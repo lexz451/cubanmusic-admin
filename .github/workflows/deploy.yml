@@ -25,4 +25,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: 'dist'
-          destination: '/var/www/cubanmusic'
+          target: '/var/www/cubanmusic'
+          rm: true
