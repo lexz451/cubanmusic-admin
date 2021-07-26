@@ -26,6 +26,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           passphrase: ${{ secrets.SSH_KEY_PASS }}
           key: ${{ secrets.SSH_KEY }}
-          source: '*'
+          source: 'dist/*'
           target: 'www/admin.cubanmusic.info/public_html'
           rm: true
