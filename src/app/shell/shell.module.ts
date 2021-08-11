@@ -1,3 +1,4 @@
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,6 +12,6 @@ import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, NgbModule, AuthModule, I18nModule, RouterModule],
-  declarations: [HeaderComponent, ShellComponent],
+  declarations: [HeaderComponent, ShellComponent, SidebarComponent],
 })
 export class ShellModule {}

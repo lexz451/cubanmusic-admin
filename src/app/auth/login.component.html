@@ -14,25 +14,23 @@
             <i class="far fa-3x fa-user-circle text-muted"></i>
           </h4>
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-            <div class="alert alert-danger" [hidden]="!error || isLoading" translate>
-              Username or password incorrect.
-            </div>
+            <div class="alert alert-danger" [hidden]="!error || isLoading" translate>Email or password incorrect.</div>
             <div class="form-group">
               <label class="d-block">
                 <input
-                  type="text"
+                  type="email"
                   class="form-control"
-                  formControlName="username"
-                  autocomplete="username"
-                  [placeholder]="'Username' | translate"
+                  formControlName="email"
+                  autocomplete="email"
+                  [placeholder]="'Email' | translate"
                 />
-                <span hidden translate>Username</span>
+                <span hidden translate>Email</span>
                 <small
-                  [hidden]="loginForm.controls.username.valid || loginForm.controls.username.untouched"
+                  [hidden]="loginForm.controls.email.valid || loginForm.controls.email.untouched"
                   class="text-danger"
                   translate
                 >
-                  Username is required
+                  Email is required
                 </small>
               </label>
               <label class="d-block">

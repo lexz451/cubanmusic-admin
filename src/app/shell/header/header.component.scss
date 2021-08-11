@@ -1,9 +1,23 @@
 @import "src/theme/theme-variables";
 
-.navbar {
-  margin-bottom: $spacer;
-}
-
 .nav-link.dropdown-toggle {
   cursor: pointer;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  // text-transform: uppercase;
+  span {
+    color: $accent;
+  }
+}
+
+.navbar {
+  background-color: $dark-header;
+  // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  border-bottom: 1px solid $accent;
+  z-index: 9999;
+}
+
+.navbar-menu .navbar-nav {
 }

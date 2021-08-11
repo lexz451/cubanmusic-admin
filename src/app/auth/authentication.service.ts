@@ -1,13 +1,10 @@
+import { CredentialsService } from './credentials.service';
+import { map, tap } from 'rxjs/operators';
+import { Credentials } from './../@core/model/auth-response';
+import { SignInRequest } from './../@core/model/signin-request';
+import { ApiService } from './../@core/api.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
-import { Credentials, CredentialsService } from './credentials.service';
-
-export interface LoginContext {
-  username: string;
-  password: string;
-  remember?: boolean;
-}
 
 /**
  * Provides a base for authentication workflow.
@@ -17,21 +14,19 @@ export interface LoginContext {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private credentialsService: CredentialsService) {}
+  constructor(private _credentialsService: CredentialsService, private _apiService: ApiService) {}
 
   /**
    * Authenticates the user.
    * @param context The login parameters.
    * @return The user credentials.
    */
-  login(context: LoginContext): Observable<Credentials> {
-    // Replace by proper authentication call
-    const data = {
-      username: context.username,
-      token: '123456',
-    };
-    this.credentialsService.setCredentials(data, context.remember);
-    return of(data);
+  signIn(context: SignInRequest): Observable<Credentials> {
+    return this._apiService.post<Credentials, SignInRequest>('/auth/signin', context).pipe(
+      tap((response) => {
+        this._credentialsService.setCredentials(response, context.rememberMe);
+      })
+    );
   }
 
   /**
@@ -39,8 +34,7 @@ export class AuthenticationService {
    * @return True if the user was logged out successfully.
    */
   logout(): Observable<boolean> {
-    // Customize credentials invalidation here
-    this.credentialsService.setCredentials();
+    this._credentialsService.setCredentials();
     return of(true);
   }
 }

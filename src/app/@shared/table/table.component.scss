@@ -1,0 +1,16 @@
+ag-grid-angular {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep .ag-theme-alpine .ag-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: break-spaces;
+  line-height: 1;
+  outline: none !important;
+  border: none !important;
+  height: 100%;
+  padding: 0 !important;
+}

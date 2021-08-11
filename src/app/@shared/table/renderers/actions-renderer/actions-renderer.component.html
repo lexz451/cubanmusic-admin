@@ -1,0 +1,11 @@
+<div class="d-flex align-items-center actions-container">
+  <span class="action" *ngIf="useViewAction" (click)="onView()">
+    <i class="action-icon fas fa-eye"></i>
+  </span>
+  <span class="action" *ngIf="useEditAction" (click)="onEdit()">
+    <i class="action-icon fas fa-edit"></i>
+  </span>
+  <span class="action" *ngIf="useDeleteAction" (click)="onDelete()">
+    <i class="action-icon fas fa-trash"></i>
+  </span>
+</div>

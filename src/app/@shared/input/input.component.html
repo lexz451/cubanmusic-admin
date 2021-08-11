@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label class="d-block">
+    <input [placeholder]="placeholder | translate" [type]="type" class="form-control" />
+    <span hidden translate>{{ label }}</span>
+    <small [hidden]="valid || untouched" class="text-danger" translate>
+      {{ errorText }}
+    </small>
+  </label>
+</div>

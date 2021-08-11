@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
+    const login$ = this.authenticationService.signIn(this.loginForm.value);
     login$
       .pipe(
         finalize(() => {
@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit {
         untilDestroyed(this)
       )
       .subscribe(
-        (credentials) => {
-          log.debug(`${credentials.username} successfully logged in`);
+        () => {
           this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
         },
         (error) => {
@@ -57,7 +56,7 @@ export class LoginComponent implements OnInit {
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
       remember: true,
     });

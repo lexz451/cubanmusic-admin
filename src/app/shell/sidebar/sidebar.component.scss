@@ -1,0 +1,10 @@
+@import "src/theme/theme-variables";
+
+.sidebar-container {
+  width: 350px;
+  height: 100%;
+  background-color: $dark-sidebar;
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+}
