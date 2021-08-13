@@ -1,0 +1,31 @@
+.location-container {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  position: relative;
+  border: 1px solid #fafafa15;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  ::ng-deep app-input .form-group,
+  ::ng-deep app-select .form-group {
+    margin-bottom: 0 !important;
+    label {
+      margin-bottom: 0 !important;
+    }
+  }
+  .location-label {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .location-input {
+    flex-grow: 1;
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -1,5 +1,9 @@
+import { DataService } from './../../@core/data.service';
 import { Artist } from './../../@core/model/artist';
 import { Component, OnInit } from '@angular/core';
+import { Country } from '@app/@core/model/country';
+import { Observable } from 'rxjs';
+import { Location } from '@app/@core/model/location';
 
 @Component({
   selector: 'app-artist-details',
@@ -8,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArtistDetailsComponent implements OnInit {
   editable = false;
-  artist?: Artist;
 
-  constructor() {}
+  artist?: Artist = new Artist();
 
-  ngOnInit() {}
+  countries: Country[] = [];
+
+  constructor(private _dataService: DataService) {}
+
+  get genderSelectors(): any[] {
+    return this._dataService.genderSelectors;
+  }
+
+  ngOnInit() {
+    console.log(this.artist);
+    this._dataService.countries.subscribe((res) => {
+      if (res && res.length) {
+        this.countries = res;
+      }
+    });
+  }
 }

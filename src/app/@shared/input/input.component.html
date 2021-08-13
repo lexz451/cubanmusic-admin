@@ -1,7 +1,16 @@
 <div class="form-group">
   <label class="d-block">
-    <input [placeholder]="placeholder | translate" [type]="type" class="form-control" />
+    <input [placeholder]="placeholder | translate" [type]="type" class="form-control" *ngIf="controlType == 'input'" />
+    <textarea
+      [rows]="4"
+      [placeholder]="placeholder | translate"
+      class="form-control"
+      *ngIf="controlType == 'textarea'"
+    ></textarea>
     <span hidden translate>{{ label }}</span>
+    <small class="form-text text-muted text-help" *ngIf="!!helperText">
+      {{ helperText }}
+    </small>
     <small [hidden]="valid || untouched" class="text-danger" translate>
       {{ errorText }}
     </small>

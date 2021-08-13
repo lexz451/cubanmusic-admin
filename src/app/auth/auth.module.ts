@@ -7,9 +7,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18nModule } from '@app/i18n';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login.component';
+import { CoreModule } from '@app/@core';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, NgbModule, I18nModule, AuthRoutingModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, NgbModule, I18nModule, AuthRoutingModule, CoreModule],
   declarations: [LoginComponent],
 })
 export class AuthModule {}

@@ -1,13 +1,131 @@
 <div class="artist-details-container">
-  <h3>{{ artist?.name }}</h3>
+  <h3 class="mb-4">{{ artist?.name }}</h3>
   <form class="form-row">
-    <div class="form-group col-sm-6">
-      <label>Nombre:</label>
-      <app-input name="nombre" [(ngModel)]="artist.name" placeholder="Nombre" label="Nombre"></app-input>
+    <div class="form-group col-sm-4">
+      <app-input name="nombre" [(ngModel)]="artist.name" placeholder="Nombre"></app-input>
     </div>
-    <div class="form-group col-sm-6">
-      <label>Alias:</label>
-      <app-input name="alias" [(ngModel)]="artist.alias" placeholder="Alias" label="Alias"></app-input>
+    <div class="form-group col-sm-4">
+      <app-input name="alias" [(ngModel)]="artist.alias" placeholder="Alias"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input
+        name="nombresAdicionales"
+        [(ngModel)]="artist.additionalNames"
+        placeholder="Nombres adicionales"
+        [helperText]="'Separados por comas'"
+      ></app-input>
+    </div>
+    <div class="col-sm-12">
+      <app-input
+        [(ngModel)]="artist.description"
+        [controlType]="'textarea'"
+        name="description"
+        [placeholder]="'Descripción'"
+      ></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input name="birthDate" [(ngModel)]="artist.birthDate" placeholder="Fecha de Nacimiento"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input name="deathDate" [(ngModel)]="artist.deathDate" placeholder="Fecha de Muerte"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-radiogroup
+        class="d-block mt-1 text-center"
+        [(ngModel)]="artist.gender"
+        [selectors]="genderSelectors"
+      ></app-radiogroup>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-select [placeholder]="'Job Title'"></app-select>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input
+        name="roles"
+        [(ngModel)]="artist.jobRoles"
+        placeholder="Roles"
+        [helperText]="'Separados por comas'"
+      ></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-select [placeholder]="'Relacionado con'"></app-select>
+    </div>
+    <div class="form-group col-sm-12 mt-2">
+      <app-location label="Lugar de Nacimiento" [(location)]="artist.birthPlace" [countries]="countries"></app-location>
+    </div>
+    <div class="form-group col-sm-12 mt-2">
+      <app-location label="Lugar de Muerte" [(location)]="artist.deathPlace"></app-location>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-select name="country" [placeholder]="'Nacionalidad'"></app-select>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input name="activeSince" [(ngModel)]="artist.birthDate" placeholder="Activo desde"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input name="activeUntil" [(ngModel)]="artist.deathDate" placeholder="Activo hasta"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-multiselect [placeholder]="'Premios'"></app-multiselect>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-multiselect [placeholder]="'Colaboraciones'"></app-multiselect>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-multiselect [placeholder]="'Géneros'"></app-multiselect>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-multiselect [placeholder]="'Instrumentos'"></app-multiselect>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-select name="affiliation" [placeholder]="'Afiliación'"></app-select>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-select name="studyAt" [placeholder]="'Centro de Estudios'"></app-select>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-multiselect [placeholder]="'Sellos Discográficos'"></app-multiselect>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Correo Electrónico'" [(ngModel)]="artist.email" name="email"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Sitio Web'" [(ngModel)]="artist.website" name="website"></app-input>
+    </div>
+    <div class="divider"></div>
+
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Spotify'" [(ngModel)]="artist.spotify" name="spotify"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Apple Music'" [(ngModel)]="artist.appleMusic" name="apple"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Sound Cloud'" [(ngModel)]="artist.soundCloud" name="soundcloud"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Deezer'" [(ngModel)]="artist.deezer" name="deezer"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Youtube'" [(ngModel)]="artist.youtube" name="youtube"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Instagram'" [(ngModel)]="artist.instagram" name="instagram"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Vibrate'" [(ngModel)]="artist.viberate" name="vibrate"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Facebook'" [(ngModel)]="artist.facebook" name="facebook"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Twitter'" [(ngModel)]="artist.twitter" name="twitter"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'TikTok'" [(ngModel)]="artist.tiktok" name="tiktok"></app-input>
+    </div>
+    <div class="form-group col-sm-4">
+      <app-input [placeholder]="'Libreria del Congreso'" [(ngModel)]="artist.libOfCongress" name="loc"></app-input>
     </div>
   </form>
 </div>

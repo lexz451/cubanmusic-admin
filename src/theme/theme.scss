@@ -31,6 +31,10 @@ body {
   @include ag-theme-alpine-dark(
     (
       odd-row-background-color: #cfd8dc,
+      background-color: $dark-bg,
+      header-background-color: $dark-header,
+      border-color: transparent,
+      row-hover-color: rgba($accent, 0.05),
     )
   );
 }
@@ -39,5 +43,24 @@ body {
   .modal-dialog .modal-content {
     background-color: $dark-bg !important;
     padding: 2rem 3rem;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #fafafa15;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  text-transform: uppercase;
+  font-size: 12px;
+  &.btn-primary {
+    color: #fafafa !important;
+    font-weight: bold;
   }
 }

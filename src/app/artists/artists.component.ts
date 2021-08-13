@@ -5,6 +5,7 @@ import { ColDef } from 'ag-grid-community';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
+import { Location } from '@app/@core/model/location';
 
 @UntilDestroy()
 @Component({
@@ -15,11 +16,11 @@ import { UntilDestroy, untilDestroyed } from '@app/@core';
 export class ArtistsComponent implements OnInit {
   data: any[] = [
     {
-      name: 'x',
+      name: 'Some artist name',
       birthDate: new Date(),
       deathDate: new Date(),
-      birthPlace: null,
-      deathPlace: null,
+      birthPlace: new Location(),
+      deathPlace: new Location(),
       residencePlace: null,
       gender: 'Male',
       jobTitle: 'Drummer',
@@ -32,36 +33,45 @@ export class ArtistsComponent implements OnInit {
       field: 'name',
       width: 100,
       sortable: true,
+      headerName: 'Nombre',
     },
     {
       field: 'birthDate',
+      headerName: 'Fecha de Nacimiento',
     },
     {
       field: 'deathDate',
+      headerName: 'Fecha de Muerte',
     },
     {
       field: 'birthPlace',
-      width: 100,
+      width: 150,
+      headerName: 'Lugar de Nacimiento',
     },
     {
       field: 'deathPlace',
-      width: 100,
+      width: 150,
+      headerName: 'Lugar de Muerte',
     },
     {
       field: 'residencePlace',
       width: 100,
+      headerName: 'Residencia',
     },
     {
       field: 'gender',
       width: 50,
+      headerName: 'Género',
     },
     {
       field: 'jobTitle',
       width: 50,
+      headerName: 'Ocupación',
     },
     {
       field: 'jobRoles',
       width: 100,
+      headerName: 'Roles',
     },
     {
       cellRendererFramework: ActionsRendererComponent,

@@ -1,10 +1,10 @@
-import { CredentialsService } from './credentials.service';
 import { map, tap } from 'rxjs/operators';
 import { Credentials } from './../@core/model/auth-response';
 import { SignInRequest } from './../@core/model/signin-request';
 import { ApiService } from './../@core/api.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { CredentialsService } from './credentials.service';
 
 /**
  * Provides a base for authentication workflow.

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { Logger } from '@core';
-import { CredentialsService } from './credentials.service';
+import { CredentialsService, Logger } from '@core';
 
 const log = new Logger('AuthenticationGuard');
 

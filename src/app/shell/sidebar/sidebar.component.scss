@@ -1,10 +1,44 @@
 @import "src/theme/theme-variables";
 
 .sidebar-container {
-  width: 350px;
+  width: 200px;
   height: 100%;
   background-color: $dark-sidebar;
   display: flex;
   flex-direction: column;
   justify-items: stretch;
+
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      padding-left: 1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      cursor: pointer;
+      &:hover,
+      &:focus {
+        background-color: rgba($color: $accent, $alpha: 0.05);
+      }
+    }
+    i {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.5rem;
+    }
+    a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.1rem;
+      color: #fafafa;
+      font-weight: bold;
+    }
+  }
 }

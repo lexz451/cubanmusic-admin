@@ -41,11 +41,20 @@ $cyan: #17a2b8;
 $dark-bg: #121212;
 $dark-header: #1f1f1f;
 $dark-sidebar: #1f1f1f;
-$accent: #bb86fc;
+$accent: #a661fb;
 $text-color-primary: #fafafa;
 
+$input-color: #fafafa;
+$input-bg: rgba(#fff, 0.05);
+$input-disabled-bg: rgba(#fff, 0.05);
+$input-placeholder-color: #c5c5c5;
+$input-box-shadow: none;
+$input-border-width: 0;
+$link-hover-decoration: none;
+$component-active-bg: $dark-bg;
+
 $theme-colors: (
-  primary: $blue,
+  primary: $accent,
   secondary: $gray-600,
   success: $green,
   info: $cyan,

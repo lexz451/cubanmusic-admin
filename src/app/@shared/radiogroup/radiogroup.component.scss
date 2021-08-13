@@ -1,0 +1,4 @@
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}

@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
+import { JWTInterceptor } from './http/jwt.interceptor';
 
 @NgModule({
   imports: [CommonModule, SharedModule, HttpClientModule, TranslateModule, RouterModule],
@@ -14,6 +15,11 @@ import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTInterceptor,
       multi: true,
     },
     {

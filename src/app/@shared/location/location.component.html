@@ -1,0 +1,31 @@
+<div class="location-container">
+  <small class="location-label">{{ label }}</small>
+  <app-input
+    class="location-input"
+    label="Dirección"
+    placeholder="Dirección"
+    [ngModel]="location?.address"
+    (ngModelChange)="onAddressChange($event)"
+  ></app-input>
+  <app-input
+    class="location-input"
+    label="Ciudad/Pueblo"
+    placeholder="Ciudad/Pueblo"
+    [ngModel]="location?.city"
+    (ngModelChange)="onCityChange($event)"
+  ></app-input>
+  <app-input
+    class="location-input"
+    label="Estado/Provincia"
+    placeholder="Estado/Provincia"
+    [ngModel]="location?.state"
+    (ngModelChange)="onStateChange($event)"
+  ></app-input>
+  <app-select
+    class="location-input"
+    label="País"
+    [ngModel]="location?.country?.id"
+    [items]="mappedCountries"
+    (ngModelChange)="onCountryChange($event)"
+  ></app-select>
+</div>

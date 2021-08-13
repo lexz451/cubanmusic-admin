@@ -1,13 +1,33 @@
 <div class="sidebar-container" [@openClose]="showSidebar ? 'open' : 'close'">
-  <div class="px-4">Search</div>
-  <label class="text-muted px-4">Entidades</label>
-  <ul>
-    <li><a routerLink="/artists"> Artistas</a></li>
-    <li>Grupos</li>
-    <li>Instituciones</li>
-    <li>Sellos Discográficos</li>
-    <li>Premios</li>
-    <li>Discos</li>
-    <li>Venues</li>
+  <small class="text-muted px-4 text-uppercase mt-4">Navegación</small>
+  <ul class="mt-2 nav-list">
+    <li class="d-flex align-items-center">
+      <i class="fas fa-user"></i>
+      <a routerLink="/artists"> Artistas</a>
+    </li>
+    <li>
+      <i class="fas fa-users"></i>
+      <a routerLink="/groups">Grupos</a>
+    </li>
+    <li>
+      <i class="fas fa-building"></i>
+      <a routerLink="/institutions">Instituciones</a>
+    </li>
+    <li>
+      <i class="fas fa-microphone"></i>
+      <a routerLink="/labels">Sellos Discográficos</a>
+    </li>
+    <li>
+      <i class="fas fa-award"></i>
+      <a routerLink="/awards">Premios</a>
+    </li>
+    <li>
+      <i class="fas fa-record-vinyl"></i>
+      <a routerLink="/albums">Discos</a>
+    </li>
+    <li>
+      <i class="fas fa-guitar"></i>
+      <a routerLink="/venues">Venues</a>
+    </li>
   </ul>
 </div>

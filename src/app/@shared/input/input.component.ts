@@ -11,6 +11,8 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label?: string;
   @Input() placeholder?: string;
   @Input() type = 'text';
+  @Input() helperText?: string;
+  @Input() controlType: 'input' | 'textarea' = 'input';
 
   value?: any;
   disabled = false;
@@ -48,11 +50,11 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {}
 
   get valid(): boolean {
-    return this.ngControl.valid;
+    return this.ngControl?.valid;
   }
 
   get untouched(): boolean {
-    return this.ngControl.untouched;
+    return this.ngControl?.untouched;
   }
 
   get errorText(): string {

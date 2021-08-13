@@ -77,7 +77,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
         headerCheckboxSelection: false,
         checkboxSelection: false,
         flex: 1,
-        minWidth: 50,
+        minWidth: 100,
         headerComponentFramework: TableHeaderComponent,
         headerComponentParams: {
           displayName: col.headerName,

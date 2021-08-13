@@ -1,0 +1,32 @@
+<div class="form-group" (clickOutside)="isOpen = false">
+  <i class="input-icon fas fa-angle-down select-caret" (click)="toggleMenu()"></i>
+  <input
+    #input="uid"
+    [placeholder]="placeholder || label"
+    [readonly]="true"
+    class="form-control"
+    [ngModel]="item?.name"
+    [disabled]="isDisabled"
+    [class.disabled]="isDisabled"
+    (blur)="onBlur()"
+    uid
+    [class.is-invalid]="showInvalid"
+    (click)="isOpen = !isOpen"
+  />
+  <div class="invalid-tooltip" *ngIf="showInvalid">
+    <span *ngFor="let error of errors">{{ error }}</span>
+  </div>
+  <div class="select-menu" [class.show]="isOpen">
+    <li class="select-item default-option" (click)="onDefaultOptionSelected()">
+      <span>Seleccionar</span>
+    </li>
+    <li
+      *ngFor="let item of items; let i = index; trackBy: trackItemBy"
+      class="select-item"
+      (click)="onItemSelected(item)"
+    >
+      <span *ngIf="item?.icon">{{ item.icon }}</span>
+      <span class="select-item-text">{{ item.name }}</span>
+    </li>
+  </div>
+</div>
