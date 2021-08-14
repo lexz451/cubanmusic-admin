@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger } from '../logger.service';
+import { Router } from '@angular/router';
 
 const log = new Logger('ErrorHandlerInterceptor');
 
@@ -15,6 +16,8 @@ const log = new Logger('ErrorHandlerInterceptor');
   providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
+  constructor(private _router: Router) {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       retry(2),
@@ -39,6 +42,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             );
             if (error.status === 401 || error.status === 403) {
               log.error('Unauthorized Exception');
+              this._router.navigateByUrl('/login');
             }
           }
         }

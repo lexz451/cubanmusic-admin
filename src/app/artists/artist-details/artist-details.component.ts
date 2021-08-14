@@ -11,11 +11,9 @@ import { Location } from '@app/@core/model/location';
   styleUrls: ['./artist-details.component.scss'],
 })
 export class ArtistDetailsComponent implements OnInit {
-  editable = false;
-
   artist?: Artist = new Artist();
-
   countries: Country[] = [];
+  mode: 'create' | 'edit' = 'create';
 
   constructor(private _dataService: DataService) {}
 
@@ -24,7 +22,6 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.artist);
     this._dataService.countries.subscribe((res) => {
       if (res && res.length) {
         this.countries = res;

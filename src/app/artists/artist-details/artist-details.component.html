@@ -1,5 +1,5 @@
 <div class="artist-details-container">
-  <h3 class="mb-4">{{ artist?.name }}</h3>
+  <h2 class="mb-4">{{ mode == 'edit' ? artist?.name : 'Crear nuevo Artista' }}</h2>
   <form class="form-row">
     <div class="form-group col-sm-4">
       <app-input name="nombre" [(ngModel)]="artist.name" placeholder="Nombre"></app-input>
@@ -37,7 +37,7 @@
       ></app-radiogroup>
     </div>
     <div class="form-group col-sm-4">
-      <app-select [placeholder]="'Job Title'"></app-select>
+      <app-select name="jobTitle" [placeholder]="'Job Title'"></app-select>
     </div>
     <div class="form-group col-sm-4">
       <app-input

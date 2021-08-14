@@ -8,6 +8,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, UntilDestroy, untilDestroyed } from '@core';
 import { I18nService } from '@app/i18n';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('App');
 
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private translateService: TranslateService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
 
     const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+
+    onNavigationEnd.pipe(untilDestroyed(this)).subscribe(() => {
+      if (this.modalService.hasOpenModals()) {
+        this.modalService.dismissAll();
+      }
+    });
 
     // Change page title on navigation or language change, based on route data
     merge(this.translateService.onLangChange, onNavigationEnd)
