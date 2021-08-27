@@ -4,7 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { AuthenticationService, Logger, UntilDestroy, untilDestroyed } from '@core';
+import { Logger, UntilDestroy, untilDestroyed } from '@shared';
+import { AuthenticationService } from './authentication.service';
 
 const log = new Logger('Login');
 
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isLoading = true;
-    const login$ = this.authenticationService.signIn(this.loginForm.value);
+    const login$ = this.authenticationService.login(this.loginForm.value);
     login$
       .pipe(
         finalize(() => {
@@ -43,7 +44,8 @@ export class LoginComponent implements OnInit {
         untilDestroyed(this)
       )
       .subscribe(
-        () => {
+        (credentials) => {
+          log.debug(`${credentials.email} successfully logged in`);
           this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
         },
         (error) => {

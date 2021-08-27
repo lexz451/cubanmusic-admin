@@ -1,0 +1,41 @@
+<div class="org-container container-fluid px-4">
+  <div class="d-flex align-items-center mb-4">
+    <span class="btn-icon me-3" routerLink="/labels">
+      <i class="fas fa-angle-left"></i>
+    </span>
+    <h2 class="mb-0 fw-bold">{{ label?.name || 'Crear nueva Institución' }}</h2>
+  </div>
+
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-4" required></app-input>
+    <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-4" required></app-input>
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="label.name" class="col-sm-4" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="label.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+    <app-phone-input class="col-sm-2" [(phone)]="label.phone" [countries]="countries"></app-phone-input>
+    <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-4"></app-input>
+    <app-select
+      class="col-sm-2"
+      name="country"
+      placeholder="País"
+      [items]="mappedCountries"
+      [(ngModel)]="label.country"
+    ></app-select>
+    <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
+    <app-input
+      name="address"
+      [(ngModel)]="label.address"
+      placeholder="Dirección"
+      controlType="textarea"
+      class="col-sm-12"
+    ></app-input>
+    <div class="col-sm-12 d-flex mt-4">
+      <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

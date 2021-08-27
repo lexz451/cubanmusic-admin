@@ -1,10 +1,5 @@
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="https://github.com/ngx-rocket" translate
-      >{{ 'APP_NAME' | translate }}
-      /
-      <span>Admin</span>
-    </a>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
     <button
       class="navbar-toggler"
       type="button"
@@ -16,29 +11,18 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
-      <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">
-          <i class="fas fa-home"></i>
-          <span translate>Home</span>
-        </a>
-        <a class="nav-item nav-link" routerLink="/about" routerLinkActive="active">
-          <i class="fas fa-question-circle"></i>
-          <span translate>About</span>
-        </a>
-        <app-language-selector inNavbar="true" menuClass="dropdown-menu dropdown-menu-right"></app-language-selector>
+      <div class="navbar-nav ms-auto">
+        <app-language-selector [inNavbar]="true" menuClass="dropdown-menu dropdown-menu-right"></app-language-selector>
         <div class="nav-item" ngbDropdown>
           <a id="user-dropdown" class="nav-link" ngbDropdownToggle>
             <i class="fas fa-user-circle"></i>
+            <span>{{ email }}</span>
           </a>
           <div ngbDropdownMenu aria-labelledby="user-dropdown" class="dropdown-menu dropdown-menu-right">
-            <h6 class="dropdown-header">
-              <span translate>Logged in as</span> <b>{{ username }}</b>
-            </h6>
-            <div class="dropdown-divider"></div>
             <button class="dropdown-item" (click)="logout()" translate>Logout</button>
           </div>
         </div>
       </div>
     </div>
-  </nav>
-</header>
+  </div>
+</nav>

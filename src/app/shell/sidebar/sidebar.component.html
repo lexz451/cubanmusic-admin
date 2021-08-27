@@ -1,33 +1,40 @@
 <div class="sidebar-container" [@openClose]="showSidebar ? 'open' : 'close'">
-  <small class="text-muted px-4 text-uppercase mt-4">Navegación</small>
-  <ul class="mt-2 nav-list">
-    <li class="d-flex align-items-center">
-      <i class="fas fa-user"></i>
-      <a routerLink="/artists"> Artistas</a>
-    </li>
-    <li>
-      <i class="fas fa-users"></i>
-      <a routerLink="/groups">Grupos</a>
-    </li>
-    <li>
-      <i class="fas fa-building"></i>
-      <a routerLink="/institutions">Instituciones</a>
-    </li>
-    <li>
-      <i class="fas fa-microphone"></i>
-      <a routerLink="/labels">Sellos Discográficos</a>
-    </li>
-    <li>
-      <i class="fas fa-award"></i>
-      <a routerLink="/awards">Premios</a>
-    </li>
-    <li>
-      <i class="fas fa-record-vinyl"></i>
-      <a routerLink="/albums">Discos</a>
-    </li>
-    <li>
-      <i class="fas fa-guitar"></i>
-      <a routerLink="/venues">Venues</a>
-    </li>
-  </ul>
+  <div class="sidebar-header">
+    <span class="sidebar-brand">Cuban<strong>Music</strong></span>
+    <span class="btn-icon sidebar-toggle">
+      <i class="fas fa-bars"></i>
+    </span>
+  </div>
+  <div class="sidebar-nav">
+    <ul class="mt-2">
+      <li class="d-flex align-items-center">
+        <i class="fas fa-user"></i>
+        <a routerLink="/artists"> Artistas</a>
+      </li>
+      <li>
+        <i class="fas fa-users"></i>
+        <a routerLink="/groups">Grupos</a>
+      </li>
+      <li>
+        <i class="fas fa-building"></i>
+        <a routerLink="/organizations">Instituciones</a>
+      </li>
+      <li>
+        <i class="fas fa-microphone"></i>
+        <a routerLink="/labels">Sellos Discográficos</a>
+      </li>
+      <li>
+        <i class="fas fa-award"></i>
+        <a routerLink="/awards">Premios</a>
+      </li>
+      <li>
+        <i class="fas fa-record-vinyl"></i>
+        <a routerLink="/albums">Albums</a>
+      </li>
+      <li>
+        <i class="fas fa-guitar"></i>
+        <a routerLink="/venues">Venues</a>
+      </li>
+    </ul>
+  </div>
 </div>

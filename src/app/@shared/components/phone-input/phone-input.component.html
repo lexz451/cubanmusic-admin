@@ -1,0 +1,28 @@
+<div class="form-group">
+  <label class="form-label">{{ label || placeholder }}</label>
+  <div class="input-group" ngbDropdown>
+    <button class="btn btn-secondary" type="button" ngbDropdownToggle>
+      <span>
+        {{ selectedCountry?.emoji }}
+        {{ selectedCountry?.phoneCode }}
+      </span>
+    </button>
+    <div class="phone-codes" ngbDropdownMenu>
+      <span *ngFor="let c of countries" (click)="onCountrySelected(c)" ngbDropdownItem>
+        {{ c.emoji }}
+        {{ c.name }}
+        <strong>({{ c.phoneCode }})</strong>
+      </span>
+    </div>
+    <input
+      [placeholder]="placeholder | translate"
+      type="text"
+      class="form-control"
+      [(ngModel)]="phone.number"
+      (ngModelChange)="valueChange()"
+    />
+  </div>
+  <small class="form-text text-muted text-help" *ngIf="!!helperText">
+    {{ helperText | translate }}
+  </small>
+</div>

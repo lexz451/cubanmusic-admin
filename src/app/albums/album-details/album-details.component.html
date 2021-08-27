@@ -1,0 +1,27 @@
+<div class="org-container container-fluid px-4">
+  <div class="d-flex align-items-center mb-4">
+    <span class="btn-icon me-3" routerLink="/albums">
+      <i class="fas fa-angle-left"></i>
+    </span>
+    <h2 class="mb-0 fw-bold">{{ album?.title || 'Crear nuevo Album' }}</h2>
+  </div>
+
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <app-input placeholder="Titulo" name="title" [(ngModel)]="album.title" class="col-sm-6" required></app-input>
+    <app-input placeholder="Descripción" name="description" [(ngModel)]="album.description" class="col-sm-12"
+      controlType="textarea"></app-input>
+    <app-datepicker name="releasedOn" class="col-sm-4" placeholder="Fecha de lanzamiento"
+      [(ngModel)]="album.releasedOn"></app-datepicker>
+    <app-select name="recordLabel" class="col-sm-4" placeholder="Sello Discografico" [items]="recordLabels"
+      [(ngModel)]="album.recordLabel"></app-select>
+    <app-multiselect name="artists" class="col-sm-4" placeholder="Artistas" [items]="artists"
+      [(ngModel)]="album.artists"></app-multiselect>
+    <app-multiselect name="collaborations" class="col-sm-4" placeholder="Colaboradores" [items]="artists"
+      [(ngModel)]="album.collaborations"></app-multiselect>
+    <app-multiselect name="organizations" class="col-sm-4" placeholder="Organizaciones relacionadas"
+      [items]="organizations" [(ngModel)]="album.organizations"></app-multiselect>
+    <div class="col-sm-12 d-flex mt-4">
+      <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

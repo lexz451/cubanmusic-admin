@@ -1,103 +1,142 @@
-import { ArtistDetailsComponent } from './artist-details/artist-details.component';
-import { TableAction } from './../@core/enum/table-action.enum';
-import { ActionsRendererComponent } from './../@shared/table/renderers/actions-renderer/actions-renderer.component';
-import { ColDef } from 'ag-grid-community';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Logger, UntilDestroy, untilDestroyed } from '@app/@shared';
+import { Artist } from '@app/@shared/models/artist';
+import { SelectorService } from '@app/@shared/services/selector.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UntilDestroy, untilDestroyed } from '@app/@core';
-import { Location } from '@app/@core/model/location';
+import { ColDef } from 'ag-grid-community';
+import { ArtistsService } from './artists.service';
+import { DatePipe } from '@angular/common';
+import { TableAction } from '@shared/models/table-actions';
+import { ActionsRendererComponent } from '@shared/components/table/renderers/actions-renderer/actions-renderer.component';
+import { ListRendererComponent } from '@shared/components/table/renderers/list-renderer/list-renderer.component';
+import { finalize } from 'rxjs/operators';
+import { UiService } from '@shared/services/ui.service';
+
+const log = new Logger('Artists');
 
 @UntilDestroy()
 @Component({
   selector: 'app-artists',
   templateUrl: './artists.component.html',
-  styleUrls: ['./artists.component.scss'],
+  styleUrls: ['./artists.component.css'],
 })
 export class ArtistsComponent implements OnInit {
-  data: any[] = [
-    {
-      name: 'Some artist name',
-      birthDate: new Date(),
-      deathDate: new Date(),
-      birthPlace: new Location(),
-      deathPlace: new Location(),
-      residencePlace: null,
-      gender: 'Male',
-      jobTitle: 'Drummer',
-      jobRoles: ['Role', 'Role', 'Role'],
-    },
-  ];
+  artists: Artist[] = [];
 
-  columns: ColDef[] = [
-    {
-      field: 'name',
-      width: 100,
-      sortable: true,
-      headerName: 'Nombre',
-    },
-    {
-      field: 'birthDate',
-      headerName: 'Fecha de Nacimiento',
-    },
-    {
-      field: 'deathDate',
-      headerName: 'Fecha de Muerte',
-    },
-    {
-      field: 'birthPlace',
-      width: 150,
-      headerName: 'Lugar de Nacimiento',
-    },
-    {
-      field: 'deathPlace',
-      width: 150,
-      headerName: 'Lugar de Muerte',
-    },
-    {
-      field: 'residencePlace',
-      width: 100,
-      headerName: 'Residencia',
-    },
-    {
-      field: 'gender',
-      width: 50,
-      headerName: 'Género',
-    },
-    {
-      field: 'jobTitle',
-      width: 50,
-      headerName: 'Ocupación',
-    },
-    {
-      field: 'jobRoles',
-      width: 100,
-      headerName: 'Roles',
-    },
-    {
-      cellRendererFramework: ActionsRendererComponent,
-      cellRendererParams: {
-        useActions: (): TableAction[] => {
-          return [TableAction.EDIT, TableAction.DELETE, TableAction.VIEW];
-        },
-        onAction: (type: TableAction, row: any) => {
-          if (type == TableAction.VIEW) {
-            const ref = this._modalService.open(ArtistDetailsComponent, {
-              centered: true,
-              size: 'xl',
-            });
-            ref.componentInstance.editable = true;
-            ref.componentInstance.artist = row;
-            ref.closed.pipe(untilDestroyed(this)).subscribe((res) => {
-              console.log('Closed modal');
-            });
-          }
+  constructor(
+    private modal: NgbModal,
+    private router: Router,
+    private artistsService: ArtistsService,
+    private selectorService: SelectorService,
+    private uiService: UiService,
+    private datePipe: DatePipe
+  ) {}
+
+  ngOnInit() {
+    this.uiService.showLoading();
+    this.artistsService
+      .getAll()
+      .pipe(
+        untilDestroyed(this),
+        finalize(() => {
+          this.uiService.hideLoading();
+        })
+      )
+      .subscribe((res) => {
+        this.artists = res || [];
+        console.log(res);
+      });
+  }
+
+  addArtist(): void {
+    this.router.navigate(['artists', 'new']);
+  }
+
+  get columns(): ColDef[] {
+    return [
+      {
+        field: 'name',
+        sortable: true,
+        headerName: 'Nombre',
+      },
+      {
+        field: 'birthDate',
+        headerName: 'Fecha de Nacimiento',
+        cellRenderer: (params) => {
+          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
         },
       },
-      width: 100,
-    },
-  ];
-
-  constructor(private _modalService: NgbModal) {}
-
-  ngOnInit() {}
+      {
+        field: 'deathDate',
+        headerName: 'Fecha de Muerte',
+        cellRenderer: (params) => {
+          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+        },
+      },
+      {
+        field: 'birthPlace',
+        width: 150,
+        headerName: 'Lugar de Nacimiento',
+        cellRenderer: (params) => {
+          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+        },
+      },
+      {
+        field: 'deathPlace',
+        width: 150,
+        headerName: 'Lugar de Muerte',
+        cellRenderer: (params) => {
+          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+        },
+      },
+      {
+        field: 'residencePlace',
+        width: 100,
+        headerName: 'Residencia',
+        cellRenderer: (params) => {
+          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+        },
+      },
+      {
+        field: 'gender',
+        width: 50,
+        headerName: 'Género',
+      },
+      {
+        field: 'jobTitle',
+        width: 50,
+        headerName: 'Ocupación',
+        cellRenderer: (params) => {
+          return params?.value?.title || '-';
+        },
+      },
+      {
+        field: 'jobRoles',
+        width: 100,
+        headerName: 'Roles',
+        cellRendererFramework: ListRendererComponent,
+        cellRendererParams: {},
+      },
+      {
+        cellRendererFramework: ActionsRendererComponent,
+        cellRendererParams: {
+          useActions: (): TableAction[] => {
+            return [TableAction.EDIT, TableAction.DELETE];
+          },
+          onAction: (type: TableAction, row: any) => {
+            if (type == TableAction.EDIT) {
+              const id = row?.id;
+              if (id) {
+                this.router.navigate(['artists', id]);
+              } else {
+                log.error('Row id not found!...');
+              }
+            }
+          },
+        },
+        width: 100,
+      },
+    ];
+  }
 }

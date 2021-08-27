@@ -1,0 +1,23 @@
+.phone-codes {
+  max-width: 80%;
+  max-height: 300px;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &.show {
+    display: flex;
+    flex-direction: column;
+  }
+
+  span {
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+}
+
+.form-control {
+  background: transparent;
+}

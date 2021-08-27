@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label class="form-label text-start d-block">{{ label }}</label>
+  <div class="d-flex">
+    <ng-container *ngFor="let selector of selectors; let i = index">
+      <div class="form-check" [class.form-check-inline]="inline" (click)="onCheckedChange(selector.id)">
+        <input [value]="selector.id" type="radio" class="form-check-input" [checked]="value === selector.id" />
+        <label class="form-check-label">{{ selector.name }}</label>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="group-container container-fluid px-4">
+  <div class="d-flex align-items-center mb-4">
+    <span class="btn-icon me-3" routerLink="/groups">
+      <i class="fas fa-angle-left"></i>
+    </span>
+    <h2 class="mb-0 fw-bold">{{ group?.name || 'Crear nuevo Grupo' }}</h2>
+  </div>
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="col-sm-8">
+      <div class="row">
+        <h5 class="fw-bold">Datos básicos</h5>
+        <div class="divider mt-0"></div>
+        <div class="col-sm-6">
+          <app-input name="nombre" [(ngModel)]="group.name" placeholder="Nombre" required></app-input>
+        </div>
+
+        <div class="col-sm-12">
+          <app-input
+            name="nombresAdicionales"
+            [(ngModel)]="group.additionalNames"
+            placeholder="Nombres adicionales"
+          ></app-input>
+        </div>
+        <div class="col-sm-12">
+          <app-input
+            [(ngModel)]="group.description"
+            [controlType]="'textarea'"
+            name="description"
+            [placeholder]="'Descripción'"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <h5 class="fw-bold">Imágenes</h5>
+        <div class="divider mt-0"></div>
+        <app-gallery class="col-sm-12"></app-gallery>
+      </div>
+    </div>
+    <h5 class="fw-bold mt-2">Datos Profesionales</h5>
+    <div class="divider mt-0"></div>
+    <div class="col-sm-4">
+      <app-multiselect
+        name="members"
+        [(ngModel)]="group.members"
+        [placeholder]="'Miembros'"
+        [items]="artists"
+      ></app-multiselect>
+    </div>
+    <div class="col-sm-4">
+      <app-select
+        name="country"
+        [placeholder]="'Nacionalidad'"
+        [items]="countries"
+        [(ngModel)]="group.country"
+      ></app-select>
+    </div>
+    <div class="col-sm-4">
+      <app-input
+        name="activeSince"
+        type="number"
+        [(ngModel)]="group.activeSince"
+        placeholder="Activo desde"
+      ></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input
+        name="activeUntil"
+        type="number"
+        [(ngModel)]="group.activeUntil"
+        placeholder="Activo hasta"
+      ></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-multiselect
+        name="awards"
+        [placeholder]="'Premios'"
+        [items]="awards"
+        [(ngModel)]="group.awards"
+      ></app-multiselect>
+    </div>
+    <div class="col-sm-4">
+      <app-multiselect
+        name="colabs"
+        [placeholder]="'Colaboraciones'"
+        [(ngModel)]="group.collaborations"
+      ></app-multiselect>
+    </div>
+    <div class="col-sm-4">
+      <app-multiselect
+        name="genres"
+        [placeholder]="'Géneros'"
+        [items]="genres"
+        [(ngModel)]="group.genres"
+      ></app-multiselect>
+    </div>
+    <div class="col-sm-4">
+      <app-select
+        name="affiliation"
+        [placeholder]="'Afiliación'"
+        [items]="organizations"
+        [(ngModel)]="group.affiliation"
+      ></app-select>
+    </div>
+    <div class="col-sm-4">
+      <app-multiselect
+        name="labels"
+        [placeholder]="'Sellos Discográficos'"
+        [items]="recordLabels"
+        [(ngModel)]="group.labels"
+      ></app-multiselect>
+    </div>
+    <h5 class="fw-bold mt-2">Datos de Contacto</h5>
+    <div class="divider mt-0"></div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Correo Electrónico'" [(ngModel)]="group.email" name="email"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Sitio Web'" [(ngModel)]="group.website" name="website"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Spotify'" [(ngModel)]="group.spotify" name="spotify"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Apple Music'" [(ngModel)]="group.appleMusic" name="apple"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Sound Cloud'" [(ngModel)]="group.soundCloud" name="soundcloud"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Deezer'" [(ngModel)]="group.deezer" name="deezer"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Youtube'" [(ngModel)]="group.youtube" name="youtube"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Instagram'" [(ngModel)]="group.instagram" name="instagram"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Vibrate'" [(ngModel)]="group.viberate" name="vibrate"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Facebook'" [(ngModel)]="group.facebook" name="facebook"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Twitter'" [(ngModel)]="group.twitter" name="twitter"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'TikTok'" [(ngModel)]="group.tiktok" name="tiktok"></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input [placeholder]="'Libreria del Congreso'" [(ngModel)]="group.libOfCongress" name="loc"></app-input>
+    </div>
+    <div class="col-sm-12">
+      <div class="d-flex">
+        <button type="submit" class="btn btn-primary ms-auto">Guardar</button>
+      </div>
+    </div>
+  </form>
+</div>

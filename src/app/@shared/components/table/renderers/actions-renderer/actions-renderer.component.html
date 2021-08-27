@@ -1,0 +1,11 @@
+<div class="d-flex">
+  <span class="btn-icon" *ngIf="useViewAction" (click)="onView()">
+    <i class="fas fa-eye"></i>
+  </span>
+  <span class="btn-icon mx-2" *ngIf="useEditAction" (click)="onEdit()">
+    <i class="fas fa-edit"></i>
+  </span>
+  <span class="btn-icon" *ngIf="useDeleteAction" (click)="onDelete()">
+    <i class="fas fa-trash-alt"></i>
+  </span>
+</div>

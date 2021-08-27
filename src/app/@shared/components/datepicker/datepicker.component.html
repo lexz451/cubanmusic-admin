@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label class="form-label">{{ label || placeholder }}</label>
+  <div class="input-group">
+    <input
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      class="form-control"
+      [startDate]="today"
+      (dateSelect)="onDateChange($event)"
+    />
+    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+      <i class="fas fa-calendar-alt"></i>
+    </button>
+  </div>
+</div>

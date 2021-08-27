@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 import { ArtistsComponent } from './artists.component';
-import { Routes, RouterModule } from '@angular/router';
-import { Shell } from './../shell/shell.service';
 
 const routes: Routes = [
-  Shell.childRoutes([{ path: 'artists', component: ArtistsComponent, data: { title: marker('Artists') } }]),
+  // Module is lazy loaded, see app-routing.module.ts
+  { path: '', component: ArtistsComponent, data: { title: marker('Artists') } },
+  { path: 'new', component: ArtistDetailsComponent, data: { title: marker('Artist') } },
+  { path: ':id', component: ArtistDetailsComponent, data: { title: marker('Artist') } },
 ];
 
 @NgModule({

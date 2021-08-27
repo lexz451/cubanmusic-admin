@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { animate, group, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 

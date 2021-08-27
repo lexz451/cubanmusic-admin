@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, CredentialsService } from '@app/@core';
+import { UntilDestroy, untilDestroyed } from '@app/@shared';
 
+import { AuthenticationService, CredentialsService } from '@app/auth';
+
+@UntilDestroy()
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,10 +26,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService
+      .logout()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
-  get username(): string | null {
+  get email(): string | null {
     const credentials = this.credentialsService.credentials;
     return credentials ? credentials.email : null;
   }

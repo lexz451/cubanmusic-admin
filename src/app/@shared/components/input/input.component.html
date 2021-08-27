@@ -1,0 +1,29 @@
+<div class="form-group">
+  <label class="d-block">
+    <label class="form-label">{{ label || placeholder }}</label>
+    <input
+      [placeholder]="placeholder | translate"
+      [type]="type"
+      class="form-control"
+      *ngIf="controlType === 'input'"
+      [ngModel]="value"
+      (ngModelChange)="onValueChange($event)"
+      (blur)="onBlur()"
+    />
+    <textarea
+      [rows]="5"
+      [placeholder]="placeholder | translate"
+      class="form-control"
+      *ngIf="controlType === 'textarea'"
+      [ngModel]="value"
+      (ngModelChange)="onValueChange($event)"
+      (blur)="onBlur()"
+    ></textarea>
+    <small class="form-text text-muted text-help" *ngIf="!!helperText">
+      {{ helperText }}
+    </small>
+    <small [hidden]="valid || untouched" class="validation-error" translate>
+      {{ validationMessages }}
+    </small>
+  </label>
+</div>

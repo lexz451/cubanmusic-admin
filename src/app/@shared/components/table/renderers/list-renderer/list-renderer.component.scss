@@ -1,0 +1,12 @@
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 300px;
+  justify-content: center;
+
+  .list-item {
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+}

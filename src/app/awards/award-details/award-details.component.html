@@ -1,0 +1,47 @@
+<div class="org-container container-fluid px-4">
+  <div class="d-flex align-items-center mb-4">
+    <span class="btn-icon me-3" routerLink="/awards">
+      <i class="fas fa-angle-left"></i>
+    </span>
+    <h2 class="mb-0 fw-bold">{{ award?.title || 'Crear nuevo Premio' }}</h2>
+  </div>
+
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="award.title" class="col-sm-6" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="award.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+
+
+    <app-select
+      class="col-sm-4"
+      name="country"
+      placeholder="País"
+      [items]="countries"
+      [(ngModel)]="award.country"
+    ></app-select>
+
+    <app-select
+      class="col-sm-4"
+      name="granted"
+      placeholder="Otorgado por"
+      [items]="orgs"
+      [(ngModel)]="award.grantedBy"
+    ></app-select>
+
+    <app-input
+      name="address"
+      [(ngModel)]="award.categories"
+      placeholder="Categorias"
+      controlType="textarea"
+      class="col-sm-8"
+    ></app-input>
+    <div class="col-sm-12 d-flex mt-4">
+      <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

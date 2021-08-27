@@ -1,0 +1,39 @@
+<div class="org-container container-fluid px-4">
+  <div class="d-flex align-items-center mb-4">
+    <span class="btn-icon me-3" routerLink="/organizations">
+      <i class="fas fa-angle-left"></i>
+    </span>
+    <h2 class="mb-0 fw-bold">{{ org?.name || 'Crear nueva Institución' }}</h2>
+  </div>
+
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="org.name" class="col-sm-6" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="org.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+    <app-phone-input class="col-sm-4" [(phone)]="org.phone" [countries]="countries"></app-phone-input>
+    <app-input name="email" [(ngModel)]="org.email" placeholder="Email" class="col-sm-4"></app-input>
+    <app-select
+      class="col-sm-4"
+      name="country"
+      placeholder="País"
+      [items]="mappedCountries"
+      [(ngModel)]="org.country"
+    ></app-select>
+    <app-input name="website" [(ngModel)]="org.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
+    <app-input
+      name="address"
+      [(ngModel)]="org.address"
+      placeholder="Dirección"
+      controlType="textarea"
+      class="col-sm-8"
+    ></app-input>
+    <div class="col-sm-12 d-flex mt-4">
+      <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

@@ -10,15 +10,12 @@
     <div class="container">
       <div class="card col-md-6 mt-3 mx-auto">
         <div class="card-body">
-          <h4 class="card-title text-center">
-            <i class="far fa-3x fa-user-circle text-muted"></i>
-          </h4>
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
             <div class="alert alert-danger" [hidden]="!error || isLoading" translate>Email or password incorrect.</div>
-            <div class="form-group">
-              <label class="d-block">
+            <div class="m-3">
+              <label class="d-block my-3">
                 <input
-                  type="email"
+                  type="text"
                   class="form-control"
                   formControlName="email"
                   autocomplete="email"
@@ -33,7 +30,7 @@
                   Email is required
                 </small>
               </label>
-              <label class="d-block">
+              <label class="d-block mb-3">
                 <input
                   type="password"
                   class="form-control"
@@ -58,10 +55,12 @@
                 </label>
               </div>
             </div>
-            <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
-              <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
-              <span translate>Login</span>
-            </button>
+            <div class="m-3">
+              <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
+                <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+                <span translate>Login</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

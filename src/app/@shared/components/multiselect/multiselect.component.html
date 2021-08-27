@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label class="form-label">{{ label || placeholder }}</label>
+  <ng-multiselect-dropdown
+    class="d-block"
+    [placeholder]="placeholder"
+    [settings]="settings"
+    [(ngModel)]="selectedItems"
+    (onSelect)="onItemSelected($event)"
+    [data]="items"
+  ></ng-multiselect-dropdown>
+</div>

@@ -1,0 +1,17 @@
+.form-control {
+  box-shadow: none !important;
+  cursor: pointer;
+  background-color: transparent;
+  &:focus {
+    border: 1px solid var(--app-gray-400);
+  }
+}
+
+.btn-action {
+  border: 1px solid var(--app-gray-400);
+  box-shadow: none !important;
+  background-color: var(--app-gray-200);
+  &:hover {
+    background-color: var(--app-gray-300);
+  }
+}

@@ -1,41 +1,30 @@
-# ngX Starter Kit
+# CubanMusic
 
-Web project starter kit including modern tools and workflow based on
-[angular-cli](https://github.com/angular/angular-cli), best practices from the community, a scalable base template and
-a good learning base.
-
-Generated using [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket).
-
-### Benefits
-
-- Quickstart a project in seconds and focus on features, not on frameworks or tools
-
-- Industrial-grade tools, ready for usage in a continuous integration environment and DevOps
-
-- Scalable architecture with base app template including example components, services and tests
+This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
+version 10.0.0
 
 # Getting started
 
 1. Go to project folder and install dependencies:
- ```bash
+ ```sh
  npm install
  ```
- 
+
 2. Launch development server, and open `localhost:4200` in your browser:
- ```bash
+ ```sh
  npm start
  ```
- 
+
 # Project structure
 
 ```
-dist/                        compiled version
+dist/                        web app production build
 docs/                        project docs and coding guides
 e2e/                         end-to-end tests
 src/                         project source code
 |- app/                      app components
-|  |- @core/                 core module (singleton services and single-use components)
-|  |- @shared/               shared module  (common components, directives and pipes)
+|  |- core/                  core module (singleton services and single-use components)
+|  |- shared/                shared module  (common components, directives and pipes)
 |  |- app.component.*        app root component (shell)
 |  |- app.module.ts          app root module definition
 |  |- app-routing.module.ts  app routes
@@ -57,21 +46,22 @@ proxy.conf.js                backend proxy configuration
 
 Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
 
-Tasks                         | Description
-------------------------------|---------------------------------------------------------------------------------------
-npm start                     | Run development server on `http://localhost:4200/`
-npm run build [-- --env=prod] | Lint code and build app for production in `dist/` folder
-npm test                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
-npm run test:ci               | Lint code and run unit tests once for continuous integration
-npm run e2e                   | Run e2e tests using [Protractor](http://www.protractortest.org)
-npm run lint                  | Lint code
-npm run translations:extract  | Extract strings from code and templates to `src/app/translations/template.json`
-npm run docs                  | Display project documentation
+Task                            | Description
+--------------------------------|--------------------------------------------------------------------------------------
+`npm start`                     | Run development server on `http://localhost:4200/`
+`npm run serve:sw`              | Run test server on `http://localhost:4200/` with service worker enabled
+`npm run build [-- --configuration=production]` | Lint code and build web app for production (with [AOT](https://angular.io/guide/aot-compiler)) in `dist/` folder
+`npm test`                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
+`npm run test:ci`               | Lint code and run unit tests once for continuous integration
+`npm run e2e`                   | Run e2e tests using [Protractor](http://www.protractortest.org)
+`npm run lint`                  | Lint code
+`npm run translations:extract`  | Extract strings from code and templates to `src/app/translations/template.json`
+`npm run prettier`              | Automatically format all `.ts`, `.js` & `.scss` files
 
-When building the application, you can specify the target environment using the additional flag `--env <name>` (do not
-forget to prepend `--` to pass arguments to npm scripts).
+When building the application, you can specify the target configuration using the additional flag
+`--configuration <name>` (do not forget to prepend `--` to pass arguments to npm scripts).
 
-The default build environment is `prod`.
+The default build configuration is `prod`.
 
 ## Development server
 
@@ -92,6 +82,16 @@ you can also use the command `ng generate` directly.
 Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help or go check out the
 [Angular-CLI README](https://github.com/angular/angular-cli).
 
+## Code formatting
+
+All `.ts`, `.js` & `.scss` files in this project are formatted automatically using [Prettier](https://prettier.io),
+and enforced via the `test:ci` script.
+
+A pre-commit git hook has been configured on this project to automatically format staged files, using
+(pretty-quick)[https://github.com/azz/pretty-quick], so you don't have to care for it.
+
+You can also force code formatting by running the command `npm run prettier`.
+
 # What's in the box
 
 The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http://www.typescriptlang.org) and
@@ -111,18 +111,18 @@ Development, build and quality processes are based on [angular-cli](https://gith
 - End-to-end tests using [Protractor](https://github.com/angular/protractor)
 - Static code analysis: [TSLint](https://github.com/palantir/tslint), [Codelyzer](https://github.com/mgechev/codelyzer),
   [Stylelint](http://stylelint.io) and [HTMLHint](http://htmlhint.com/)
-- Local knowledgebase server using [Hads](https://github.com/sinedied/hads)
 - Automatic code formatting with [Prettier](https://prettier.io)
 
 #### Libraries
 
 - [Angular](https://angular.io)
 - [Bootstrap 4](https://getbootstrap.com)
+- [ng-bootsrap](https://ng-bootstrap.github.io/)
 - [Font Awesome](http://fontawesome.io)
 - [RxJS](http://reactivex.io/rxjs)
-- [ng-bootstrap](https://ng-bootstrap.github.io)
 - [ngx-translate](https://github.com/ngx-translate/core)
 - [Lodash](https://lodash.com)
+- [Moment.js](https://momentjs.com)
 
 #### Coding guides
 
@@ -140,7 +140,3 @@ Development, build and quality processes are based on [angular-cli](https://gith
 - [Updating dependencies and tools](docs/updating.md)
 - [Using a backend proxy for development](docs/backend-proxy.md)
 - [Browser routing](docs/routing.md)
-
-# License
-
-[MIT](https://github.com/ngx-rocket/generator-ngx-rocket/blob/main/LICENSE)

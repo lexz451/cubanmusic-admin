@@ -2,66 +2,81 @@
  * Global application theme.
  * Framework overrides and customization goes here.
  */
-@import "../../node_modules/ag-grid-community/src/styles/ag-theme-alpine-dark/sass/ag-theme-alpine-dark-mixin";
-@import "./fonts.scss";
 
-html,
-body {
-  color: $text-color-primary;
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+
+.ag-theme-alpine {
+  @include ag-theme-alpine(
+    (
+
+      alpine-active-color: deeppink
+    )
+  );
+
+  .ag-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .dropdown-menu {
-  padding: 0 !important;
-  .dropdown-divider {
-    margin: 0 !important;
-  }
-  .dropdown-item {
-    padding: 0.5rem 1.5rem !important;
-    &:last-child {
-      border-bottom-left-radius: 0.25rem;
-      border-bottom-right-radius: 0.25rem;
-    }
-    &:first-child {
-      border-top-left-radius: 0.25rem;
-      border-top-right-radius: 0.25rem;
-    }
-  }
+  right: 0;
 }
 
-.ag-theme-alpine {
-  @include ag-theme-alpine-dark(
-    (
-      odd-row-background-color: #cfd8dc,
-      background-color: $dark-bg,
-      header-background-color: $dark-header,
-      border-color: transparent,
-      row-hover-color: rgba($accent, 0.05),
-    )
-  );
-}
-
-.modal {
-  .modal-dialog .modal-content {
-    background-color: $dark-bg !important;
-    padding: 2rem 3rem;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-}
-
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: #fafafa15;
-  margin-top: 0.5rem;
+.form-group {
   margin-bottom: 1rem;
 }
 
-.btn {
-  text-transform: uppercase;
-  font-size: 12px;
-  &.btn-primary {
-    color: #fafafa !important;
-    font-weight: bold;
+body {
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.btn-icon {
+  background-color: $gray-200;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.1s ease;
+
+  &:hover,
+  &:focus {
+    background-color: $gray-300;
+  }
+}
+
+/* Firefox-only */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $gray-400 $gray-200;
+}
+
+/* Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $gray-200;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $gray-400;
+  border-radius: 20px;
+  //border: 3px solid #b7b7b7;
+}
+
+.form-control {
+  &:focus {
+    border: 1px solid #bdbdbd;
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 20%);
   }
 }

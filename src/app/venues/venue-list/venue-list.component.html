@@ -1,0 +1,6 @@
+<div class="container-fluid d-flex flex-column h-100">
+  <div class="actions-container w-100 d-flex">
+    <button class="btn btn-primary ms-auto" (click)="addVenues()">Añadir Venue</button>
+  </div>
+  <app-table class="mt-2" [columns]="columns" [data]="venues"></app-table>
+</div>
