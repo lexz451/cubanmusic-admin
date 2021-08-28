@@ -21,13 +21,13 @@ const log = new Logger('Orgs');
 export class OrganizationListComponent implements OnInit {
   orgs: Organization[] = [];
 
-  constructor(private router: Router, private orgService: OrganizationService,
-    private uiService: UiService) {}
+  constructor(private router: Router, private orgService: OrganizationService, private uiService: UiService) {}
 
   ngOnInit() {
-    this.uiService.showLoading();
-    this.orgService.getAll().pipe(untilDestroyed(this), finalize(() => this.uiService.hideLoading()))
-      .subscribe(res => {
+    this.orgService
+      .getAll()
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
         this.orgs = res || [];
       });
   }
@@ -41,10 +41,10 @@ export class OrganizationListComponent implements OnInit {
       {
         field: 'phone',
         headerName: 'Teléfono',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const phone = params.value;
           return `(${phone.code}) ${phone.number}`;
-        }
+        },
       },
       {
         field: 'email',
@@ -53,11 +53,11 @@ export class OrganizationListComponent implements OnInit {
       {
         field: 'country',
         headerName: 'País',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const country = params?.value;
           if (!country) return '-';
           return `${country?.emoji} ${country?.name}`;
-        }
+        },
       },
       {
         field: 'website',
@@ -83,8 +83,8 @@ export class OrganizationListComponent implements OnInit {
               }
             }
           },
-        }
-      }
+        },
+      },
     ];
   }
 

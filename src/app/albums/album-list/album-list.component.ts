@@ -21,10 +21,9 @@ const log = new Logger('Albums');
 @Component({
   selector: 'app-album-list',
   templateUrl: './album-list.component.html',
-  styleUrls: ['./album-list.component.scss']
+  styleUrls: ['./album-list.component.scss'],
 })
 export class AlbumListComponent implements OnInit {
-
   albums: Album[] = [];
 
   recordLabels: ISelectableItem[] = [];
@@ -36,60 +35,48 @@ export class AlbumListComponent implements OnInit {
     private uiService: UiService,
     private router: Router,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.uiService.showLoading();
-
-    forkJoin([this.selectorService.artists, this.selectorService.recordLabels]).pipe(
-      untilDestroyed(this)
-    ).subscribe(res => {
-      this.artists = res[0] || [];
-      this.recordLabels = res[1] || [];
-    })
-
-    this.selectorService.recordLabels.subscribe(res => {
-      this.recordLabels = res;
-    })
-
-    this.albumService.getAll().pipe(
-      untilDestroyed(this),
-      finalize(() => this.uiService.hideLoading())
-    ).subscribe(res => {
-      this.albums = res || [];
-    })
+    forkJoin([this.selectorService.artists, this.selectorService.recordLabels, this.albumService.getAll()])
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.artists = res[0] || [];
+        this.recordLabels = res[1] || [];
+        this.albums = res[2] || [];
+      });
   }
 
   get columns(): ColDef[] {
     return [
       {
-        field: "title",
-        headerName: "Titulo",
+        field: 'title',
+        headerName: 'Titulo',
       },
       {
-        field: "releasedOn",
+        field: 'releasedOn',
         headerName: 'Lanzado en',
         cellRenderer: (params) => {
           return this.datePipe.transform(params.value, 'YYYY-MM-dd');
         },
       },
       {
-        field: "recordLabel",
-        headerName: "Sello Discografico",
-        cellRenderer: params => {
+        field: 'recordLabel',
+        headerName: 'Sello Discografico',
+        cellRenderer: (params) => {
           const labelId = params.value;
-          const recordLabel = this.recordLabels.find(e => e.id == labelId);
-          return recordLabel?.name || "-";
-        }
+          const recordLabel = this.recordLabels.find((e) => e.id == labelId);
+          return recordLabel?.name || '-';
+        },
       },
       {
-        field: "artists",
-        headerName: "Artistas",
-        cellRenderer: params => {
+        field: 'artists',
+        headerName: 'Artistas',
+        cellRenderer: (params) => {
           const artistIds = params.value;
-          const artists = this.artists.filter(e => artistIds.includes(e.id));
-          return artists.map(e => `${e.name}`).toString();
-        }
+          const artists = this.artists.filter((e) => artistIds.includes(e.id));
+          return artists.map((e) => `${e.name}`).toString();
+        },
       },
       {
         cellRendererFramework: ActionsRendererComponent,
@@ -116,5 +103,4 @@ export class AlbumListComponent implements OnInit {
   addAlbum(): void {
     this.router.navigate(['albums', 'new']);
   }
-
 }

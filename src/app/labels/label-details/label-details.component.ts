@@ -1,3 +1,4 @@
+import { Observable, forkJoin } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
@@ -12,10 +13,9 @@ import { LabelService } from '../label.service';
 @Component({
   selector: 'app-label-details',
   templateUrl: './label-details.component.html',
-  styleUrls: ['./label-details.component.scss']
+  styleUrls: ['./label-details.component.scss'],
 })
 export class LabelDetailsComponent implements OnInit {
-
   label: Recordlabel = new Recordlabel();
   countries: Country[] = [];
 
@@ -27,30 +27,33 @@ export class LabelDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params.id;
 
-    this.route.params.subscribe(params => {
-      if (params.id) {
-        this.labelService.getById(params.id).pipe(untilDestroyed(this))
-          .subscribe(res => {
-            this.label = res || new Recordlabel();
-          })
-      }
-    })
+    const req: Observable<any>[] = [];
+    req.push(this.labelService.countries);
 
-    this.labelService.countries.pipe(untilDestroyed(this))
-      .subscribe(res => {
-        this.countries = res || [];
-      })
+    if (id) {
+      req.push(this.labelService.getById(id));
+    }
+
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.countries = res[0] || [];
+        if (id) {
+          this.label = res[1] || new Recordlabel();
+        }
+      });
   }
 
   get mappedCountries(): ISelectableItem[] {
-    return this.countries.map(e => {
+    return this.countries.map((e) => {
       return {
         id: e.id,
         name: e.name,
-        icon: e.emoji
-      }
-    })
+        icon: e.emoji,
+      };
+    });
   }
 
   onSubmit(form: NgForm) {
@@ -58,16 +61,20 @@ export class LabelDetailsComponent implements OnInit {
       form.control.markAllAsTouched();
     } else {
       if (this.label.id) {
-        this.labelService.updateLabel(this.label).pipe(untilDestroyed(this))
+        this.labelService
+          .updateLabel(this.label)
+          .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.notifierService.notify('success', 'Sello Discografico actualizado con exito.');
-          })
-      } else  {
-        this.labelService.createLabel(this.label).pipe(untilDestroyed(this))
+          });
+      } else {
+        this.labelService
+          .createLabel(this.label)
+          .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.notifierService.notify('success', 'Sello Discografico creado con exito');
             this.router.navigate(['labels']);
-          })
+          });
       }
     }
   }

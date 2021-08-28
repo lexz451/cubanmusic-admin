@@ -7,7 +7,7 @@ export class Venue {
   foundedAt?: string;
   capacity?: number;
   openingHours?: string;
-  phone?: Phone = new Phone()
+  phone?: Phone = new Phone();
   email?: string;
   address?: string;
   website?: string;

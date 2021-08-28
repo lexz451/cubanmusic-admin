@@ -3,7 +3,7 @@
     <label class="form-label">{{ label || placeholder }}</label>
     <div class="input-group">
       <input [placeholder]="placeholder | translate" type="text" class="form-control" [value]="inputValue" readonly />
-      <button class="btn btn-action" type="button" (click)="openModal(content)">
+      <button class="btn btn-secondary text-primary" type="button" (click)="openModal(content)">
         <i class="fas fa-ellipsis-h"></i>
       </button>
     </div>

@@ -51,72 +51,72 @@ export class SelectorService {
   get venueTypes(): Observable<ISelectableItem[]> {
     return of([
       {
-        id: "BAR",
-        name: "Bar"
+        id: 'BAR',
+        name: 'Bar',
       },
       {
-        id: "PUB",
-        name: "Pub"
+        id: 'PUB',
+        name: 'Pub',
       },
       {
-        id: "CLUB",
-        name: "Club"
+        id: 'CLUB',
+        name: 'Club',
       },
       {
-        id: "RESTAURANT",
-        name: "Restaurant"
+        id: 'RESTAURANT',
+        name: 'Restaurant',
       },
       {
-        id: "HOTEL",
-        name: "Hotel"
+        id: 'HOTEL',
+        name: 'Hotel',
       },
       {
-        id: "CONFERENCE_CENTER",
-        name: "Centro de Conferencias"
+        id: 'CONFERENCE_CENTER',
+        name: 'Centro de Conferencias',
       },
       {
-        id: "BUSINESS_CENTER",
-        name: "Centro de Negocios"
+        id: 'BUSINESS_CENTER',
+        name: 'Centro de Negocios',
       },
       {
-        id: "COMMUNITY_CENTER",
-        name: "Centro Comunitario"
+        id: 'COMMUNITY_CENTER',
+        name: 'Centro Comunitario',
       },
       {
-        id: "SPORT_CLUB",
-        name: "Club Deportivo"
+        id: 'SPORT_CLUB',
+        name: 'Club Deportivo',
       },
       {
-        id: "ART_GALLERY",
-        name: "Galeria de Arte"
+        id: 'ART_GALLERY',
+        name: 'Galeria de Arte',
       },
       {
-        id: "ACADEMY",
-        name: "Academia"
+        id: 'ACADEMY',
+        name: 'Academia',
       },
       {
-        id: "HOME",
-        name: "Casa"
+        id: 'HOME',
+        name: 'Casa',
       },
       {
-        id: "PARK",
-        name: "Parque"
+        id: 'PARK',
+        name: 'Parque',
       },
       {
-        id: "FIELD",
-        name: "Terreno"
+        id: 'FIELD',
+        name: 'Terreno',
       },
       {
-        id: "CONCERT_HALL",
-        name: "Sala de Conciertos"
-      }
+        id: 'CONCERT_HALL',
+        name: 'Sala de Conciertos',
+      },
     ]);
   }
 
   get countries(): Observable<ISelectableItem[]> {
     return this.api.get<Country[]>('/countries').pipe(
       map((countries) =>
-        countries.map((c) => {
+        countries?.map((c) => {
           return {
             id: c.id,
             name: c.name,
@@ -130,7 +130,7 @@ export class SelectorService {
   get organizations(): Observable<ISelectableItem[]> {
     return this.api.get<Organization[]>('/organizations').pipe(
       map((orgs) =>
-        orgs.map((o) => {
+        orgs?.map((o) => {
           return {
             id: o.id,
             name: o.name,
@@ -143,7 +143,7 @@ export class SelectorService {
   get awards(): Observable<ISelectableItem[]> {
     return this.api.get<Award[]>('/awards').pipe(
       map((awards) =>
-        awards.map((a) => {
+        awards?.map((a) => {
           return {
             id: a.id,
             name: a.title,
@@ -156,7 +156,7 @@ export class SelectorService {
   get instruments(): Observable<ISelectableItem[]> {
     return this.api.get<Instrument[]>('/instruments').pipe(
       map((instruments) =>
-        instruments.map((i) => {
+        instruments?.map((i) => {
           return {
             id: i.id,
             name: i.name,
@@ -169,7 +169,7 @@ export class SelectorService {
   get genres(): Observable<ISelectableItem[]> {
     return this.api.get<Genre[]>('/genres').pipe(
       map((genres) =>
-        genres.map((g) => {
+        genres?.map((g) => {
           return {
             id: g.id,
             name: g.name,
@@ -182,7 +182,7 @@ export class SelectorService {
   get jobTitles(): Observable<ISelectableItem[]> {
     return this.api.get<JobTitle[]>('/jobtitles').pipe(
       map((titles) =>
-        titles.map((t) => {
+        titles?.map((t) => {
           return {
             id: t.id,
             name: t.title,
@@ -195,7 +195,7 @@ export class SelectorService {
   get recordLabels(): Observable<ISelectableItem[]> {
     return this.api.get<Recordlabel[]>('/recordlabels').pipe(
       map((labels) =>
-        labels.map((l) => {
+        labels?.map((l) => {
           return {
             id: l.id,
             name: l.name,
@@ -208,7 +208,7 @@ export class SelectorService {
   get artists(): Observable<ISelectableItem[]> {
     return this.api.get<Artist[]>('/persons').pipe(
       map((persons) =>
-        persons.map((p) => {
+        persons?.map((p) => {
           return {
             id: p.id,
             name: p.name,

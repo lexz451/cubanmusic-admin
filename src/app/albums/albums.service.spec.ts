@@ -6,7 +6,7 @@ import { AlbumsService } from './albums.service';
 describe('Service: Albums', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AlbumsService]
+      providers: [AlbumsService],
     });
   });
 

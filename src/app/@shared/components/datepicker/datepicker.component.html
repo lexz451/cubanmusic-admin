@@ -9,8 +9,9 @@
       class="form-control"
       [startDate]="today"
       (dateSelect)="onDateChange($event)"
+      (click)="d.toggle()"
     />
-    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+    <button class="btn btn-secondary text-primary" (click)="d.toggle()" type="button">
       <i class="fas fa-calendar-alt"></i>
     </button>
   </div>

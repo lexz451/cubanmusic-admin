@@ -17,20 +17,17 @@ const log = new Logger('Labels');
   styleUrls: ['./label-list.component.scss'],
 })
 export class LabelListComponent implements OnInit {
-
   labels: Recordlabel[] = [];
 
-  constructor(
-    private labelService: LabelService,
-    private router: Router
-  ) {}
+  constructor(private labelService: LabelService, private router: Router) {}
 
   ngOnInit(): void {
-    this.labelService.getAll().pipe(
-      untilDestroyed(this)
-    ).subscribe(res => {
-      this.labels = res || [];
-    });
+    this.labelService
+      .getAll()
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.labels = res || [];
+      });
   }
 
   addLabel(): void {
@@ -41,11 +38,11 @@ export class LabelListComponent implements OnInit {
     return [
       {
         field: 'ipiCode',
-        headerName: 'IPI'
+        headerName: 'IPI',
       },
       {
         field: 'isniCode',
-        headerName: 'ISNI'
+        headerName: 'ISNI',
       },
       {
         field: 'name',
@@ -54,10 +51,10 @@ export class LabelListComponent implements OnInit {
       {
         field: 'phone',
         headerName: 'Teléfono',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const phone = params.value;
           return `(${phone.code}) ${phone.number}`;
-        }
+        },
       },
       {
         field: 'email',
@@ -66,11 +63,11 @@ export class LabelListComponent implements OnInit {
       {
         field: 'country',
         headerName: 'País',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const country = params?.value;
           if (!country) return '-';
           return `${country?.emoji} ${country?.name}`;
-        }
+        },
       },
       {
         field: 'website',
@@ -96,8 +93,8 @@ export class LabelListComponent implements OnInit {
               }
             }
           },
-        }
-      }
-    ]
+        },
+      },
+    ];
   }
 }

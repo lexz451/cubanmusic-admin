@@ -1,3 +1,4 @@
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,6 +13,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoaderComponent } from '@app/shell/loader/loader.component';
 import { LottieModule } from 'ngx-lottie';
 import { NotifierModule } from 'angular-notifier';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 @NgModule({
   imports: [
@@ -23,6 +26,9 @@ import { NotifierModule } from 'angular-notifier';
     LottieModule,
     RouterModule,
     NotifierModule,
+    LoadingBarModule,
+    LoadingBarRouterModule,
+    LoadingBarHttpClientModule,
   ],
   declarations: [HeaderComponent, SidebarComponent, ShellComponent, LoaderComponent],
 })

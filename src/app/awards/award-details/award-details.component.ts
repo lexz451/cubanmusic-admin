@@ -11,16 +11,15 @@ import { NgForm } from '@angular/forms';
 import { Award } from './../../@shared/models/award';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
   selector: 'app-award-details',
   templateUrl: './award-details.component.html',
-  styleUrls: ['./award-details.component.scss']
+  styleUrls: ['./award-details.component.scss'],
 })
 export class AwardDetailsComponent implements OnInit {
-
   award: Award = new Award();
 
   countries: ISelectableItem[] = [];
@@ -29,58 +28,49 @@ export class AwardDetailsComponent implements OnInit {
   constructor(
     private awardService: AwardService,
     private uiService: UiService,
-    private notifier: NotifierService,
     private router: Router,
     private route: ActivatedRoute,
     private selector: SelectorService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.uiService.showLoading();
-    this.route.params.pipe(untilDestroyed(this))
-      .subscribe(params => {
-        if (params.id) {
-          this.awardService.getById(params.id).pipe(untilDestroyed(this))
-            .subscribe(res => {
-              this.award = res || new Award();
-            });
+    const req: Observable<any>[] = [];
+    req.push(this.selector.countries);
+    req.push(this.selector.organizations);
+    const id = this.route.snapshot.params.id;
+    if (id) {
+      req.push(this.awardService.getById(id));
+    }
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.countries = res[0] || [];
+        this.orgs = res[1] || [];
+        if (id) {
+          this.award = res[2] || new Award();
         }
-        forkJoin([this.selector.countries, this.selector.organizations]).pipe(
-          untilDestroyed(this),
-          finalize(() => this.uiService.hideLoading())
-        ).subscribe(res => {
-          this.countries = res[0] || [];
-          this.orgs = res[1] || [];
-        })
-      })
-
+      });
   }
-
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
       form.control.markAllAsTouched();
     } else {
-      this.uiService.showLoading();
       if (this.award.id) {
-        this.awardService.updateAward(this.award).pipe(
-          untilDestroyed(this),
-          finalize(() => {
-            this.uiService.hideLoading();
-          })
-        ).subscribe(() => {
-          this.notifier.notify('success', 'Premio actualizado con exito');
-        });
+        this.awardService
+          .updateAward(this.award)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Premio actualizado con exito');
+          });
       } else {
-        this.awardService.createAward(this.award).pipe(
-          untilDestroyed(this),
-          finalize(() => {
-            this.uiService.hideLoading();
-          })
-        ).subscribe(() => {
-          this.notifier.notify('success', 'Premio creado con exito');
-          this.router.navigate(['awards']);
-        });
+        this.awardService
+          .createAward(this.award)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Premio creado con exito');
+            this.router.navigate(['awards']);
+          });
       }
     }
   }

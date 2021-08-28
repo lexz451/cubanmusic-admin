@@ -9,6 +9,7 @@ import { OrganizationService } from '@app/organizations/organization.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Country } from '@shared/models/country';
 import { ISelectableItem } from '@shared/models/selectable-item';
+import { Observable, forkJoin } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -20,38 +21,52 @@ export class OrganizationDetailsComponent implements OnInit {
   org: Organization = new Organization();
   countries: Country[] = [];
 
-  constructor(private organizationService: OrganizationService,
-    private route: ActivatedRoute, private router: Router, private uiService: UiService,
-    private notifierService: NotifierService) {}
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private uiService: UiService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.pipe(untilDestroyed(this)).subscribe(params => {
-      if (params.id) {
-        this.organizationService.getById(params.id).pipe(untilDestroyed(this))
-          .subscribe(res => {
-            this.org = res || new Organization()
-          })
-      }
-    });
+    const id = this.route.snapshot.params.id;
 
-    this.organizationService.countries.pipe(untilDestroyed(this)).subscribe((countries) => {
-      this.countries = countries;
-    });
+    const req: Observable<any>[] = [];
+    req.push(this.organizationService.countries);
+
+    if (id) {
+      req.push(this.organizationService.getById(id));
+    }
+
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.countries = res[0] || [];
+        if (id) {
+          this.org = res[1] || new Organization();
+        }
+      });
   }
 
   onSubmit(form: NgForm) {
     if (form.invalid) {
       form.control.markAllAsTouched();
     } else {
-      this.uiService.showLoading();
       if (this.org.id) {
-        this.organizationService.updateOrg(this.org).pipe(untilDestroyed(this), finalize(() => this.uiService.hideLoading())).subscribe(() => {
-          this.notifierService.notify('success', 'Institucion actualizada con exito.')
-        });
+        this.organizationService
+          .updateOrg(this.org)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Institucion actualizada con exito.');
+          });
       } else {
-        this.organizationService.createOrg(this.org).pipe(untilDestroyed(this), finalize(() => this.uiService.hideLoading())).subscribe(() => {
-          this.notifierService.notify('success', 'Institucion creada con exito');
-        });
+        this.organizationService
+          .createOrg(this.org)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Institucion creada con exito');
+            this.router.navigate(['organizations']);
+          });
       }
     }
   }

@@ -4,7 +4,7 @@ import { GroupService } from './../group.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Group } from '@shared/models/group';
 import { ISelectableItem } from '@shared/models/selectable-item';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { untilDestroyed } from '@shared';
 import { finalize } from 'rxjs/operators';
 import { SelectorService } from '@shared/services/selector.service';
@@ -28,43 +28,41 @@ export class GroupDetailsComponent implements OnInit {
   recordLabels: ISelectableItem[] = [];
   artists: ISelectableItem[] = [];
 
-  constructor(private selector: SelectorService, private uiService: UiService,
-    private groupService: GroupService, private route: ActivatedRoute, private router: Router,
-    private notifierService: NotifierService) {}
+  constructor(
+    private selector: SelectorService,
+    private uiService: UiService,
+    private groupService: GroupService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.uiService.showLoading();
-    this.route.params.pipe(untilDestroyed(this)).subscribe(params => {
-      if (params.id) {
-        this.groupService.getById(params.id).pipe(
-          untilDestroyed(this),
-        ).subscribe(res => {
-          this.group = res;
-        })
-      }
-    });
-
-    forkJoin([
+    const id = this.route.snapshot.params.id;
+    const req: Observable<any>[] = [];
+    req.push(
       this.selector.countries,
       this.selector.organizations,
       this.selector.awards,
-      this.selector.instruments,
       this.selector.genres,
-      this.selector.jobTitles,
       this.selector.recordLabels,
-      this.selector.artists,
-    ])
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => this.uiService.hideLoading())
-      )
+      this.selector.artists
+    );
+    if (id) {
+      req.push(this.groupService.getById(id));
+    }
+
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.countries = res[0] || [];
         this.organizations = res[1] || [];
         this.awards = res[2] || [];
-        this.genres = res[4] || [];
-        this.recordLabels = res[6] || [];
-        this.artists = res[7] || [];
+        this.genres = res[3] || [];
+        this.recordLabels = res[4] || [];
+        this.artists = res[5] || [];
+        if (id) {
+          this.group = res[6] || new Group();
+        }
       });
   }
 
@@ -72,16 +70,19 @@ export class GroupDetailsComponent implements OnInit {
     if (form.invalid) {
       form.control.markAllAsTouched();
     } else {
-      this.uiService.showLoading();
       if (this.group.id) {
-        this.groupService.updateGroup(this.group).pipe(untilDestroyed(this))
+        this.groupService
+          .updateGroup(this.group)
+          .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.notifierService.notify('success', 'Grupo actualizado con exito.');
+            this.uiService.notifySuccess('Grupo actualizado con exito.');
           });
       } else {
-        this.groupService.createGroup(this.group).pipe(untilDestroyed(this))
+        this.groupService
+          .createGroup(this.group)
+          .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.notifierService.notify('success', 'Grupo creado con exito.');
+            this.uiService.notifySuccess('Grupo creado con exito.');
             this.router.navigate(['groups']);
           });
       }

@@ -5,13 +5,10 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VenueService {
-
-constructor(
-  private apiService: ApiService
-) { }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Venue[]> {
     return this.apiService.get('/venues');
@@ -32,5 +29,4 @@ constructor(
   get countries(): Observable<Country[]> {
     return this.apiService.get<Country[]>('/countries');
   }
-
 }

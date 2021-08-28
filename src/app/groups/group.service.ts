@@ -3,13 +3,10 @@ import { ApiService } from './../@shared/services/api.service';
 import { Group } from './../@shared/models/group';
 import { Injectable } from '@angular/core';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GroupService {
-
-  constructor(
-    private apiService: ApiService
-  ) {}
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Group[]> {
     return this.apiService.get<Group[]>('/groups');

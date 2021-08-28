@@ -11,9 +11,8 @@ describe('AwardListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AwardListComponent ]
-    })
-    .compileComponents();
+      declarations: [AwardListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

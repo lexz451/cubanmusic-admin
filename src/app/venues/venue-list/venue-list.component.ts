@@ -17,10 +17,9 @@ const log = new Logger('Venues');
 @Component({
   selector: 'app-venue-list',
   templateUrl: './venue-list.component.html',
-  styleUrls: ['./venue-list.component.scss']
+  styleUrls: ['./venue-list.component.scss'],
 })
 export class VenueListComponent implements OnInit {
-
   venues: Venue[] = [];
 
   constructor(
@@ -28,16 +27,19 @@ export class VenueListComponent implements OnInit {
     private venueService: VenueService,
     private uiService: UiService,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.uiService.showLoading();
-    this.venueService.getAll().pipe(
-      untilDestroyed(this),
-      finalize(() => this.uiService.hideLoading()))
-      .subscribe(res => {
+    this.venueService
+      .getAll()
+      .pipe(
+        untilDestroyed(this),
+        finalize(() => this.uiService.hideLoading())
+      )
+      .subscribe((res) => {
         this.venues = res || [];
-      })
+      });
   }
 
   get columns(): ColDef[] {
@@ -48,30 +50,30 @@ export class VenueListComponent implements OnInit {
       },
       {
         field: 'venueType',
-        headerName: 'Tipo'
+        headerName: 'Tipo',
       },
       {
         field: 'foundedAt',
         headerName: 'Fundado en',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           return this.datePipe.transform(params.value, 'YYYY-MM-dd');
-        }
+        },
       },
       {
         field: 'capacity',
-        headerName: 'Capacidad'
+        headerName: 'Capacidad',
       },
       {
         field: 'openingHours',
-        headerName: 'Horario de Servicios'
+        headerName: 'Horario de Servicios',
       },
       {
         field: 'phone',
         headerName: 'Teléfono',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const phone = params.value;
           return `(${phone.code}) ${phone.number}`;
-        }
+        },
       },
       {
         field: 'email',
@@ -101,8 +103,8 @@ export class VenueListComponent implements OnInit {
               }
             }
           },
-        }
-      }
+        },
+      },
     ];
   }
 

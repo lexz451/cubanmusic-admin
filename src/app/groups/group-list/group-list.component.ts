@@ -22,18 +22,15 @@ const log = new Logger('Groups');
 export class GroupListComponent implements OnInit {
   groups: Group[] = [];
 
-  constructor(
-    private groupService: GroupService,
-    private datePipe: DatePipe, private router: Router, private uiService: UiService) {}
+  constructor(private groupService: GroupService, private datePipe: DatePipe, private router: Router) {}
 
   ngOnInit(): void {
-    this.uiService.showLoading();
-    this.groupService.getAll().pipe(
-      untilDestroyed(this),
-      finalize(() => this.uiService.hideLoading())
-    ).subscribe(res => {
-      this.groups = res || [];
-    });
+    this.groupService
+      .getAll()
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.groups = res || [];
+      });
   }
 
   addGroup(): void {
@@ -115,7 +112,7 @@ export class GroupListComponent implements OnInit {
             if (type == TableAction.EDIT) {
               const id = row?.id;
               if (id) {
-                this.router.navigate(['artists', id]);
+                this.router.navigate(['groups', id]);
               } else {
                 log.error('Row id not found!...');
               }

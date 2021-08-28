@@ -10,18 +10,16 @@ import { Venue } from './../../@shared/models/venue';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { ActivationEnd, ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
   selector: 'app-venue-details',
   templateUrl: './venue-details.component.html',
-  styleUrls: ['./venue-details.component.scss']
+  styleUrls: ['./venue-details.component.scss'],
 })
 export class VenueDetailsComponent implements OnInit {
-
   venue: Venue = new Venue();
-
   countries: Country[] = [];
   venueTypes: ISelectableItem[] = [];
 
@@ -29,56 +27,50 @@ export class VenueDetailsComponent implements OnInit {
     private selector: SelectorService,
     private uiService: UiService,
     private venueService: VenueService,
-    private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.route.params.pipe(untilDestroyed(this))
-      .subscribe(params => {
-        if (params.id) {
-          this.venueService.getById(params.id).pipe(
-            untilDestroyed(this))
-            .subscribe(res => {
-              this.venue = res || new Venue();
-            })
+    const id = this.route.snapshot.params.id;
+    const req: Observable<any>[] = [];
+
+    req.push(this.selector.venueTypes);
+    req.push(this.venueService.countries);
+    if (id) {
+      req.push(this.venueService.getById(id));
+    }
+
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.venueTypes = res[0] || [];
+        this.countries = res[1] || [];
+        if (id) {
+          this.venue = res[2] || new Venue();
         }
-
-        forkJoin([this.venueService.countries, this.selector.venueTypes])
-        .pipe(
-          untilDestroyed(this),
-          finalize(() => this.uiService.hideLoading())
-        )
-        .subscribe(res => {
-          this.countries = res[0] || [];
-          this.venueTypes = res[1] || [];
-        })
-
       });
-
   }
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
-      form.control.markAllAsTouched()
+      form.control.markAllAsTouched();
     } else {
-      this.uiService.showLoading();
       if (this.venue.id) {
-        this.venueService.updateVenue(this.venue).pipe(
-          untilDestroyed(this),
-          finalize(() => this.uiService.hideLoading())
-        ).subscribe(() => {
-          this.notifierService.notify('success', 'Venue actualizado con exito');
-        })
+        this.venueService
+          .updateVenue(this.venue)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Venue actualizado con exito.');
+          });
       } else {
-        this.venueService.createVenue(this.venue).pipe(
-          untilDestroyed(this),
-          finalize(() => this.uiService.hideLoading())
-        ).subscribe(() => {
-          this.notifierService.notify('success', 'Venue creado con exito.');
-          this.router.navigate(['venues']);
-        })
+        this.venueService
+          .createVenue(this.venue)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Venue creado con exito.');
+            this.router.navigate(['venues']);
+          });
       }
     }
   }

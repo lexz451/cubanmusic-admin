@@ -2,16 +2,13 @@ import { Country } from './../@shared/models/country';
 import { Observable } from 'rxjs';
 import { Recordlabel } from '../@shared/models/recordlabel';
 import { ApiService } from '../@shared/services/api.service';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LabelService {
-
-  constructor(
-    private apiService: ApiService
-  ) {}
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Recordlabel[]> {
     return this.apiService.get<Recordlabel[]>('/recordlabels');

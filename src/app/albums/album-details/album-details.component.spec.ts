@@ -11,9 +11,8 @@ describe('AlbumDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlbumDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [AlbumDetailsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

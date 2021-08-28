@@ -14,12 +14,16 @@ import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
-import { JWTInterceptor } from './auth/jwt.interceptor';
+import { UnauthorizedInterceptor } from './@shared/http/unauthorized.interceptor';
+import { JWTInterceptor } from './@shared/http/jwt.interceptor';
 import { DatePipe } from '@angular/common';
 import { LottiePlayerFactoryOrLoader } from 'ngx-lottie/lib/symbols';
 import { LottieModule } from 'ngx-lottie';
 import { NotifierModule } from 'angular-notifier';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingInterceptor } from './@shared/http/loading.interceptor';
 
 const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
@@ -55,6 +59,11 @@ const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   ],
   declarations: [AppComponent],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,

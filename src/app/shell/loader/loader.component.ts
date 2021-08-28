@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
 import { UiService } from '@shared/services/ui.service';
+import { debounceTime, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
 })
-export class LoaderComponent implements OnInit, AfterViewInit {
+export class LoaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isLoading = false;
 
   animOptions: AnimationOptions = {
@@ -19,6 +21,8 @@ export class LoaderComponent implements OnInit, AfterViewInit {
 
   anim?: AnimationItem;
 
+  private _subcription?: Subscription;
+
   constructor(
     private uiService: UiService,
     private ngZone: NgZone,
@@ -28,8 +32,12 @@ export class LoaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
+  ngOnDestroy(): void {
+    this._subcription?.unsubscribe();
+  }
+
   ngAfterViewInit() {
-    this.uiService.isLoading.subscribe((loading) => {
+    this._subcription = this.uiService.isLoading.subscribe((loading) => {
       if (loading) {
         this.renderer.setStyle(this.elRef.nativeElement, 'display', 'flex');
       } else {

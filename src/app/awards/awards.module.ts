@@ -6,10 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AwardsRoutingModule } from './awards-routing.module';
 
 @NgModule({
-  declarations: [
-    AwardListComponent,
-    AwardDetailsComponent
-  ],
+  declarations: [AwardListComponent, AwardDetailsComponent],
   imports: [CommonModule, SharedModule, AwardsRoutingModule],
 })
 export class AwardsModule {}

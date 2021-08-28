@@ -5,8 +5,10 @@ import { Shell } from '@app/shell/shell.service';
 const routes: Routes = [
   Shell.childRoutes([
     {
-      path: 'about', loadChildren: () => import('./about/about.module').then((m) => m.AboutModule)
-    }]),
+      path: 'about',
+      loadChildren: () => import('./about/about.module').then((m) => m.AboutModule),
+    },
+  ]),
   Shell.childRoutes([
     { path: 'artists', loadChildren: () => import('./artists/artists.module').then((m) => m.ArtistsModule) },
   ]),
@@ -21,23 +23,27 @@ const routes: Routes = [
   ]),
   Shell.childRoutes([
     {
-      path: 'labels', loadChildren: () => import('./labels/labels.module').then(m => m.LabelsModule),
-    }
+      path: 'labels',
+      loadChildren: () => import('./labels/labels.module').then((m) => m.LabelsModule),
+    },
   ]),
   Shell.childRoutes([
     {
-      path: 'awards', loadChildren: () => import('./awards/awards.module').then(m => m.AwardsModule)
-    }
+      path: 'awards',
+      loadChildren: () => import('./awards/awards.module').then((m) => m.AwardsModule),
+    },
   ]),
   Shell.childRoutes([
     {
-      path: 'venues', loadChildren: () => import('./venues/venues.module').then(m => m.VenuesModule)
-    }
+      path: 'venues',
+      loadChildren: () => import('./venues/venues.module').then((m) => m.VenuesModule),
+    },
   ]),
   Shell.childRoutes([
     {
-      path: "albums", loadChildren: () => import('./albums/albums.module').then(m => m.AlbumsModule)
-    }
+      path: 'albums',
+      loadChildren: () => import('./albums/albums.module').then((m) => m.AlbumsModule),
+    },
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' },
@@ -48,4 +54,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

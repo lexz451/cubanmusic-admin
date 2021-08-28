@@ -10,7 +10,6 @@ import { Country } from '@shared/models/country';
 export class OrganizationService {
   constructor(private apiService: ApiService) {}
 
-
   getAll(): Observable<Organization[]> {
     return this.apiService.get<Organization[]>('/organizations');
   }

@@ -4,13 +4,10 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AwardService {
-
-  constructor(
-    private apiService: ApiService
-  ) { }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Award[]> {
     return this.apiService.get<Award[]>('/awards');
@@ -27,5 +24,4 @@ export class AwardService {
   updateAward(award: Award): Observable<void> {
     return this.apiService.put(`/awards/${award.id}`, award);
   }
-
 }

@@ -1,7 +1,7 @@
 import { ListRendererComponent } from './../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { AwardService } from './../award.service';
 import { Award } from './../../@shared/models/award';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from './../../@shared/logger.service';
 import { TableAction } from './../../@shared/models/table-actions';
 import { ActionsRendererComponent } from './../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
@@ -15,48 +15,45 @@ const log = new Logger('Awards');
 @Component({
   selector: 'app-award-list',
   templateUrl: './award-list.component.html',
-  styleUrls: ['./award-list.component.scss']
+  styleUrls: ['./award-list.component.scss'],
 })
 export class AwardListComponent implements OnInit {
-
   awards: Award[] = [];
 
-  constructor(
-    private router: Router,
-    private awardService: AwardService
-  ) { }
+  constructor(private router: Router, private route: ActivatedRoute, private awardService: AwardService) {}
 
   ngOnInit() {
-    this.awardService.getAll().pipe(
-      untilDestroyed(this)
-    ).subscribe(res => {
-      this.awards = res || [];
-    })
+    this.awardService
+      .getAll()
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.awards = res || [];
+      });
   }
 
   get columns(): ColDef[] {
     return [
       {
         field: 'title',
-        headerName: "Nombre"
+        headerName: 'Nombre',
       },
       {
         field: 'country',
         headerName: 'Pais',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const country = params?.value;
-          if (!country) return "-";
+          if (!country) return '-';
           return `${country.emoji} ${country.name}`;
-        }
+        },
       },
       {
         field: 'grantedBy',
         headerName: 'Otorgado por',
-        cellRenderer: params => {
+        cellRenderer: (params) => {
           const org = params?.value;
-          if (!org) return "-";
+          if (!org) return '-';
           return org.name;
-        }
+        },
       },
       {
         field: 'categories',
@@ -79,13 +76,12 @@ export class AwardListComponent implements OnInit {
               }
             }
           },
-        }
-      }
+        },
+      },
     ];
   }
 
   addAward(): void {
     this.router.navigate(['awards', 'new']);
   }
-
 }

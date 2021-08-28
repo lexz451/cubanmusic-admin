@@ -1931,6 +1931,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ngx-loading-bar/core@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "@ngx-loading-bar/core@npm:5.1.2"
+  dependencies:
+    tslib: ">=1.7.1"
+  peerDependencies:
+    "@angular/common": ">=9.0.0"
+    rxjs: ">=6.3.0"
+  checksum: 6cc016ce4643704abce58e26b7a147e3896facf1d6d4723cebf9d7a588b9d8cd91d4aa8e2875f00954c83716334bb3d58d94c1e31484f185fccaf30010caa3af
+  languageName: node
+  linkType: hard
+
+"@ngx-loading-bar/http-client@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "@ngx-loading-bar/http-client@npm:5.1.2"
+  dependencies:
+    tslib: ^1.10.0
+  peerDependencies:
+    "@ngx-loading-bar/core": 5.1.2
+  checksum: ae6fc213fe0d56fd977ea8d4b93550e6d63e5aaceb2ae41ab99f3afbd5cd9958083e2a5f4555705df7db33799ef2b5119ad0518fef8fee4ed1ae0d62648d1d59
+  languageName: node
+  linkType: hard
+
+"@ngx-loading-bar/router@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "@ngx-loading-bar/router@npm:5.1.2"
+  dependencies:
+    tslib: ^1.10.0
+  peerDependencies:
+    "@angular/router": ">=7.0.0"
+    "@ngx-loading-bar/core": 5.1.2
+  checksum: f4206148d9a3d87d11b6fca9174fd1f82097bb3f90214140a3b301e365b473dfa04bce00264fefcb1b6cc7d0f508fc6bd5e05b52add36bd482c9d53e3b2c3ec3
+  languageName: node
+  linkType: hard
+
 "@ngx-rocket/ascii-logo@npm:^1.1.0":
   version: 1.1.0
   resolution: "@ngx-rocket/ascii-logo@npm:1.1.0"
@@ -4625,6 +4660,9 @@ __metadata:
     "@fortawesome/fontawesome-free": ^5.15.1
     "@ng-bootstrap/ng-bootstrap": ^11.0.0-beta.2
     "@ngneat/until-destroy": ^8.0.4
+    "@ngx-loading-bar/core": ^5.1.2
+    "@ngx-loading-bar/http-client": ^5.1.2
+    "@ngx-loading-bar/router": ^5.1.2
     "@ngx-rocket/scripts": ^5.1.0
     "@ngx-translate/core": ^13.0.0
     "@twogate/ngx-photo-gallery": ^1.1.0
@@ -13081,17 +13119,17 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"tslib@npm:>=1.7.1, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.2.0":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.10.0, tslib@npm:^1.8.1, tslib@npm:^1.9.0":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.2.0":
-  version: 2.3.1
-  resolution: "tslib@npm:2.3.1"
-  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 

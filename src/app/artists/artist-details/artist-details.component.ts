@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { Artist } from '@app/@shared/models/artist';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { SelectorService } from '@app/@shared/services/selector.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { ArtistsService } from '@app/artists/artists.service';
 import { UiService } from '@shared/services/ui.service';
 import { finalize } from 'rxjs/operators';
@@ -17,7 +17,6 @@ import { Location } from '@shared/models/location';
   selector: 'app-artist-details',
   templateUrl: './artist-details.component.html',
   styleUrls: ['./artist-details.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtistDetailsComponent implements OnInit {
   artist = new Artist();
@@ -34,10 +33,9 @@ export class ArtistDetailsComponent implements OnInit {
   constructor(
     private selector: SelectorService,
     private route: ActivatedRoute,
+    private router: Router,
     private artistService: ArtistsService,
-    private notifierService: NotifierService,
-    private uiService: UiService,
-    private cdRef: ChangeDetectorRef
+    private uiService: UiService
   ) {}
 
   get genders(): ISelectableItem[] {
@@ -45,21 +43,9 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.uiService.showLoading();
-
-    this.route.params.pipe(untilDestroyed(this)).subscribe((params) => {
-      if (params.id) {
-        this.artistService
-          .getById(params.id)
-          .pipe(untilDestroyed(this))
-          .subscribe((artist) => {
-            this.artist = artist;
-            this.cdRef.detectChanges();
-          });
-      }
-    });
-
-    forkJoin([
+    const id = this.route.snapshot.params.id;
+    const req: Observable<any>[] = [];
+    req.push(
       this.selector.countries,
       this.selector.organizations,
       this.selector.awards,
@@ -67,12 +53,15 @@ export class ArtistDetailsComponent implements OnInit {
       this.selector.genres,
       this.selector.jobTitles,
       this.selector.recordLabels,
-      this.selector.artists,
-    ])
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => this.uiService.hideLoading())
-      )
+      this.selector.artists
+    );
+
+    if (id) {
+      req.push(this.artistService.getById(id));
+    }
+
+    forkJoin(req)
+      .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.countries = res[0] || [];
         this.organizations = res[1] || [];
@@ -82,22 +71,34 @@ export class ArtistDetailsComponent implements OnInit {
         this.jobTitles = res[5] || [];
         this.recordLabels = res[6] || [];
         this.artists = res[7] || [];
-        if (this.artist.id) {
-          this.artists = this.artists.filter((a) => a.id !== this.artist.id);
+        if (id) {
+          this.artist = res[8] || new Artist();
+          if (this.artist.id) {
+            this.artists = this.artists.filter((a) => a.id !== this.artist.id);
+          }
         }
-        this.cdRef.detectChanges();
       });
   }
 
   onSubmit(form: NgForm) {
-    console.log('OnSubmit');
     if (form.invalid) {
       form.control.markAllAsTouched();
     }
     if (this.artist.id) {
-      this.artistService.updateArtist(this.artist).subscribe(() => {
-        this.notifierService.notify('success', 'Artista actualizado con éxito.');
-      });
+      this.artistService
+        .updateArtist(this.artist)
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.uiService.notifySuccess('Artista actualizado con éxito.');
+        });
+    } else {
+      this.artistService
+        .createArtist(this.artist)
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.uiService.notifySuccess('Artista creado con exito.');
+          this.router.navigate(['artists']);
+        });
     }
   }
 }

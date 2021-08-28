@@ -15,10 +15,32 @@
       class="col-sm-12"
       controlType="textarea"
     ></app-input>
-    <app-select class="col-sm-4" [(ngModel)]="venue.venueType" name="type" placeholder="Tipo" [items]="venueTypes"></app-select>
-    <app-datepicker class="col-sm-4" [(ngModel)]="venue.foundedAt" name="founded" placeholder="Fundado en"></app-datepicker>
-    <app-input class="col-sm-4" [(ngModel)]="venue.capacity" name="capacity" placeholder="Capacidad" type="number"></app-input>
-    <app-input class="col-sm-4" [(ngModel)]="venue.openingHours" name="opening" placeholder="Horario de Servicio"></app-input>
+    <app-select
+      class="col-sm-4"
+      [(ngModel)]="venue.venueType"
+      name="type"
+      placeholder="Tipo"
+      [items]="venueTypes"
+    ></app-select>
+    <app-datepicker
+      class="col-sm-4"
+      [(ngModel)]="venue.foundedAt"
+      name="founded"
+      placeholder="Fundado en"
+    ></app-datepicker>
+    <app-input
+      class="col-sm-4"
+      [(ngModel)]="venue.capacity"
+      name="capacity"
+      placeholder="Capacidad"
+      type="number"
+    ></app-input>
+    <app-input
+      class="col-sm-4"
+      [(ngModel)]="venue.openingHours"
+      name="opening"
+      placeholder="Horario de Servicio"
+    ></app-input>
     <app-phone-input class="col-sm-4" [(phone)]="venue.phone" [countries]="countries"></app-phone-input>
     <app-input name="email" [(ngModel)]="venue.email" placeholder="Email" class="col-sm-4"></app-input>
     <app-input name="website" [(ngModel)]="venue.website" placeholder="Sitio Web" class="col-sm-4"></app-input>

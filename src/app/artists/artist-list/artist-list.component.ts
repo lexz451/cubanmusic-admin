@@ -1,51 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Logger, UntilDestroy, untilDestroyed } from '@app/@shared';
-import { Artist } from '@app/@shared/models/artist';
-import { SelectorService } from '@app/@shared/services/selector.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Logger } from './../../@shared/logger.service';
+import { TableAction } from './../../@shared/models/table-actions';
+import { ActionsRendererComponent } from './../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
+import { ListRendererComponent } from './../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { ColDef } from 'ag-grid-community';
-import { ArtistsService } from './artists.service';
 import { DatePipe } from '@angular/common';
-import { TableAction } from '@shared/models/table-actions';
-import { ActionsRendererComponent } from '@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { ListRendererComponent } from '@shared/components/table/renderers/list-renderer/list-renderer.component';
-import { finalize } from 'rxjs/operators';
 import { UiService } from '@shared/services/ui.service';
+import { ArtistsService } from './../artists.service';
+import { Artist } from './../../@shared/models/artist';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@app/@shared';
 
 const log = new Logger('Artists');
 
 @UntilDestroy()
 @Component({
-  selector: 'app-artists',
-  templateUrl: './artists.component.html',
-  styleUrls: ['./artists.component.css'],
+  selector: 'app-artist-list',
+  templateUrl: './artist-list.component.html',
+  styleUrls: ['./artist-list.component.scss'],
 })
-export class ArtistsComponent implements OnInit {
+export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
 
   constructor(
-    private modal: NgbModal,
     private router: Router,
     private artistsService: ArtistsService,
-    private selectorService: SelectorService,
     private uiService: UiService,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
-    this.uiService.showLoading();
     this.artistsService
       .getAll()
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => {
-          this.uiService.hideLoading();
-        })
-      )
+      .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.artists = res || [];
-        console.log(res);
       });
   }
 

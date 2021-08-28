@@ -6,14 +6,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component: LabelListComponent, data: { title: marker('Sellos Discogrficos') },
+    path: '',
+    component: LabelListComponent,
+    data: { title: marker('Sellos Discogrficos') },
   },
   {
-    path: 'new', component: LabelDetailsComponent, data: { title: marker('Crear Sello Discografico') }
+    path: 'new',
+    component: LabelDetailsComponent,
+    data: { title: marker('Crear Sello Discografico') },
   },
   {
-    path: ':id', component: LabelDetailsComponent, data: { title: marker('Editar Sello Discografico') }
-  }
+    path: ':id',
+    component: LabelDetailsComponent,
+    data: { title: marker('Editar Sello Discografico') },
+  },
 ];
 
 @NgModule({
