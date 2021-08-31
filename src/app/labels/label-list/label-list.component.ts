@@ -1,3 +1,7 @@
+import { ISelectableItem } from './../../@shared/models/selectable-item';
+import { forkJoin } from 'rxjs';
+import { SelectorService } from './../../@shared/services/selector.service';
+import { Country } from './../../@shared/models/country';
 import { Logger } from './../../@shared/logger.service';
 import { TableAction } from './../../@shared/models/table-actions';
 import { ActionsRendererComponent } from './../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
@@ -18,15 +22,20 @@ const log = new Logger('Labels');
 })
 export class LabelListComponent implements OnInit {
   labels: Recordlabel[] = [];
+  countries: ISelectableItem[] = [];
 
-  constructor(private labelService: LabelService, private router: Router) {}
+  constructor(private labelService: LabelService, private selectorService: SelectorService, private router: Router) {}
 
   ngOnInit(): void {
-    this.labelService
-      .getAll()
+    this.fetchData();
+  }
+
+  private fetchData(): void {
+    forkJoin([this.selectorService.countries, this.labelService.getAll()])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.labels = res || [];
+        this.countries = res[0] || [];
+        this.labels = res[1] || [];
       });
   }
 
@@ -64,9 +73,10 @@ export class LabelListComponent implements OnInit {
         field: 'country',
         headerName: 'País',
         cellRenderer: (params) => {
-          const country = params?.value;
+          const countryId = params?.value;
+          const country = this.countries.find((e) => e.id == countryId);
           if (!country) return '-';
-          return `${country?.emoji} ${country?.name}`;
+          return `${country?.icon} ${country?.name}`;
         },
       },
       {

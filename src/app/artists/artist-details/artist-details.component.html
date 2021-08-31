@@ -16,13 +16,14 @@
         <div class="col-sm-6">
           <app-input name="alias" [(ngModel)]="artist.alias" placeholder="Alias"></app-input>
         </div>
-        <!--<div class="col-sm-12">
-          <app-input
+        <div class="col-sm-12">
+          <app-tags
             name="nombresAdicionales"
             [(ngModel)]="artist.additionalNames"
-            placeholder="Nombres adicionales"
-          ></app-input>
-        </div>-->
+            label="Nombres adicionales"
+            placeholder="Añadir nombre"
+          ></app-tags>
+        </div>
         <div class="col-sm-12">
           <app-input
             [(ngModel)]="artist.description"
@@ -90,9 +91,9 @@
         [items]="jobTitles"
       ></app-select>
     </div>
-    <!--<div class="col-sm-4">
-      <app-input name="roles" [(ngModel)]="artist.jobRoles" placeholder="Roles"></app-input>
-    </div>-->
+    <div class="col-sm-8">
+      <app-tags name="roles" [(ngModel)]="artist.jobRoles" placeholder="Roles"></app-tags>
+    </div>
     <div class="col-sm-4">
       <app-select
         name="relatedTo"

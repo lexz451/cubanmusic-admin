@@ -1,3 +1,4 @@
+import { SelectorService } from './../../@shared/services/selector.service';
 import { Observable, forkJoin } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
@@ -21,6 +22,7 @@ export class LabelDetailsComponent implements OnInit {
 
   constructor(
     private labelService: LabelService,
+    private selectorService: SelectorService,
     private router: Router,
     private route: ActivatedRoute,
     private notifierService: NotifierService
@@ -62,14 +64,14 @@ export class LabelDetailsComponent implements OnInit {
     } else {
       if (this.label.id) {
         this.labelService
-          .updateLabel(this.label)
+          .update(this.label)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.notifierService.notify('success', 'Sello Discografico actualizado con exito.');
           });
       } else {
         this.labelService
-          .createLabel(this.label)
+          .create(this.label)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.notifierService.notify('success', 'Sello Discografico creado con exito');

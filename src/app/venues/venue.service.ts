@@ -18,12 +18,16 @@ export class VenueService {
     return this.apiService.get(`/venues/${id}`);
   }
 
-  createVenue(venue: Venue): Observable<void> {
+  create(venue: Venue): Observable<void> {
     return this.apiService.post('/venues/new', venue);
   }
 
-  updateVenue(venue: Venue): Observable<void> {
+  update(venue: Venue): Observable<void> {
     return this.apiService.put(`/venues/${venue.id}`, venue);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.apiService.delete(`/venues/${id}`);
   }
 
   get countries(): Observable<Country[]> {

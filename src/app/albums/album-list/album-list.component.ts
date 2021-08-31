@@ -38,6 +38,10 @@ export class AlbumListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fectchData();
+  }
+
+  private fectchData(): void {
     forkJoin([this.selectorService.artists, this.selectorService.recordLabels, this.albumService.getAll()])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
@@ -85,13 +89,19 @@ export class AlbumListComponent implements OnInit {
             return [TableAction.EDIT, TableAction.DELETE];
           },
           onAction: (type: TableAction, row: any) => {
+            const id = row?.id;
             if (type == TableAction.EDIT) {
-              const id = row?.id;
-              if (id) {
-                this.router.navigate(['albums', id]);
-              } else {
-                log.error('Row id not found!...');
-              }
+              id && this.router.navigate(['albums', id]);
+            }
+            if (type == TableAction.DELETE) {
+              id &&
+                this.albumService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.uiService.notifySuccess('Album eliminado con exito.');
+                    this.fectchData();
+                  });
             }
           },
         },

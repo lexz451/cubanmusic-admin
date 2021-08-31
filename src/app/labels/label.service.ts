@@ -18,15 +18,15 @@ export class LabelService {
     return this.apiService.get<Recordlabel>(`/recordlabels/${id}`);
   }
 
-  updateLabel(label: Recordlabel): Observable<void> {
+  update(label: Recordlabel): Observable<void> {
     return this.apiService.put<void, Recordlabel>(`/recordlabels/${label.id}`, label);
   }
 
-  createLabel(label: Recordlabel): Observable<void> {
+  create(label: Recordlabel): Observable<void> {
     return this.apiService.post<void, Recordlabel>('/recordlabels/new', label);
   }
 
   get countries(): Observable<Country[]> {
-    return this.apiService.get<Country[]>('/countries');
+    return this.apiService.get('/countries');
   }
 }

@@ -18,7 +18,6 @@ import { ISelectableItem } from '@app/@shared/models/selectable-item';
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent implements OnInit, OnChanges, ControlValueAccessor {
   isOpen = false;
@@ -39,8 +38,7 @@ export class SelectComponent implements OnInit, OnChanges, ControlValueAccessor 
   constructor(
     @Optional()
     @Self()
-    private ngControl: NgControl,
-    private cdRef: ChangeDetectorRef
+    private ngControl: NgControl
   ) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
@@ -48,7 +46,7 @@ export class SelectComponent implements OnInit, OnChanges, ControlValueAccessor 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.items && !changes.items.isFirstChange()) {
+    if (changes.items) {
       if (this.value) {
         this.item = this.items.find((e) => e.id == this.value);
       }

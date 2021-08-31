@@ -1,3 +1,4 @@
+import { Country } from './../@shared/models/country';
 import { ApiService } from './../@shared/services/api.service';
 import { Award } from './../@shared/models/award';
 import { Observable } from 'rxjs';
@@ -23,5 +24,9 @@ export class AwardService {
 
   updateAward(award: Award): Observable<void> {
     return this.apiService.put(`/awards/${award.id}`, award);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.apiService.delete(`/awards/${id}`);
   }
 }

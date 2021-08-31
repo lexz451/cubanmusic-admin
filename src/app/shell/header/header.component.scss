@@ -2,8 +2,18 @@
 
 :host {
   display: block;
+  margin-bottom: 1rem;
 }
 
 .nav-link.dropdown-toggle {
   cursor: pointer;
+}
+
+.navbar-nav {
+  font-size: 16px;
+  font-weight: 700;
+  .nav-link {
+    color: var(--app-gray-800) !important;
+    user-select: none;
+  }
 }

@@ -7,6 +7,6 @@ export class Award {
   description?: string;
   image?: Image;
   country?: number;
-  grantedBy?: Organization;
+  grantedBy?: number;
   categories?: string[];
 }

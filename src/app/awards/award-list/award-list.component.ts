@@ -1,3 +1,8 @@
+import { ISelectableItem } from './../../@shared/models/selectable-item';
+import { SelectorService } from './../../@shared/services/selector.service';
+import { forkJoin } from 'rxjs';
+import { Country } from './../../@shared/models/country';
+import { UiService } from './../../@shared/services/ui.service';
 import { ListRendererComponent } from './../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { AwardService } from './../award.service';
 import { Award } from './../../@shared/models/award';
@@ -19,15 +24,27 @@ const log = new Logger('Awards');
 })
 export class AwardListComponent implements OnInit {
   awards: Award[] = [];
+  countries: ISelectableItem[] = [];
+  organizations: ISelectableItem[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private awardService: AwardService) {}
+  constructor(
+    private router: Router,
+    private awardService: AwardService,
+    private selectorService: SelectorService,
+    private uiService: UiService
+  ) {}
 
   ngOnInit() {
-    this.awardService
-      .getAll()
+    this.fetchData();
+  }
+
+  private fetchData(): void {
+    forkJoin([this.selectorService.countries, this.selectorService.organizations, this.awardService.getAll()])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.awards = res || [];
+        this.countries = res[0] || [];
+        this.organizations = res[1] || [];
+        this.awards = res[2] || [];
       });
   }
 
@@ -41,16 +58,18 @@ export class AwardListComponent implements OnInit {
         field: 'country',
         headerName: 'Pais',
         cellRenderer: (params) => {
-          const country = params?.value;
+          const countryId = params?.value;
+          const country = this.countries.find((e) => e.id == countryId);
           if (!country) return '-';
-          return `${country.emoji} ${country.name}`;
+          return `${country.icon} ${country.name}`;
         },
       },
       {
         field: 'grantedBy',
         headerName: 'Otorgado por',
         cellRenderer: (params) => {
-          const org = params?.value;
+          const orgId = params?.value;
+          const org = this.organizations.find((e) => e.id == orgId);
           if (!org) return '-';
           return org.name;
         },
@@ -67,13 +86,19 @@ export class AwardListComponent implements OnInit {
             return [TableAction.EDIT, TableAction.DELETE];
           },
           onAction: (type: TableAction, row: any) => {
+            const id = row?.id;
             if (type == TableAction.EDIT) {
-              const id = row?.id;
-              if (id) {
-                this.router.navigate(['awards', id]);
-              } else {
-                log.error('Row id not found!...');
-              }
+              id && this.router.navigate(['awards', id]);
+            }
+            if (type == TableAction.DELETE) {
+              id &&
+                this.awardService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.fetchData();
+                    this.uiService.notifySuccess('Premio eliminado con exito.');
+                  });
             }
           },
         },

@@ -26,7 +26,11 @@ export class OrganizationService {
     return this.apiService.put<void, Organization>(`/organizations/${org.id}`, org);
   }
 
+  delete(id: number): Observable<void> {
+    return this.apiService.delete(`/organizations/${id}`);
+  }
+
   get countries(): Observable<Country[]> {
-    return this.apiService.get<Country[]>('/countries');
+    return this.apiService.get('/countries');
   }
 }

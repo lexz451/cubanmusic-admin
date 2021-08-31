@@ -6,6 +6,8 @@
     [settings]="settings"
     [(ngModel)]="selectedItems"
     (onSelect)="onItemSelected($event)"
+    (onSelectAll)="onSelectAll($event)"
     [data]="items"
-  ></ng-multiselect-dropdown>
+  >
+  </ng-multiselect-dropdown>
 </div>

@@ -1,0 +1,14 @@
+<div class="form-group">
+  <label class="form-label">{{ label || placeholder }}</label>
+  <tag-input
+    [ngModel]="value"
+    [ripple]="false"
+    (ngModelChange)="onInputChange($event)"
+    [placeholder]="placeholder"
+    [secondaryPlaceholder]="placeholder"
+    [modelAsStrings]="true"
+    [trimTags]="true"
+    [disable]="isDisabled"
+  ></tag-input>
+  <small class="helper-text text-muted">(Presiona Enter para agregar otro valor)</small>
+</div>

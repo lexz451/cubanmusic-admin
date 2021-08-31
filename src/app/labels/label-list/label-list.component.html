@@ -1,6 +1,8 @@
 <div class="container-fluid d-flex flex-column h-100">
   <div class="actions-container w-100 d-flex">
-    <button class="btn btn-primary ms-auto" (click)="addLabel()">Añadir Sello</button>
+    <button class="btn btn-primary ms-auto" (click)="addLabel()">
+      <i class="fas fa-microphone me-2"></i>Crear Sello Discográfico
+    </button>
   </div>
   <app-table class="mt-2" [columns]="columns" [data]="labels"></app-table>
 </div>

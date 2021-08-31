@@ -58,14 +58,14 @@ export class VenueDetailsComponent implements OnInit {
     } else {
       if (this.venue.id) {
         this.venueService
-          .updateVenue(this.venue)
+          .update(this.venue)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.uiService.notifySuccess('Venue actualizado con exito.');
           });
       } else {
         this.venueService
-          .createVenue(this.venue)
+          .create(this.venue)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.uiService.notifySuccess('Venue creado con exito.');

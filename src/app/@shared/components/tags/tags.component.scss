@@ -1,0 +1,52 @@
+:host {
+  .helper-text {
+    font-size: 12px;
+  }
+  ::ng-deep .ng2-tag-input {
+    border: 1px solid #bdbdbd !important;
+    border-radius: 0.3rem;
+    padding: 0.25rem 0.5rem !important;
+
+    .ng2-tag-input__text-input {
+      background: transparent !important;
+      height: 28px;
+      padding: 0 0.25rem !important;
+    }
+
+    tag {
+      border-radius: 0.3rem !important;
+      background-color: var(--app-secondary) !important;
+      line-height: 22px !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      letter-spacing: normal !important;
+      height: unset !important;
+      &:hover {
+        box-shadow: 0 0px 2px 0px #d4d1d1 !important;
+      }
+      .tag-wrapper {
+        display: flex;
+        align-items: center;
+        .tag__text {
+          margin-right: 0.3rem;
+          color: var(--app-gray-800) !important;
+          line-height: 23px;
+        }
+        delete-icon {
+          height: unset !important;
+          &:hover {
+            transform: none !important;
+          }
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          svg {
+            height: unset !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { SelectorService } from './../../@shared/services/selector.service';
 import { finalize } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { UiService } from './../../@shared/services/ui.service';
@@ -23,6 +24,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
+    private selectorService: SelectorService,
     private route: ActivatedRoute,
     private router: Router,
     private uiService: UiService
@@ -48,6 +50,16 @@ export class OrganizationDetailsComponent implements OnInit {
       });
   }
 
+  get selectableCountries(): ISelectableItem[] {
+    return this.countries.map((e) => {
+      return {
+        id: e.id,
+        name: e.name,
+        icon: e.emoji,
+      };
+    });
+  }
+
   onSubmit(form: NgForm) {
     if (form.invalid) {
       form.control.markAllAsTouched();
@@ -69,15 +81,5 @@ export class OrganizationDetailsComponent implements OnInit {
           });
       }
     }
-  }
-
-  get mappedCountries(): ISelectableItem[] {
-    return this.countries.map((e) => {
-      return {
-        id: e.id,
-        name: e.name,
-        icon: e.emoji,
-      };
-    });
   }
 }

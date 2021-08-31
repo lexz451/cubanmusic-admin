@@ -83,22 +83,23 @@ export class ArtistDetailsComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (form.invalid) {
       form.control.markAllAsTouched();
-    }
-    if (this.artist.id) {
-      this.artistService
-        .updateArtist(this.artist)
-        .pipe(untilDestroyed(this))
-        .subscribe(() => {
-          this.uiService.notifySuccess('Artista actualizado con éxito.');
-        });
     } else {
-      this.artistService
-        .createArtist(this.artist)
-        .pipe(untilDestroyed(this))
-        .subscribe(() => {
-          this.uiService.notifySuccess('Artista creado con exito.');
-          this.router.navigate(['artists']);
-        });
+      if (this.artist.id) {
+        this.artistService
+          .updateArtist(this.artist)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Artista actualizado con éxito.');
+          });
+      } else {
+        this.artistService
+          .createArtist(this.artist)
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.uiService.notifySuccess('Artista creado con exito.');
+            this.router.navigate(['artists']);
+          });
+      }
     }
   }
 }

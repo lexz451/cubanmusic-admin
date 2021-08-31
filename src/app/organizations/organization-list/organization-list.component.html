@@ -1,6 +1,8 @@
 <div class="container-fluid d-flex flex-column h-100">
   <div class="actions-container w-100 d-flex">
-    <button class="btn btn-primary ms-auto" (click)="addOrganization()">Añadir Institución</button>
+    <button class="btn btn-primary ms-auto" (click)="addOrganization()">
+      <i class="fas fa-building me-2"></i>Crear Institución
+    </button>
   </div>
   <app-table class="mt-2" [columns]="columns" [data]="orgs"></app-table>
 </div>

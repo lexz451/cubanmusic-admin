@@ -1,3 +1,4 @@
+import { TagsComponent } from './components/tags/tags.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +24,7 @@ import { ListRendererComponent } from './components/table/renderers/list-rendere
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
+import { TagInputModule } from 'ngx-chips';
 
 // @ts-ignore
 @NgModule({
@@ -38,6 +40,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
       defaultOptions: {},
     }),
     NgbModule,
+    TagInputModule,
   ],
   declarations: [
     CheckComponent,
@@ -49,6 +52,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
     SelectComponent,
     TableComponent,
     TableHeaderComponent,
+    TagsComponent,
 
     ClickOutsideDirective,
     UidDirective,
@@ -70,6 +74,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
     DatepickerComponent,
     GalleryComponent,
     PhoneInputComponent,
+    TagsComponent,
 
     ClickOutsideDirective,
     UidDirective,

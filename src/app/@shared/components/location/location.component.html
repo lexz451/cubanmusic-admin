@@ -2,7 +2,14 @@
   <label class="d-block">
     <label class="form-label">{{ label || placeholder }}</label>
     <div class="input-group">
-      <input [placeholder]="placeholder | translate" type="text" class="form-control" [value]="inputValue" readonly />
+      <input
+        [placeholder]="placeholder | translate"
+        type="text"
+        class="form-control"
+        [value]="inputValue"
+        (click)="openModal(content)"
+        readonly
+      />
       <button class="btn btn-secondary text-primary" type="button" (click)="openModal(content)">
         <i class="fas fa-ellipsis-h"></i>
       </button>
@@ -28,7 +35,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
   </div>
 </ng-template>

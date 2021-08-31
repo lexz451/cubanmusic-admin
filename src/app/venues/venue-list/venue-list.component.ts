@@ -30,13 +30,13 @@ export class VenueListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.uiService.showLoading();
+    this.fetchData();
+  }
+
+  private fetchData(): void {
     this.venueService
       .getAll()
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => this.uiService.hideLoading())
-      )
+      .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.venues = res || [];
       });
@@ -94,13 +94,19 @@ export class VenueListComponent implements OnInit {
             return [TableAction.EDIT, TableAction.DELETE];
           },
           onAction: (type: TableAction, row: any) => {
+            const id = row?.id;
             if (type == TableAction.EDIT) {
-              const id = row?.id;
-              if (id) {
-                this.router.navigate(['venues', id]);
-              } else {
-                log.error('Row id not found!...');
-              }
+              id && this.router.navigate(['venues', id]);
+            }
+            if (type == TableAction.DELETE) {
+              id &&
+                this.venueService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.fetchData();
+                    this.uiService.notifySuccess('Venue eliminado con exito');
+                  });
             }
           },
         },

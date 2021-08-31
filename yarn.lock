@@ -4683,6 +4683,7 @@ __metadata:
     htmlhint: ^0.15.1
     https-proxy-agent: ^5.0.0
     husky: ^7.0.1
+    immutable: ^4.0.0-rc.14
     jasmine-core: ~3.8.0
     jasmine-spec-reporter: ~7.0.0
     karma: ~6.3.0
@@ -4695,6 +4696,7 @@ __metadata:
     lottie-web: ^5.7.13
     moment: ^2.29.1
     ng-multiselect-dropdown: ^0.3.4
+    ngx-chips: ^2.2.2
     ngx-lottie: ^7.0.3
     prettier: ^2.2.1
     pretty-quick: ^3.1.0
@@ -6905,6 +6907,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.0.0-rc.14":
+  version: 4.0.0-rc.14
+  resolution: "immutable@npm:4.0.0-rc.14"
+  checksum: 40941a80dd957361471697388019ae09be28d046a2c79d88dc81b215e6f2ed68a8c7356b9d99bb814a2d978c60d0bdf78997f65403f87adca60d7e11993e8c91
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.0.0, import-fresh@npm:^3.2.1":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -9042,6 +9051,35 @@ fsevents@~2.3.2:
     "@angular/common": ">=2.0.0"
     "@angular/core": ">=2.0.0"
   checksum: 0231bfba95ba478a914ff5d4d664b84811d11f1fe16a648c94f3c6635f6bf756a71ec7f6b9e5ab0e22f4de117f739650b102a9ebabb805d71bdf6bd675e5153b
+  languageName: node
+  linkType: hard
+
+"ng2-material-dropdown@npm:>=0.11.0":
+  version: 0.11.0
+  resolution: "ng2-material-dropdown@npm:0.11.0"
+  dependencies:
+    tslib: ^1.9.0
+  peerDependencies:
+    "@angular/animations": ^8.0.0
+    "@angular/common": ^8.0.0
+    "@angular/core": ^8.0.0
+  checksum: 6022aa673d3e20ec3816bee261fd9c6b75d40c2b6ef7eb1e59cab764907b1d8d5ee04d50093bcbb1be62be5c52e379120c7a8eedb270d7907e4bb8ee38a24ed2
+  languageName: node
+  linkType: hard
+
+"ngx-chips@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "ngx-chips@npm:2.2.2"
+  dependencies:
+    ng2-material-dropdown: ">=0.11.0"
+    tslib: ^1.10.0
+  peerDependencies:
+    "@angular/animations": ">=10.1.5"
+    "@angular/common": ">=10.1.5"
+    "@angular/compiler": ">=10.1.5"
+    "@angular/core": ">=10.1.5"
+    "@angular/forms": ">=10.1.5"
+  checksum: 02e8142f11c4ebc8a7b24fa6cb61064ace96d799d107d3772b4e6274a72cefefd5ca51c13b0c4632f1ff8ff7392aad3dd7380e88d58b69ef4d6eb0c25b17c797
   languageName: node
   linkType: hard
 

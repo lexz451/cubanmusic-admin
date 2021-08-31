@@ -1,17 +1,17 @@
+import { Logger } from './../../@shared/logger.service';
 import { SelectorService } from './../../@shared/services/selector.service';
-import { Organization } from './../../@shared/models/organization';
-import { Country } from './../../@shared/models/country';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
-import { NotifierService } from 'angular-notifier';
-import { finalize } from 'rxjs/operators';
 import { UiService } from './../../@shared/services/ui.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AwardService } from './../award.service';
 import { NgForm } from '@angular/forms';
 import { Award } from './../../@shared/models/award';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { forkJoin, Observable } from 'rxjs';
+import { publishReplay, refCount } from 'rxjs/operators';
+
+const log = new Logger('Award');
 
 @UntilDestroy()
 @Component({

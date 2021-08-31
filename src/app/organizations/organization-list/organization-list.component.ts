@@ -1,3 +1,6 @@
+import { ISelectableItem } from './../../@shared/models/selectable-item';
+import { SelectorService } from './../../@shared/services/selector.service';
+import { Country } from './../../@shared/models/country';
 import { finalize } from 'rxjs/operators';
 import { UiService } from './../../@shared/services/ui.service';
 import { Logger } from './../../@shared/logger.service';
@@ -9,6 +12,7 @@ import { ColDef } from 'ag-grid-community';
 import { Organization } from '@shared/models/organization';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { forkJoin } from 'rxjs';
 
 const log = new Logger('Orgs');
 
@@ -21,14 +25,25 @@ const log = new Logger('Orgs');
 export class OrganizationListComponent implements OnInit {
   orgs: Organization[] = [];
 
-  constructor(private router: Router, private orgService: OrganizationService, private uiService: UiService) {}
+  countries: ISelectableItem[] = [];
+
+  constructor(
+    private router: Router,
+    private orgService: OrganizationService,
+    private selectorService: SelectorService,
+    private uiService: UiService
+  ) {}
 
   ngOnInit() {
-    this.orgService
-      .getAll()
+    this.fetchData();
+  }
+
+  private fetchData(): void {
+    forkJoin([this.selectorService.countries, this.orgService.getAll()])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.orgs = res || [];
+        this.countries = res[0] || [];
+        this.orgs = res[1] || [];
       });
   }
 
@@ -54,9 +69,10 @@ export class OrganizationListComponent implements OnInit {
         field: 'country',
         headerName: 'País',
         cellRenderer: (params) => {
-          const country = params?.value;
+          const countryId = params?.value;
+          const country = this.countries.find((e) => e.id == countryId);
           if (!country) return '-';
-          return `${country?.emoji} ${country?.name}`;
+          return `${country?.icon} ${country?.name}`;
         },
       },
       {
@@ -80,6 +96,18 @@ export class OrganizationListComponent implements OnInit {
                 this.router.navigate(['organizations', id]);
               } else {
                 log.error('Row id not found!...');
+              }
+            }
+            if (type == TableAction.DELETE) {
+              const id = row?.id;
+              if (id) {
+                this.orgService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.fetchData();
+                    this.uiService.notifySuccess('Institucion eliminada con exito.');
+                  });
               }
             }
           },
