@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { ValidationControl } from '@app/@shared/base/validation-control';
+import { ValidationControl } from '@app/@shared/validation/validation-control';
 
 @Component({
   selector: 'app-input',

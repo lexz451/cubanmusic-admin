@@ -2889,6 +2889,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"angular-coordinates@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "angular-coordinates@npm:1.0.0"
+  peerDependencies:
+    "@angular/core": ">=2.0.0 <5.0.0"
+  checksum: 0f8c2a65657f661b836c1615cccea39a6681b7ad76a73d4b3bd114ea944ce771e829c7bc49da79be1a8895fe1f2285f3e7ea42fff23620f9a455734f80d07930
+  languageName: node
+  linkType: hard
+
 "angular-notifier@npm:^9.1.0":
   version: 9.1.0
   resolution: "angular-notifier@npm:9.1.0"
@@ -4674,6 +4683,7 @@ __metadata:
     "@typescript-eslint/parser": 4.28.2
     ag-grid-angular: ^26.0.0
     ag-grid-community: ^26.0.0
+    angular-coordinates: ^1.0.0
     angular-notifier: ^9.1.0
     bootstrap: ^5.0.2
     eslint: ^7.26.0

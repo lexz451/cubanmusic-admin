@@ -1,3 +1,4 @@
+import { Direction } from 'angular-coordinates';
 import { NotifierService } from 'angular-notifier';
 import { finalize } from 'rxjs/operators';
 import { VenueService } from './../venue.service';
@@ -22,6 +23,8 @@ export class VenueDetailsComponent implements OnInit {
   venue: Venue = new Venue();
   countries: Country[] = [];
   venueTypes: ISelectableItem[] = [];
+
+  direction = Direction;
 
   constructor(
     private selector: SelectorService,

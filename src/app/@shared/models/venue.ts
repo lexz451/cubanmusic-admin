@@ -11,4 +11,10 @@ export class Venue {
   email?: string;
   address?: string;
   website?: string;
+  latitude?: string;
+  longitude?: string;
+  youtube?: string;
+  instagram?: string;
+  facebook?: string;
+  twitter?: string;
 }

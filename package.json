@@ -38,6 +38,7 @@
     "@twogate/ngx-photo-gallery": "^1.1.0",
     "ag-grid-angular": "^26.0.0",
     "ag-grid-community": "^26.0.0",
+    "angular-coordinates": "^1.0.0",
     "angular-notifier": "^9.1.0",
     "bootstrap": "^5.0.2",
     "immutable": "^4.0.0-rc.14",

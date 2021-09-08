@@ -25,6 +25,8 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 import { TagInputModule } from 'ngx-chips';
+import { CoordinatesModule } from 'angular-coordinates';
+import { CoordinateValidator } from './validation/coordinates-validator';
 
 // @ts-ignore
 @NgModule({
@@ -41,6 +43,7 @@ import { TagInputModule } from 'ngx-chips';
     }),
     NgbModule,
     TagInputModule,
+    CoordinatesModule,
   ],
   declarations: [
     CheckComponent,
@@ -55,6 +58,7 @@ import { TagInputModule } from 'ngx-chips';
     TagsComponent,
 
     ClickOutsideDirective,
+    CoordinateValidator,
     UidDirective,
     DatepickerComponent,
     ActionsRendererComponent,
@@ -77,6 +81,7 @@ import { TagInputModule } from 'ngx-chips';
     TagsComponent,
 
     ClickOutsideDirective,
+    CoordinateValidator,
     UidDirective,
 
     FormsModule,

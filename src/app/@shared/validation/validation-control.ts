@@ -13,6 +13,8 @@ export class ValidationControl {
         switch (key) {
           case 'required':
             return 'El campo es requerido.';
+          case 'coordinate':
+            return 'El valor de la coordenada no es valido.';
           default:
             break;
         }

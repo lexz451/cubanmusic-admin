@@ -43,14 +43,41 @@
     ></app-input>
     <app-phone-input class="col-sm-4" [(phone)]="venue.phone" [countries]="countries"></app-phone-input>
     <app-input name="email" [(ngModel)]="venue.email" placeholder="Email" class="col-sm-4"></app-input>
+
     <app-input name="website" [(ngModel)]="venue.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
+    <app-input name="youtube" class="col-sm-4" placeholder="Youtube" [(ngModel)]="venue.youtube"></app-input>
+    <app-input name="instagram" class="col-sm-4" placeholder="Instagram" [(ngModel)]="venue.instagram"></app-input>
+    <app-input name="facebook" class="col-sm-4" placeholder="Facebook" [(ngModel)]="venue.facebook"></app-input>
+    <app-input name="twitter" class="col-sm-4" placeholder="Twitter" [(ngModel)]="venue.twitter"></app-input>
+    <div class="w-100"></div>
+
+    <div class="col-sm-4">
+      <div class="row">
+        <app-input
+          name="lat"
+          class="col-sm-12"
+          placeholder="Latitude"
+          [(ngModel)]="venue.latitude"
+          [coordinate]="direction.Latitude"
+        ></app-input>
+        <app-input
+          name="lng"
+          class="col-sm-12"
+          placeholder="Longitude"
+          [(ngModel)]="venue.longitude"
+          [coordinate]="direction.Longitude"
+        ></app-input>
+      </div>
+    </div>
+
     <app-input
       name="address"
       [(ngModel)]="venue.address"
       placeholder="Dirección"
       controlType="textarea"
-      class="col-sm-8"
+      class="col-sm-6"
     ></app-input>
+
     <div class="col-sm-12 d-flex mt-4">
       <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
     </div>
