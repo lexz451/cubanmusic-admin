@@ -36,6 +36,16 @@
   }
 }
 
+.nav-tabs {
+  .nav-link {
+    font-weight: 500 !important;
+    color: var(--app-gray-600) !important;
+    &.active {
+      color: var(--app-primary) !important;
+    }
+  }
+}
+
 .dropdown-menu {
   right: 0;
 }
@@ -52,6 +62,10 @@ body {
 .btn {
   font-size: 14px;
   font-weight: 500;
+  min-width: 100px;
+  &.btn-link {
+    min-width: auto;
+  }
   &.btn-primary {
     color: var(--app-gray-100);
   }

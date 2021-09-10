@@ -1,3 +1,4 @@
+import { FileInputComponent } from './components/fileinput/fileinput.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { TableComponent } from './components/table/table.component';
 import { TableHeaderComponent } from './components/table/table-header.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActionsRendererComponent } from './components/table/renderers/actions-renderer/actions-renderer.component';
 import { ListRendererComponent } from './components/table/renderers/list-renderer/list-renderer.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -27,6 +28,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
 import { TagInputModule } from 'ngx-chips';
 import { CoordinatesModule } from 'angular-coordinates';
 import { CoordinateValidator } from './validation/coordinates-validator';
+import { Masonry, MasonryModule } from '@thisissoon/angular-masonry';
 
 // @ts-ignore
 @NgModule({
@@ -39,11 +41,17 @@ import { CoordinateValidator } from './validation/coordinates-validator';
     NgMultiSelectDropDownModule,
     NgbDatepickerModule,
     PhotoGalleryModule.forRoot({
-      defaultOptions: {},
+      defaultOptions: {
+        arrowEl: true,
+        arrowKeys: true,
+        closeEl: true,
+        closeOnScroll: false,
+      },
     }),
     NgbModule,
     TagInputModule,
     CoordinatesModule,
+    NgbNavModule,
   ],
   declarations: [
     CheckComponent,
@@ -56,6 +64,7 @@ import { CoordinateValidator } from './validation/coordinates-validator';
     TableComponent,
     TableHeaderComponent,
     TagsComponent,
+    FileInputComponent,
 
     ClickOutsideDirective,
     CoordinateValidator,
@@ -79,6 +88,7 @@ import { CoordinateValidator } from './validation/coordinates-validator';
     GalleryComponent,
     PhoneInputComponent,
     TagsComponent,
+    FileInputComponent,
 
     ClickOutsideDirective,
     CoordinateValidator,
@@ -86,6 +96,7 @@ import { CoordinateValidator } from './validation/coordinates-validator';
 
     FormsModule,
     ReactiveFormsModule,
+    NgbNavModule,
   ],
 })
 export class SharedModule {}

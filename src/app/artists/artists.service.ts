@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Artist } from '@app/@shared/models/artist';
+import { Quote } from '@app/@shared/models/quote';
 import { ApiService } from '@app/@shared/services/api.service';
 import { Observable } from 'rxjs';
 
@@ -23,5 +24,13 @@ export class ArtistsService {
 
   createArtist(artist: Artist): Observable<void> {
     return this.apiService.post<void, Artist>('/persons/new', artist);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.apiService.delete(`/persons/${id}`);
+  }
+
+  createQuote(id: number, quote: Quote): Observable<void> {
+    return this.apiService.post<void, Quote>(`/persons/${id}/quote`, quote);
   }
 }

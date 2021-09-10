@@ -1,19 +1,58 @@
-<div class="images card d-flex flex-column" [photoGalleryGroup]="{ arrowEl: true }">
-  <div style="max-height: 400px; display: flex; flex-wrap: wrap" class="card-body p-0">
-    <div class="images-item" [photoGallery]="image1" style="width: 100%">
-      <img [src]="image1" alt="" width="100%" />
-    </div>
-    <div class="images-item" [photoGallery]="image2" style="width: 30%">
-      <img [src]="image2" alt="" width="100%" />
-    </div>
-    <div class="images-item" [photoGallery]="image3" style="width: 30%">
-      <img [src]="image3" alt="" width="100%" />
-    </div>
-  </div>
-  <div class="card-footer d-flex">
-    <button class="btn btn-primary mx-auto my-2" type="button">
+<div class="gallery-container d-flex flex-column">
+  <div class="d-flex">
+    <button class="btn btn-primary ms-auto my-2" type="button" (click)="addImage(content)">
       <i class="fas fa-upload me-2"></i>
       Subir imagen
     </button>
   </div>
+
+  <div class="grid" [photoGalleryGroup]="">
+    <!--<div *ngFor="let item of images" class="img-fluid images-item" [photoGallery]="item">
+      <img [src]="item" alt="" width="100%" loading="lazy"/>
+    </div>-->
+    <div *ngFor="let item of images" [photoGallery]="getImage(item)" class="card">
+      <img class="card-img-top" [src]="getImage(item)" loading="lazy" />
+      <div class="card-body">
+        <h5 class="card-title">{{ item?.title }}</h5>
+        <p class="card-text mb-0">
+          <small class="text-muted">{{ item?.author || '-' }}</small>
+        </p>
+        <p class="card-text">
+          <small class="text-muted">{{ item?.date | date }}</small>
+        </p>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+      </div>
+      <div class="card-footer">
+        <small *ngFor="let _ of item.tags" class="badge bg-primary me-2 text-uppercase">{{ _ }}</small>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="mb-0 fw-bold">Subir nueva imagen</h4>
+  </div>
+  <div class="modal-body">
+    <form class="row" #form="ngForm" (ngSubmit)="onSubmitModal(form, modal)">
+      <app-fileinput name="file" placeholder="Archivos" [(ngModel)]="image.filedata" class="col-sm-12" required>
+      </app-fileinput>
+      <app-input name="title" placeholder="Titulo" [(ngModel)]="image.title" class="col-sm-12" required></app-input>
+      <app-input name="author" placeholder="Autor" [(ngModel)]="image.author" class="col-sm-12"></app-input>
+      <app-input
+        name="desc"
+        placeholder="Descripcion"
+        controlType="textarea"
+        [(ngModel)]="image.description"
+        class="col-sm-12"
+      ></app-input>
+      <app-tags name="tags" placeholder="Etiquetas" [(ngModel)]="image.tags" class="col-sm-12"></app-tags>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="form.ngSubmit.emit()">Aceptar</button>
+  </div>
+</ng-template>

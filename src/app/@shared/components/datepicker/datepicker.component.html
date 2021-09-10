@@ -8,6 +8,8 @@
       #d="ngbDatepicker"
       class="form-control"
       [startDate]="today"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
       (dateSelect)="onDateChange($event)"
       (click)="d.toggle()"
     />

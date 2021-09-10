@@ -30,6 +30,10 @@ export class ArtistListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData(): void {
     this.artistsService
       .getAll()
       .pipe(untilDestroyed(this))
@@ -114,13 +118,19 @@ export class ArtistListComponent implements OnInit {
             return [TableAction.EDIT, TableAction.DELETE];
           },
           onAction: (type: TableAction, row: any) => {
+            const id = row?.id;
             if (type == TableAction.EDIT) {
-              const id = row?.id;
-              if (id) {
-                this.router.navigate(['artists', id]);
-              } else {
-                log.error('Row id not found!...');
-              }
+              id && this.router.navigate(['artists', id]);
+            }
+            if (type == TableAction.DELETE) {
+              id &&
+                this.artistsService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.uiService.notifySuccess('Artista eliminado con exito.');
+                    this.fetchData();
+                  });
             }
           },
         },

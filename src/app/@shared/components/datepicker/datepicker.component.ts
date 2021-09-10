@@ -110,6 +110,22 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     return this.calendar.getToday();
   }
 
+  get minDate(): NgbDateStruct {
+    return {
+      day: this.today.day,
+      month: this.today.month,
+      year: this.today.year - 500,
+    };
+  }
+
+  get maxDate(): NgbDateStruct {
+    return {
+      day: this.today.day,
+      month: this.today.month,
+      year: this.today.year + 1,
+    };
+  }
+
   onDateChange(date: NgbDate): void {
     this.value = this.dateAdapter.toModel(date);
     this.onChange?.(this.value);

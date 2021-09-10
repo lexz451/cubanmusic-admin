@@ -59,10 +59,6 @@ export class SelectComponent implements OnInit, OnChanges, ControlValueAccessor 
     this.isOpen = !this.isOpen;
   }
 
-  onBlur(): void {
-    this.onTouch?.();
-  }
-
   onDefaultOptionSelected(): void {
     this.item = null;
     this.value = null;

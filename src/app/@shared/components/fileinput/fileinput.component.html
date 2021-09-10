@@ -1,0 +1,25 @@
+<div class="form-group">
+  <input class="d-none" type="file" (change)="onFileChange($event)" #input [multiple]="multiple" [accept]="accept" />
+  <label class="d-block">
+    <label class="form-label">{{ label || placeholder }}</label>
+    <div class="input-group">
+      <input
+        [placeholder]="placeholder"
+        class="form-control"
+        [value]="displayText"
+        type="text"
+        readonly
+        (click)="selectFile()"
+      />
+      <small [hidden]="valid || untouched" class="validation-error" translate>
+        {{ validationMessages }}
+      </small>
+      <button class="btn btn-secondary text-primary" type="button" (click)="selectFile()">
+        <i class="fas fa-file-upload"></i>
+      </button>
+    </div>
+    <small class="form-text text-muted text-help" *ngIf="!!helperText">
+      {{ helperText }}
+    </small>
+  </label>
+</div>

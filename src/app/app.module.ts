@@ -20,9 +20,6 @@ import { DatePipe } from '@angular/common';
 import { LottiePlayerFactoryOrLoader } from 'ngx-lottie/lib/symbols';
 import { LottieModule } from 'ngx-lottie';
 import { NotifierModule } from 'angular-notifier';
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingInterceptor } from './@shared/http/loading.interceptor';
 
 const lottieFactory: LottiePlayerFactoryOrLoader = () =>

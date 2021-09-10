@@ -1,24 +1,25 @@
-import { Component, OnInit, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ValidationControl } from '@app/@shared/validation/validation-control';
+import { Component, OnInit, Input, Optional, Self, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  selector: 'app-fileinput',
+  templateUrl: './fileinput.component.html',
+  styleUrls: ['./fileinput.component.scss'],
 })
-export class InputComponent extends ValidationControl implements OnInit, ControlValueAccessor {
-  @Input() icon?: string;
+export class FileInputComponent extends ValidationControl implements OnInit, ControlValueAccessor {
   @Input() label?: string;
   @Input() placeholder?: string;
-  @Input() type = 'text';
   @Input() helperText?: string;
-  @Input() controlType: 'input' | 'textarea' = 'input';
+  @Input() multiple: boolean = false;
+  @Input() accept = 'image/x-png,image/jpeg';
 
-  value?: any;
+  value?: File | File[];
   disabled = false;
   onChange?: (_: any) => {};
   onTouch?: () => {};
+
+  @ViewChild('input', { static: false }) fileInput: ElementRef<HTMLElement> | undefined;
 
   constructor(
     @Optional()
@@ -31,8 +32,23 @@ export class InputComponent extends ValidationControl implements OnInit, Control
     }
   }
 
-  onValueChange(value: string) {
-    this.value = value;
+  ngOnInit(): void {}
+
+  get displayText(): string | null {
+    if (!this.value) return null;
+    return this.value instanceof File ? this.value?.name : this.value?.map((e) => e.name).join('\n');
+  }
+
+  selectFile(): void {
+    this.fileInput?.nativeElement?.click();
+  }
+
+  onFileChange(event: any) {
+    if (this.multiple) {
+      this.value = event.target.files;
+    } else {
+      this.value = event.target.files[0];
+    }
     this.onChange?.(this.value);
     this.onTouch?.();
   }
@@ -54,8 +70,6 @@ export class InputComponent extends ValidationControl implements OnInit, Control
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  ngOnInit() {}
 
   get valid(): boolean {
     return this.ngControl?.valid;

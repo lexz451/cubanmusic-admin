@@ -8,7 +8,6 @@
       *ngIf="controlType === 'input'"
       [ngModel]="value"
       (ngModelChange)="onValueChange($event)"
-      (blur)="onBlur()"
     />
     <textarea
       [rows]="5"
@@ -17,7 +16,6 @@
       *ngIf="controlType === 'textarea'"
       [ngModel]="value"
       (ngModelChange)="onValueChange($event)"
-      (blur)="onBlur()"
     ></textarea>
     <small class="form-text text-muted text-help" *ngIf="!!helperText">
       {{ helperText }}

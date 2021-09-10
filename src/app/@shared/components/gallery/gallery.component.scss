@@ -1,7 +1,18 @@
-.images-item {
-  margin: 0.2rem;
-}
-
-.images {
+.gallery-container {
   padding: 0.5rem;
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    .card {
+      cursor: pointer;
+      max-width: calc(33.33333% - 0.6rem);
+      flex-shrink: 1;
+      margin: 0.3rem;
+      .card-img-top {
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
 }

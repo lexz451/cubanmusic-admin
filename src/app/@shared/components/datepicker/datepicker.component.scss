@@ -1,3 +1,9 @@
 ::ng-deep ngb-datepicker {
   width: 15rem;
 }
+
+:host {
+  .btn {
+    min-width: unset !important;
+  }
+}

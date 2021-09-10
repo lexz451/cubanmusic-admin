@@ -81,7 +81,6 @@ export class LocationComponent implements OnInit, ControlValueAccessor, OnChange
   openModal(modal: any): void {
     this.modal.open(modal, { size: 'lg', centered: true, backdrop: 'static' }).result.then(
       () => {
-        console.log(this.location);
         this.value = this.location;
         this.onChange?.(this.value);
         this.onTouch?.();
