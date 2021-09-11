@@ -17,6 +17,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() columns: ColDef[] = [];
   @Input() data: any[] = [];
   @Input() rowMultiSelectWithClick = false;
+  @Input() rowHeight?: number;
 
   @Output() rowsSelected = new EventEmitter(true);
 
@@ -46,7 +47,7 @@ export class TableComponent implements OnInit, OnChanges {
       pagination: this.pagination,
       paginationPageSize: this.pageSize,
       rowSelection: this.rowSelection,
-      rowHeight: 56,
+      rowHeight: this.rowHeight || 56,
     };
   }
 

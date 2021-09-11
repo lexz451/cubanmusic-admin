@@ -19,6 +19,7 @@ import { NotifierService } from 'angular-notifier';
 import { Location } from '@shared/models/location';
 import { ImagesService } from '@app/@shared/services/images.service';
 import { Quote } from '@app/@shared/models/quote';
+import { Article } from '@app/@shared/models/article';
 
 @UntilDestroy()
 @Component({
@@ -48,6 +49,7 @@ export class ArtistDetailsComponent implements OnInit {
   ];
 
   quote: Quote = new Quote();
+  article: Article = new Article();
 
   constructor(
     private selector: SelectorService,
@@ -169,11 +171,22 @@ export class ArtistDetailsComponent implements OnInit {
     return this.artist.quotes;
   }
 
+  get articles(): Article[] {
+    return this.artist.relatedArticles;
+  }
+
   get quotesColumns(): ColDef[] {
     return [
       {
         field: 'quote',
         headerName: 'Comentario',
+        width: 450,
+        wrapText: true,
+        autoHeight: true,
+        cellStyle: {
+          fontStyle: 'italic',
+          lineHeight: '1.5',
+        },
       },
       {
         field: 'author',
@@ -196,11 +209,108 @@ export class ArtistDetailsComponent implements OnInit {
           useActions: (): TableAction[] => {
             return [TableAction.DELETE];
           },
-          onAction: (type: TableAction, row: any) => {},
+          onAction: (type: TableAction, row: any) => {
+            const uuid = row?.uuid;
+            const id = this.artist?.id;
+            if (type == TableAction.DELETE) {
+              if (uuid != null && id != null) {
+                this.artistService
+                  .deleteQuote(id, uuid)
+                  .pipe(
+                    untilDestroyed(this),
+                    switchMap(() => this.artistService.getById(id)),
+                    finalize(() => this.uiService.notifySuccess('Quote eliminado con exito.'))
+                  )
+                  .subscribe((res) => {
+                    this.artist = res;
+                  });
+              }
+            }
+          },
         },
         width: 100,
       },
     ];
+  }
+
+  get articlesColumns(): ColDef[] {
+    return [
+      {
+        field: 'title',
+        headerName: 'Titulo',
+        wrapText: true,
+        autoHeight: true,
+        cellStyle: {
+          lineHeight: '1.5',
+          whiteSpace: 'break-spaces',
+        },
+      },
+      {
+        field: 'source',
+        headerName: 'Medio',
+      },
+      {
+        field: 'author',
+        headerName: 'Autor',
+      },
+      {
+        field: 'date',
+        headerName: 'Fecha',
+        cellRenderer: (params) => {
+          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+        },
+      },
+      {
+        cellRendererFramework: ActionsRendererComponent,
+        cellRendererParams: {
+          useActions: (): TableAction[] => {
+            return [TableAction.DELETE];
+          },
+          onAction: (type: TableAction, row: any) => {
+            const uuid = row?.uuid;
+            const id = this.artist?.id;
+            if (type == TableAction.DELETE) {
+              if (uuid != null && id != null) {
+                this.artistService
+                  .deleteArticle(id, uuid)
+                  .pipe(
+                    untilDestroyed(this),
+                    switchMap(() => this.artistService.getById(id)),
+                    finalize(() => this.uiService.notifySuccess('Articulo eliminado con exito.'))
+                  )
+                  .subscribe((res) => {
+                    this.artist = res;
+                  });
+              }
+            }
+          },
+        },
+        width: 100,
+      },
+    ];
+  }
+
+  addArticle(articleModal: any): void {
+    this.article = new Article();
+    this.modal
+      .open(articleModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.artistService
+            .createArticle(this.artist.id, this.article)
+            .pipe(
+              untilDestroyed(this),
+              switchMap(() => this.artistService.getById(this.artist.id))
+            )
+            .subscribe((res) => {
+              this.artist = res;
+            });
+        },
+        () => {}
+      );
   }
 
   addQuote(quoteModal: any): void {

@@ -10,6 +10,7 @@
   @include ag-theme-alpine(
     (
       alpine-active-color: #feddc2,
+      grid-size: 5px,
       header-background-color: #f5f5f5,
       foreground-color: #212121,
       background-color: #fafafa,
@@ -43,7 +44,14 @@
     &.active {
       color: var(--app-primary) !important;
     }
+    &.disabled {
+      color: var(--app-gray-300) !important;
+    }
   }
+}
+
+.text-overflow {
+  line-height: 1;
 }
 
 .dropdown-menu {

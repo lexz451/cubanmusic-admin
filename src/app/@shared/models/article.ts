@@ -1,6 +1,6 @@
-export class Quote {
+export class Article {
   uuid?: string;
-  quote?: string;
+  title?: string;
   source?: string;
   author?: string;
   date?: string;

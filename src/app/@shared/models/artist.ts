@@ -1,6 +1,7 @@
 import { Quote } from './quote';
 import { JobTitle } from './job-title';
 import { Location } from './location';
+import { Article } from './article';
 
 export class Artist {
   id?: number;
@@ -42,7 +43,7 @@ export class Artist {
   twitter?: string;
   tiktok?: string;
   libOfCongress?: string;
-
   images: number[] = [];
   quotes: Quote[] = [];
+  relatedArticles: Article[] = [];
 }

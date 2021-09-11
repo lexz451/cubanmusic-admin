@@ -205,25 +205,6 @@
           </div>
         </ng-template>
       </li>
-      <li ngbNavItem="quotes" [disabled]="!isEditMode">
-        <a ngbNavLink routerLink="." fragment="quotes">Quotes</a>
-        <ng-template ngbNavContent>
-          <div class="col-sm-12">
-            <div class="d-flex mb-2">
-              <button class="btn btn-primary ms-auto" type="button" (click)="addQuote(quoteModal)">
-                <i class="fas fa-comment me-2"></i> Agregar Quote
-              </button>
-            </div>
-            <app-table [columns]="quotesColumns" [data]="quotes"></app-table>
-          </div>
-        </ng-template>
-      </li>
-      <li ngbNavItem="articles">
-        <a ngbNavLink routerLink="." fragment="articles">Articulos</a>
-        <ng-template ngbNavContent>
-          <div class="col-sm-12"></div>
-        </ng-template>
-      </li>
       <li ngbNavItem="contact">
         <a ngbNavLink routerLink="." fragment="contact">Datos de Contacto</a>
         <ng-template ngbNavContent>
@@ -276,7 +257,33 @@
           </div>
         </ng-template>
       </li>
-      <li ngbNavItem="gallery">
+      <li ngbNavItem="quotes" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="quotes">Quotes</a>
+        <ng-template ngbNavContent>
+          <div class="col-sm-12">
+            <div class="d-flex mb-2">
+              <button class="btn btn-primary ms-auto" type="button" (click)="addQuote(quoteModal)">
+                <i class="fas fa-comment me-2"></i> Agregar Quote
+              </button>
+            </div>
+            <app-table [columns]="quotesColumns" [data]="quotes" [rowHeight]="100"></app-table>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="articles" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="articles">Articulos Relacionados</a>
+        <ng-template ngbNavContent>
+          <div class="col-sm-12">
+            <div class="d-flex mb-2">
+              <button class="btn btn-primary ms-auto" type="button" (click)="addArticle(articleModal)">
+                <i class="fas fa-link me-2"></i> Agregar Articulo
+              </button>
+            </div>
+            <app-table [columns]="articlesColumns" [data]="articles"></app-table>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="gallery" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="gallery">Galeria</a>
         <ng-template ngbNavContent>
           <div class="col-sm-12">
@@ -313,6 +320,24 @@
       <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="quote.date"></app-datepicker>
       <app-input class="col-sm-12" [placeholder]="'Comentario'" controlType="textarea" [(ngModel)]="quote.quote">
       </app-input>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #articleModal let-modal>
+  <div class="modal-header">
+    <h5 class="mb-0 fw-bold">Nuevo Articulo Relacionado</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-input [placeholder]="'Titulo'" class="col-sm-12" [(ngModel)]="article.title"></app-input>
+      <app-input [placeholder]="'Medio'" class="col-sm-12" [(ngModel)]="article.source"></app-input>
+      <app-input [placeholder]="'Autor'" class="col-sm-12" [(ngModel)]="article.author"></app-input>
+      <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="article.date"></app-datepicker>
     </div>
   </div>
   <div class="modal-footer">
