@@ -1,14 +1,15 @@
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { Album } from './../../@shared/models/albums';
 import { forkJoin, Observable } from 'rxjs';
-import { SelectorService } from '@app/@shared/services/selector.service';
+import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from './../../@shared/services/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumsService } from './../albums.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 
 @UntilDestroy()
@@ -29,15 +30,17 @@ export class AlbumDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private uiService: UiService,
-    private selector: SelectorService
+    private dataService: DataService,
+    @Optional()
+    private modalRef: NgbActiveModal
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.params.id;
     const req: Observable<any>[] = [];
-    req.push(this.selector.recordLabels);
-    req.push(this.selector.artists);
-    req.push(this.selector.organizations);
+    req.push(this.dataService.recordLabels);
+    req.push(this.dataService.artists);
+    req.push(this.dataService.organizations);
     if (id) {
       req.push(this.albumService.getById(id));
     }
@@ -75,5 +78,9 @@ export class AlbumDetailsComponent implements OnInit {
           });
       }
     }
+  }
+
+  cancelModal(): void {
+    this.modalRef?.dismiss();
   }
 }

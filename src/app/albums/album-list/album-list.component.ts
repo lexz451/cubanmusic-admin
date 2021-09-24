@@ -1,4 +1,4 @@
-import { SelectorService } from '@app/@shared/services/selector.service';
+import { DataService } from '@app/@shared/services/data.service';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { DatePipe } from '@angular/common';
 import { Logger } from './../../@shared/logger.service';
@@ -31,7 +31,7 @@ export class AlbumListComponent implements OnInit {
 
   constructor(
     private albumService: AlbumsService,
-    private selectorService: SelectorService,
+    private selectorService: DataService,
     private uiService: UiService,
     private router: Router,
     private datePipe: DatePipe

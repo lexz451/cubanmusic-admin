@@ -13,7 +13,7 @@
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
             <div class="alert alert-danger" [hidden]="!error || isLoading" translate>Email or password incorrect.</div>
             <div class="m-3">
-              <label class="d-block my-3">
+              <label class="d-flex flex-column my-3 form-group">
                 <input
                   type="text"
                   class="form-control"
@@ -24,13 +24,13 @@
                 <span hidden translate>Email</span>
                 <small
                   [hidden]="loginForm.controls.email.valid || loginForm.controls.email.untouched"
-                  class="text-danger"
+                  class="text-danger mt-2"
                   translate
                 >
                   Email is required
                 </small>
               </label>
-              <label class="d-block mb-3">
+              <label class="d-flex flex-column mb-3">
                 <input
                   type="password"
                   class="form-control"
@@ -42,7 +42,7 @@
                 <span hidden translate>Password</span>
                 <small
                   [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched"
-                  class="text-danger"
+                  class="text-danger mt-2"
                   translate
                 >
                   Password is required

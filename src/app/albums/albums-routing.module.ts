@@ -8,17 +8,17 @@ const routes: Routes = [
   {
     path: '',
     component: AlbumListComponent,
-    data: { title: marker('Albums') },
+    data: { title: marker('Albums'), animation: 21 },
   },
   {
     path: 'new',
     component: AlbumDetailsComponent,
-    data: { title: marker('Crear Album') },
+    data: { title: marker('Crear Album'), animation: 22 },
   },
   {
     path: ':id',
     component: AlbumDetailsComponent,
-    data: { title: marker('Editar Album') },
+    data: { title: marker('Editar Album'), animation: 23 },
   },
 ];
 

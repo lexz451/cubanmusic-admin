@@ -21,9 +21,16 @@ import { LottiePlayerFactoryOrLoader } from 'ngx-lottie/lib/symbols';
 import { LottieModule } from 'ngx-lottie';
 import { NotifierModule } from 'angular-notifier';
 import { LoadingInterceptor } from './@shared/http/loading.interceptor';
+import {
+  PerfectScrollbarConfigInterface,
+  PerfectScrollbarModule,
+  PERFECT_SCROLLBAR_CONFIG,
+} from 'ngx-perfect-scrollbar';
 
 const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 
 @NgModule({
   imports: [
@@ -48,6 +55,7 @@ const lottieFactory: LottiePlayerFactoryOrLoader = () =>
         },
       },
     }),
+    PerfectScrollbarModule,
     SharedModule,
     ShellModule,
     HomeModule,
@@ -56,6 +64,10 @@ const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   ],
   declarations: [AppComponent],
   providers: [
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
@@ -81,10 +93,10 @@ const lottieFactory: LottiePlayerFactoryOrLoader = () =>
       useClass: JWTInterceptor,
       multi: true,
     },
-    {
+    /*{
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
-    },
+    },*/
     DatePipe,
   ],
   bootstrap: [AppComponent],
