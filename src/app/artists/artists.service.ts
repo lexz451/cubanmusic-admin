@@ -1,3 +1,4 @@
+import { Album } from './../@shared/models/albums';
 import { Injectable } from '@angular/core';
 import { Article } from '@app/@shared/models/article';
 import { Artist } from '@app/@shared/models/artist';
@@ -15,8 +16,8 @@ export class ArtistsService {
     return this.apiService.get<Artist[]>('/persons');
   }
 
-  getById(id: number): Observable<Artist> {
-    return this.apiService.get<Artist>(`/persons/${id}`);
+  getById(artistID: number): Observable<Artist> {
+    return this.apiService.get<Artist>(`/persons/${artistID}`);
   }
 
   updateArtist(artist: Artist): Observable<void> {
@@ -27,23 +28,31 @@ export class ArtistsService {
     return this.apiService.post<void, Artist>('/persons/new', artist);
   }
 
-  delete(id: number): Observable<void> {
-    return this.apiService.delete(`/persons/${id}`);
+  delete(artistID: number): Observable<void> {
+    return this.apiService.delete(`/persons/${artistID}`);
   }
 
-  createQuote(id: number, quote: Quote): Observable<void> {
-    return this.apiService.post<void, Quote>(`/artists/${id}/quote`, quote);
+  getQuotes(artistID: number): Observable<Quote[]> {
+    return this.apiService.get(`/artists/${artistID}/quotes`);
   }
 
-  deleteQuote(id: number, uuid: string): Observable<void> {
-    return this.apiService.delete(`/artists/${id}/quote/${uuid}`);
+  createQuote(artistID: number, quote: Quote): Observable<void> {
+    return this.apiService.post<void, Quote>(`/artists/${artistID}/quotes`, quote);
   }
 
-  createArticle(id: number, article: Article): Observable<void> {
-    return this.apiService.post<void, Article>(`/artists/${id}/article`, article);
+  deleteQuote(quoteID: number): Observable<void> {
+    return this.apiService.delete(`/artists/quotes/${quoteID}`);
   }
 
-  deleteArticle(id: number, uuid: string): Observable<void> {
-    return this.apiService.delete(`/artists/${id}/article/${uuid}`);
+  getArticles(artistID: number): Observable<Article[]> {
+    return this.apiService.get(`/artists/${artistID}/articles`);
+  }
+
+  createArticle(artistID: number, article: Article): Observable<void> {
+    return this.apiService.post<void, Article>(`/artists/${artistID}/articles`, article);
+  }
+
+  deleteArticle(articleID: number): Observable<void> {
+    return this.apiService.delete(`/artists/articles/${articleID}`);
   }
 }
