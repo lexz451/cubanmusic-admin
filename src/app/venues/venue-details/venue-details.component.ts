@@ -3,7 +3,7 @@ import { NotifierService } from 'angular-notifier';
 import { finalize } from 'rxjs/operators';
 import { VenueService } from './../venue.service';
 import { UiService } from './../../@shared/services/ui.service';
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { Country } from './../../@shared/models/country';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { NgForm } from '@angular/forms';
@@ -22,12 +22,12 @@ import { forkJoin, Observable } from 'rxjs';
 export class VenueDetailsComponent implements OnInit {
   venue: Venue = new Venue();
   countries: Country[] = [];
-  venueTypes: ISelectableItem[] = [];
+  venueTypes$: Observable<ISelectableItem[]>;
 
   direction = Direction;
 
   constructor(
-    private selector: SelectorService,
+    private dataService: DataService,
     private uiService: UiService,
     private venueService: VenueService,
     private route: ActivatedRoute,
@@ -38,7 +38,8 @@ export class VenueDetailsComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     const req: Observable<any>[] = [];
 
-    req.push(this.selector.venueTypes);
+    this.venueTypes$ = this.dataService.venueTypes;
+
     req.push(this.venueService.countries);
     if (id) {
       req.push(this.venueService.getById(id));
@@ -47,10 +48,9 @@ export class VenueDetailsComponent implements OnInit {
     forkJoin(req)
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.venueTypes = res[0] || [];
-        this.countries = res[1] || [];
+        this.countries = res[0] || [];
         if (id) {
-          this.venue = res[2] || new Venue();
+          this.venue = res[1] || new Venue();
         }
       });
   }
@@ -70,9 +70,9 @@ export class VenueDetailsComponent implements OnInit {
         this.venueService
           .create(this.venue)
           .pipe(untilDestroyed(this))
-          .subscribe(() => {
+          .subscribe((res) => {
             this.uiService.notifySuccess('Venue creado con exito.');
-            this.router.navigate(['venues']);
+            this.router.navigate(['venues', res]);
           });
       }
     }

@@ -8,17 +8,17 @@ const routes: Routes = [
   {
     path: '',
     component: VenueListComponent,
-    data: { title: marker('Venues') },
+    data: { title: marker('Venues'), animation: 13 },
   },
   {
     path: 'new',
     component: VenueDetailsComponent,
-    data: { title: marker('Crear Venue') },
+    data: { title: marker('Crear Venue'), animation: 14 },
   },
   {
     path: ':id',
     component: VenueDetailsComponent,
-    data: { title: marker('Editar Venue') },
+    data: { title: marker('Editar Venue'), animation: 15 },
   },
 ];
 

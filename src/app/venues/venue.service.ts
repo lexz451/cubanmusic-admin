@@ -18,7 +18,7 @@ export class VenueService {
     return this.apiService.get(`/venues/${id}`);
   }
 
-  create(venue: Venue): Observable<void> {
+  create(venue: Venue): Observable<number> {
     return this.apiService.post('/venues/new', venue);
   }
 

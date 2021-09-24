@@ -1,8 +1,9 @@
 <div class="org-container container-fluid px-4">
-  <div class="d-flex align-items-center mb-4">
-    <span class="btn-icon me-3" routerLink="/venues">
-      <i class="fas fa-angle-left"></i>
-    </span>
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/venues">
+      <i class="icon-arrow-left" style="font-size: 14px"></i>
+      <span style="font-size: 18px">Atrás</span>
+    </button>
     <h2 class="mb-0 fw-bold">{{ venue?.name || 'Crear nuevo Venue' }}</h2>
   </div>
 
@@ -15,13 +16,13 @@
       class="col-sm-12"
       controlType="textarea"
     ></app-input>
-    <app-select
+    <app-selector
       class="col-sm-4"
       [(ngModel)]="venue.venueType"
       name="type"
       placeholder="Tipo"
-      [items]="venueTypes"
-    ></app-select>
+      [data$]="venueTypes$"
+    ></app-selector>
     <app-datepicker
       class="col-sm-4"
       [(ngModel)]="venue.foundedAt"
