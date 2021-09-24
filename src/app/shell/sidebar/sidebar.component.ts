@@ -10,38 +10,15 @@ import { Component, OnInit } from '@angular/core';
       state(
         'open',
         style({
-          transform: 'translateX(0)',
+          width: '300px',
         })
       ),
       state(
         'close',
         style({
-          transform: 'translateX(100%)',
+          width: '100px',
         })
       ),
-      transition('open => close', [
-        group([
-          style({ transform: 'translateX(0)' }),
-          animate(
-            '0.2s ease',
-            style({
-              transform: 'translateX(100%)',
-            })
-          ),
-        ]),
-      ]),
-      transition('close => open', [
-        group([
-          style({ transform: 'translateX(100%)' }),
-          animate(
-            '0.2s ease',
-            style({
-              transform: 'translateX(0)',
-            })
-          ),
-        ]),
-      ]),
-      transition('* => open', [style({ opacity: 1 })]),
     ]),
   ],
 })
@@ -49,6 +26,10 @@ export class SidebarComponent implements OnInit {
   showSidebar = true;
 
   constructor() {}
+
+  toggle() {
+    this.showSidebar = !this.showSidebar;
+  }
 
   ngOnInit() {}
 }

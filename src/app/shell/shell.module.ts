@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from '@shared';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,6 +21,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 @NgModule({
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     TranslateModule,
     NgbModule,
     AuthModule,
@@ -27,8 +30,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     RouterModule,
     NotifierModule,
     LoadingBarModule,
-    LoadingBarRouterModule,
+    //LoadingBarRouterModule,
     LoadingBarHttpClientModule,
+    SharedModule,
   ],
   declarations: [HeaderComponent, SidebarComponent, ShellComponent, LoaderComponent],
 })

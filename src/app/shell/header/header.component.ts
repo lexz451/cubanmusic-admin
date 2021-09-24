@@ -11,8 +11,6 @@ import { AuthenticationService, CredentialsService } from '@app/auth';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  menuHidden = true;
-
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -20,10 +18,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
-
-  toggleMenu() {
-    this.menuHidden = !this.menuHidden;
-  }
 
   logout() {
     this.authenticationService

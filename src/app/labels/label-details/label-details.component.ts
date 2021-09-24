@@ -1,4 +1,4 @@
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { Observable, forkJoin } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
@@ -22,7 +22,7 @@ export class LabelDetailsComponent implements OnInit {
 
   constructor(
     private labelService: LabelService,
-    private selectorService: SelectorService,
+    private selectorService: DataService,
     private router: Router,
     private route: ActivatedRoute,
     private notifierService: NotifierService

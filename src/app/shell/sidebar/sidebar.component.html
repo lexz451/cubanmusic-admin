@@ -1,51 +1,48 @@
-<div class="sidebar-container" [@openClose]="showSidebar ? 'open' : 'close'">
+<div class="sidebar-container" [@openClose]="showSidebar ? 'open' : 'close'" [class.closed]="!showSidebar">
   <div class="sidebar-header">
-    <span class="sidebar-brand">
-      <span>cuban.</span>
-      <span>music.</span>
-      <span>info</span>
-    </span>
-    <span class="btn-icon sidebar-toggle">
-      <i class="fas fa-bars"></i>
-    </span>
+    <h2 class="sidebar-brand">
+      <a href="/">cuban.music</a>
+      <small>administracion</small>
+    </h2>
+    <button class="btn btn-icon sidebar-toggle" (click)="toggle()">
+      <i class="icon-menu"></i>
+    </button>
   </div>
   <div class="sidebar-nav">
     <ul class="mt-2">
       <li routerLinkActive="active" routerLink="/home">
-        <i class="fas fa-home"></i>
+        <i class="icon-home me-4"></i>
         <a> Inicio</a>
       </li>
       <li routerLinkActive="active" routerLink="/artists">
-        <i class="fas fa-user"></i>
+        <i class="icon-user me-4"></i>
         <a> Artistas</a>
       </li>
       <li routerLinkActive="active" routerLink="/groups">
-        <i class="fas fa-users"></i>
+        <i class="icon-people me-4"></i>
         <a>Grupos</a>
       </li>
       <li routerLinkActive="active" routerLink="/organizations">
-        <i class="fas fa-building"></i>
+        <i class="icon-wrench me-4"></i>
         <a>Instituciones</a>
       </li>
       <li routerLinkActive="active" routerLink="/labels">
-        <i class="fas fa-microphone"></i>
+        <i class="icon-microphone me-4"></i>
         <a>Sellos Discográficos</a>
       </li>
       <li routerLinkActive="active" routerLink="/awards">
-        <i class="fas fa-award"></i>
+        <i class="icon-trophy me-4"></i>
         <a>Premios</a>
       </li>
       <li routerLinkActive="active" routerLink="/albums">
-        <i class="fas fa-record-vinyl"></i>
+        <i class="icon-disc me-4"></i>
         <a>Albums</a>
       </li>
       <li routerLinkActive="active" routerLink="/venues">
-        <i class="fas fa-guitar"></i>
+        <i class="icon-location-pin me-4"></i>
         <a>Venues</a>
       </li>
     </ul>
   </div>
-  <div class="sidebar-settings">
-    <a href="#"><i class="fas fa-cogs me-2"></i>Configuración</a>
-  </div>
+  <div class="sidebar-footer"></div>
 </div>

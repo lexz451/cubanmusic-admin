@@ -6,9 +6,13 @@ import { OrganizationDetailsComponent } from '@app/organizations/organization-de
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: OrganizationListComponent, data: { title: marker('Instituciones') } },
-  { path: 'new', component: OrganizationDetailsComponent, data: { title: marker('Crear Institución') } },
-  { path: ':id', component: OrganizationDetailsComponent, data: { title: marker('Editar Institución') } },
+  { path: '', component: OrganizationListComponent, data: { title: marker('Instituciones'), animation: 10 } },
+  { path: 'new', component: OrganizationDetailsComponent, data: { title: marker('Crear Institución'), animation: 11 } },
+  {
+    path: ':id',
+    component: OrganizationDetailsComponent,
+    data: { title: marker('Editar Institución'), animation: 12 },
+  },
 ];
 
 @NgModule({

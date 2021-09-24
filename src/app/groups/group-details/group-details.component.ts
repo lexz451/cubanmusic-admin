@@ -7,7 +7,7 @@ import { ISelectableItem } from '@shared/models/selectable-item';
 import { forkJoin, Observable } from 'rxjs';
 import { untilDestroyed } from '@shared';
 import { finalize } from 'rxjs/operators';
-import { SelectorService } from '@shared/services/selector.service';
+import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from '@shared/services/ui.service';
 import { NgForm } from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -29,7 +29,7 @@ export class GroupDetailsComponent implements OnInit {
   artists: ISelectableItem[] = [];
 
   constructor(
-    private selector: SelectorService,
+    private selector: DataService,
     private uiService: UiService,
     private groupService: GroupService,
     private route: ActivatedRoute,

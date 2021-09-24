@@ -1,5 +1,5 @@
 import { Logger } from './../../@shared/logger.service';
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { UiService } from './../../@shared/services/ui.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,7 +30,7 @@ export class AwardDetailsComponent implements OnInit {
     private uiService: UiService,
     private router: Router,
     private route: ActivatedRoute,
-    private selector: SelectorService
+    private selector: DataService
   ) {}
 
   ngOnInit() {

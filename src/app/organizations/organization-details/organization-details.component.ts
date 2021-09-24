@@ -1,4 +1,4 @@
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { finalize } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { UiService } from './../../@shared/services/ui.service';
@@ -24,7 +24,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
-    private selectorService: SelectorService,
+    private selectorService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private uiService: UiService

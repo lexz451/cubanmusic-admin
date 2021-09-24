@@ -1,5 +1,5 @@
 import { ISelectableItem } from './../../@shared/models/selectable-item';
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { Country } from './../../@shared/models/country';
 import { finalize } from 'rxjs/operators';
 import { UiService } from './../../@shared/services/ui.service';
@@ -30,7 +30,7 @@ export class OrganizationListComponent implements OnInit {
   constructor(
     private router: Router,
     private orgService: OrganizationService,
-    private selectorService: SelectorService,
+    private selectorService: DataService,
     private uiService: UiService
   ) {}
 

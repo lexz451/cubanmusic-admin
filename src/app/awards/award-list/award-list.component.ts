@@ -1,5 +1,5 @@
 import { ISelectableItem } from './../../@shared/models/selectable-item';
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { forkJoin } from 'rxjs';
 import { Country } from './../../@shared/models/country';
 import { UiService } from './../../@shared/services/ui.service';
@@ -30,7 +30,7 @@ export class AwardListComponent implements OnInit {
   constructor(
     private router: Router,
     private awardService: AwardService,
-    private selectorService: SelectorService,
+    private selectorService: DataService,
     private uiService: UiService
   ) {}
 

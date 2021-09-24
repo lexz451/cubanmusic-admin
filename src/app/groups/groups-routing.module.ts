@@ -6,9 +6,9 @@ import { GroupDetailsComponent } from '@app/groups/group-details/group-details.c
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: GroupListComponent, data: { title: marker('Groups') } },
-  { path: 'new', component: GroupDetailsComponent, data: { title: marker('Groups') } },
-  { path: ':id', component: GroupDetailsComponent, data: { title: marker('Groups') } },
+  { path: '', component: GroupListComponent, data: { title: marker('Groups'), animation: 6 } },
+  { path: 'new', component: GroupDetailsComponent, data: { title: marker('Groups'), animation: 7 } },
+  { path: ':id', component: GroupDetailsComponent, data: { title: marker('Groups'), animation: 8 } },
 ];
 
 @NgModule({

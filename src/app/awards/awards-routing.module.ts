@@ -10,6 +10,7 @@ const routes: Routes = [
     component: AwardListComponent,
     data: {
       title: marker('Grupos'),
+      animation: 3,
     },
   },
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
     component: AwardDetailsComponent,
     data: {
       title: marker('Crear Grupo'),
+      animation: 4,
     },
   },
   {
@@ -24,6 +26,7 @@ const routes: Routes = [
     component: AwardDetailsComponent,
     data: {
       title: marker('Editar Grupo'),
+      animation: 5,
     },
   },
 ];

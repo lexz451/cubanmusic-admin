@@ -1,6 +1,6 @@
 import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { forkJoin } from 'rxjs';
-import { SelectorService } from './../../@shared/services/selector.service';
+import { DataService } from '../../@shared/services/data.service';
 import { Country } from './../../@shared/models/country';
 import { Logger } from './../../@shared/logger.service';
 import { TableAction } from './../../@shared/models/table-actions';
@@ -24,7 +24,7 @@ export class LabelListComponent implements OnInit {
   labels: Recordlabel[] = [];
   countries: ISelectableItem[] = [];
 
-  constructor(private labelService: LabelService, private selectorService: SelectorService, private router: Router) {}
+  constructor(private labelService: LabelService, private selectorService: DataService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchData();
