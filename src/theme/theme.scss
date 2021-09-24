@@ -3,104 +3,211 @@
  * Framework overrides and customization goes here.
  */
 
-@import "~ag-grid-community/src/styles/ag-grid.scss";
-@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+/** Base Bootstrap utilities  */
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/utilities";
 
-.ag-theme-alpine {
-  @include ag-theme-alpine(
-    (
-      alpine-active-color: #feddc2,
-      grid-size: 5px,
-      header-background-color: #f5f5f5,
-      foreground-color: #212121,
-      background-color: #fafafa,
-      font-family: "Inter",
-      font-size: 12px,
-      range-selection-border-color: transparent,
-    )
-  );
+@import "../../node_modules/bootstrap/scss/utilities/api";
+@import "../../node_modules/bootstrap/scss/type";
+@import "../../node_modules/bootstrap/scss/images";
+@import "../../node_modules/bootstrap/scss/containers";
+@import "../../node_modules/bootstrap/scss/grid";
+@import "../../node_modules/bootstrap/scss/helpers";
+@import "../../node_modules/bootstrap/scss/modal";
+@import "../../node_modules/bootstrap/scss/transitions";
+@import "../../node_modules/bootstrap/scss/dropdown";
+@import "../../node_modules/bootstrap/scss/nav";
+@import "../../node_modules/bootstrap/scss/navbar";
+@import "../../node_modules/bootstrap/scss/alert";
+@import "../../node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/forms";
+@import "../../node_modules/bootstrap/scss/card";
+@import "../../node_modules/bootstrap/scss/root";
 
-  .ag-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
 
-  .ag-root-wrapper {
-    border-radius: 0.3rem;
-  }
-
-  .ag-header-cell {
-    .column-header {
-      white-space: pre-wrap;
-    }
-  }
-}
-
-.nav-tabs {
-  .nav-link {
-    font-weight: 500 !important;
-    color: var(--app-gray-600) !important;
-    &.active {
-      color: var(--app-primary) !important;
-    }
-    &.disabled {
-      color: var(--app-gray-300) !important;
-    }
-  }
-}
-
-.text-overflow {
-  line-height: 1;
-}
-
-.dropdown-menu {
-  right: 0;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
+html,
 body {
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-  max-height: 100vh;
 }
 
-.btn {
-  font-size: 14px;
-  font-weight: 500;
+a.disabled {
+  color: $disabled-color !important;
+  pointer-events: none;
+  cursor: none;
+}
+
+.btn:not(.btn-icon):not(.btn-link) {
   min-width: 100px;
-  &.btn-link {
-    min-width: auto;
-  }
-  &.btn-primary {
-    color: var(--app-gray-100);
-  }
+}
+
+.btn.btn-primary {
+  color: $white;
+}
+
+.btn.btn-icon {
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
 }
 
 .btn-icon {
-  background-color: $gray-200;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  padding: 1rem;
   cursor: pointer;
-  transition: all 0.1s ease;
+}
 
-  &:hover,
-  &:focus {
-    background-color: $gray-300;
+.btn.btn-light {
+  color: $secondary;
+}
+
+.nav-tabs {
+  background-color: $light;
+  border-radius: $border-radius;
+  padding: 4px;
+  border-bottom: none;
+
+  .nav-link {
+    color: $secondary;
+    font-weight: 400;
+    font-size: 15px;
+    margin-bottom: 0;
+    border: none;
+  }
+
+  .nav-link.active {
+    color: $primary;
+    border: none;
+    border-radius: $border-radius;
+  }
+
+  .nav-link.disabled {
+    color: $disabled-color;
   }
 }
 
+.modal {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  will-change: scale;
+
+  &.fade {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  &.show {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.notifier__container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+
+  .notifier__container-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .notifier__container-list-item {
+    .notifier__notification {
+      transition: all 0.05s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
+      min-width: 300px;
+      background-color: $light;
+      color: $dark;
+      padding: 1rem;
+      border-radius: 0.35rem;
+      display: flex;
+      align-items: center;
+      position: fixed; // Overlay
+      visibility: hidden; // Notifications are hidden by default, and get shown (or animated in) dynamically by the Angular component
+      z-index: 10000; // Pretty much random ...
+      // This attribute forces this element to be rendered on a new layer, by the GPU, in order to improve its performance (#perfmatters)
+      will-change: transform;
+
+      // This attribute improves the overall scrolling performance for fixed position elements, such as this one (#perfmatters)
+      // See <https://benfrain.com/improving-css-performance-fixed-position-elements/>
+      backface-visibility: hidden;
+      box-shadow: $box-shadow;
+
+      border: 1px solid $divider;
+
+      p {
+        margin: 0;
+      }
+
+      &-message {
+        display: inline-block;
+        flex-grow: 1;
+        margin: {
+          // Reset paragraph default styles
+          top: 0;
+          bottom: 0;
+        }
+        vertical-align: top;
+        line-height: 32px;
+        font-size: 14px;
+      }
+
+      &-button {
+        display: inline-block;
+        transition: opacity 0.2s ease;
+        opacity: 0.5;
+        margin: {
+          right: -10px;
+          left: 10px;
+          bottom: 5px;
+        }
+        outline: none;
+        border: none;
+        background: none;
+        cursor: pointer; // Make it obvious that the "button" (or, more honestly, icon) is clickable (#UX)
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+        vertical-align: top;
+
+        &:hover,
+        &:focus {
+          opacity: 1; // Make me "feel" the clickability with a transparency change (#UX)
+        }
+
+        &:active {
+          transform: scale(0.82); // Make me "feel" the click by a push back (#UX)
+          opacity: 1;
+        }
+      }
+
+      &--success {
+        background-color: #eff9ef;
+        color: $success;
+      }
+      &--error {
+        background-color: #fdedeb;
+        color: $danger;
+      }
+    }
+  }
+}
+
+.badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 50rem;
+  background-color: rgba($primary, 0.1);
+  color: $primary;
+}
+
+// Body Scrollbar style
 /* Firefox-only */
 * {
   scrollbar-width: thin;
-  scrollbar-color: $gray-400 $gray-200;
+  scrollbar-color: #b7b7b7 #e5e5e5;
 }
 
 /* Chrome/Edge/Safari */
@@ -110,18 +217,11 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background: $gray-200;
+  background: #e5e5e5;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: $gray-400;
+  background-color: #b7b7b7;
   border-radius: 20px;
   //border: 3px solid #b7b7b7;
-}
-
-.form-control {
-  &:focus {
-    border: 1px solid #bdbdbd;
-    box-shadow: inset 0 0 5px rgb(0 0 0 / 20%);
-  }
 }

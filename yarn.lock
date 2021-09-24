@@ -1906,6 +1906,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ng-select/ng-select@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@ng-select/ng-select@npm:7.2.0"
+  dependencies:
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ">=12.0.0 <13.0.0"
+    "@angular/core": ">=12.0.0 <13.0.0"
+    "@angular/forms": ">=12.0.0 <13.0.0"
+  checksum: ab35df50cc43e40cbf6f61f5b0a12966815bce755b3023433ed17f6e60c858db1352574db9c6be00c0fdb2cafc50613169f373e5f02159c59678c6bfb5bace0d
+  languageName: node
+  linkType: hard
+
 "@ngneat/until-destroy@npm:^8.0.4":
   version: 8.1.3
   resolution: "@ngneat/until-destroy@npm:8.1.3"
@@ -2923,6 +2936,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"angular-smooth-scrollbar@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "angular-smooth-scrollbar@npm:7.2.0"
+  dependencies:
+    angular: ^1.4.8
+    smooth-scrollbar: ^7.2.0
+  checksum: af622a8aedd0196dbfabf5a2de0beed5d7c973a016c4ceb7b4f0cbee877d4e7bdde97f02e6e781c2cf4562ca5a392b365622eb4512d87d573b5fb9fd4e7b8c4a
+  languageName: node
+  linkType: hard
+
+"angular@npm:^1.4.8":
+  version: 1.8.2
+  resolution: "angular@npm:1.8.2"
+  checksum: 35ea81a23b8c0231a17c90a8aa69f63856bc8ab767c15131089bcc8b55435ed8c2ad803d60ad86f187a9235708d73cc76e1310abae8cad7c87127c19a3e4f932
+  languageName: node
+  linkType: hard
+
 "ansi-align@npm:^3.0.0":
   version: 3.0.0
   resolution: "ansi-align@npm:3.0.0"
@@ -3375,6 +3405,16 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 3e32e318fd91d65c3af2bb363189f00d3839f07a73a08813b553553e07da205162091b428dd5b6ffb6ea4caf531ff43ebc54197b0a5a9dc2fc5c7e9a650e946d
+  languageName: node
+  linkType: hard
+
+"babel-runtime@npm:^6.9.2":
+  version: 6.26.0
+  resolution: "babel-runtime@npm:6.26.0"
+  dependencies:
+    core-js: ^2.4.0
+    regenerator-runtime: ^0.11.0
+  checksum: 8aeade94665e67a73c1ccc10f6fd42ba0c689b980032b70929de7a6d9a12eb87ef51902733f8fefede35afea7a5c3ef7e916a64d503446c1eedc9e3284bd3d50
   languageName: node
   linkType: hard
 
@@ -4327,6 +4367,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^2.4.0":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: 44fa9934a85f8c78d61e0c8b7b22436330471ffe59ec5076fe7f324d6e8cf7f824b14b1c81ca73608b13bdb0fef035bd820989bf059767ad6fa13123bb8bd016
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.6.4":
+  version: 3.17.3
+  resolution: "core-js@npm:3.17.3"
+  checksum: cdc61f068533469e15745e4644cc205916248b5b49d07840ed8e26a52e4aa557499e3d70e42a76dbc5e921f87d2db4365d9d3a5b8babbd351c3fd9e981d74fab
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:1.0.2, core-util-is@npm:~1.0.0":
   version: 1.0.2
   resolution: "core-util-is@npm:1.0.2"
@@ -4680,6 +4734,7 @@ __metadata:
     "@biesbjerg/ngx-translate-extract-marker": ^1.0.0
     "@fortawesome/fontawesome-free": ^5.15.1
     "@ng-bootstrap/ng-bootstrap": ^11.0.0-beta.2
+    "@ng-select/ng-select": ^7.2.0
     "@ngneat/until-destroy": ^8.0.4
     "@ngx-loading-bar/core": ^5.1.2
     "@ngx-loading-bar/http-client": ^5.1.2
@@ -4698,6 +4753,7 @@ __metadata:
     ag-grid-community: ^26.0.0
     angular-coordinates: ^1.0.0
     angular-notifier: ^9.1.0
+    angular-smooth-scrollbar: ^7.2.0
     bootstrap: ^5.0.2
     eslint: ^7.26.0
     eslint-plugin-import: latest
@@ -4707,6 +4763,7 @@ __metadata:
     https-proxy-agent: ^5.0.0
     husky: ^7.0.1
     immutable: ^4.0.0-rc.14
+    istrap: ^1.0.2
     jasmine-core: ~3.8.0
     jasmine-spec-reporter: ~7.0.0
     karma: ~6.3.0
@@ -4722,10 +4779,13 @@ __metadata:
     ng-multiselect-dropdown: ^0.3.4
     ngx-chips: ^2.2.2
     ngx-lottie: ^7.0.3
+    ngx-perfect-scrollbar: ^10.1.1
+    perfect-scrollbar: ^1.5.2
     prettier: ^2.2.1
     pretty-quick: ^3.1.0
     protractor: ~7.0.0
     rxjs: ^6.6.3
+    smooth-scrollbar: ^8.6.3
     stylelint: ~13.13.1
     stylelint-config-prettier: ^8.0.2
     stylelint-config-recommended-scss: ~4.3.0
@@ -7735,6 +7795,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"istrap@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "istrap@npm:1.0.2"
+  checksum: 54c6ae86fde21f663daae525db092b08fd07a1b14a2a8ee0dc2ccafdee6ce062406c1d54ba57b0287696e04836d0d4d2d22fc2db64da69da9e711d9807a1f432
+  languageName: node
+  linkType: hard
+
 "jake@npm:^10.6.1":
   version: 10.8.2
   resolution: "jake@npm:10.8.2"
@@ -8317,6 +8384,13 @@ fsevents@~2.3.2:
   dependencies:
     p-locate: ^4.1.0
   checksum: 83e51725e67517287d73e1ded92b28602e3ae5580b301fe54bfb76c0c723e3f285b19252e375712316774cf52006cb236aed5704692c32db0d5d089b69696e30
+  languageName: node
+  linkType: hard
+
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
   languageName: node
   linkType: hard
 
@@ -9159,6 +9233,20 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"ngx-perfect-scrollbar@npm:^10.1.1":
+  version: 10.1.1
+  resolution: "ngx-perfect-scrollbar@npm:10.1.1"
+  dependencies:
+    perfect-scrollbar: 1.5.0
+    resize-observer-polyfill: ^1.5.0
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ">=9.0.0"
+    "@angular/core": ">=9.0.0"
+  checksum: 8756100abd697c3442e9c7be4ffb74c5bb39dfe704d8c2391d1a1522311c827dec87881895581d394b454d463db245c57806dc7e59abebcb21dec93fa6925a1b
+  languageName: node
+  linkType: hard
+
 "nice-try@npm:^1.0.4":
   version: 1.0.5
   resolution: "nice-try@npm:1.0.5"
@@ -9972,6 +10060,20 @@ fsevents@~2.3.2:
     process: ^0.11.1
     util: ^0.10.3
   checksum: 5dedb71e78fc008fcba797defc0b4e1cf06c1f18e0a631e03ba5bb505136f587ff017afc14f9a3d481cbe77aeedff7dc0c1d2ce4d820c1ebf3c4281ca49423a1
+  languageName: node
+  linkType: hard
+
+"perfect-scrollbar@npm:1.5.0":
+  version: 1.5.0
+  resolution: "perfect-scrollbar@npm:1.5.0"
+  checksum: 896271b18a58cdb6dde4657212f17db5df01702b9959970681fddb8ca350dfa72e74b2631442a9715392f8ba39db70d28ad32f76f6314afa981f2d6931138c7d
+  languageName: node
+  linkType: hard
+
+"perfect-scrollbar@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "perfect-scrollbar@npm:1.5.2"
+  checksum: 389a40b72c00337134479460f844a6649ef9b0319196acfe4f669e6b2bc5980ab8a6721bb382bb4dae52cffdbc2a91d699eb9056d720f73fac2f7a69eb470248
   languageName: node
   linkType: hard
 
@@ -11349,6 +11451,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.11.0":
+  version: 0.11.1
+  resolution: "regenerator-runtime@npm:0.11.1"
+  checksum: 3c97bd2c7b2b3247e6f8e2147a002eb78c995323732dad5dc70fac8d8d0b758d0295e7015b90d3d444446ae77cbd24b9f9123ec3a77018e81d8999818301b4f4
+  languageName: node
+  linkType: hard
+
 "regenerator-runtime@npm:^0.13.4":
   version: 0.13.9
   resolution: "regenerator-runtime@npm:0.13.9"
@@ -11541,6 +11650,13 @@ fsevents@~2.3.2:
   version: 1.0.0
   resolution: "requires-port@npm:1.0.0"
   checksum: eee0e303adffb69be55d1a214e415cf42b7441ae858c76dfc5353148644f6fd6e698926fc4643f510d5c126d12a705e7c8ed7e38061113bdf37547ab356797ff
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.0":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: 57e7f79489867b00ba43c9c051524a5c8f162a61d5547e99333549afc23e15c44fd43f2f318ea0261ea98c0eb3158cca261e6f48d66e1ed1cd1f340a43977094
   languageName: node
   linkType: hard
 
@@ -12092,6 +12208,26 @@ fsevents@~2.3.2:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
+  languageName: node
+  linkType: hard
+
+"smooth-scrollbar@npm:^7.2.0":
+  version: 7.4.1
+  resolution: "smooth-scrollbar@npm:7.4.1"
+  dependencies:
+    babel-runtime: ^6.9.2
+  checksum: 162a7b335af690ffab8e4df95bf08b9a66af8202ed603448bc190b8c127518fff90413421b8d2271ddf431cf2298a1a9f4b8e5c1a96626a9cbce764b50eb312c
+  languageName: node
+  linkType: hard
+
+"smooth-scrollbar@npm:^8.6.3":
+  version: 8.6.3
+  resolution: "smooth-scrollbar@npm:8.6.3"
+  dependencies:
+    core-js: ^3.6.4
+    lodash-es: ^4.17.21
+    tslib: ^1.10.0
+  checksum: 873fdeb17dd63f20fe73e1769d17ce1076f43d3a143e5db85bfa4744c167d791912bdbce51bc1d6c1e51cfc4c154898bdb53b714a9375201528f9dcb7ac5ca06
   languageName: node
   linkType: hard
 

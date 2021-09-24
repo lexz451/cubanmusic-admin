@@ -3,102 +3,79 @@
  */
 
 // Set Font Awesome font path
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+//$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
-// ---------------------------------------------------------------------------
-// Bootstrap variables
-//
-// Override Bootstrap variables here to suite your theme.
-// Copy variables you want to customize from node_modules/bootstrap/scss/_variables.scss
+$white: #ffffff;
+$black: #000000;
+$red: #ec4e3d;
+$yellow: #f8cd46;
+$green: #65c366;
 
-//
-// Color system
-//
+$light: #f2f2f6;
+$dark: #1a1a1a;
+
+$primary: #f4655f;
+$divider: #e5e5e5;
+
+$success: $green;
+$danger: $red;
+$warning: $yellow;
+
+$enable-caret: false;
+$enable-shadows: false;
+$enable-validation-icons: false;
 
 $variable-prefix: app-;
 
-$primary: #ff4141;
-$secondary: #feddc2;
+$body-color: rgba(0, 0, 0, 0.7);
+$body-bg: $white;
+$disabled-color: rgba(0, 0, 0, 0.3);
+$input-bg: rgba(0, 0, 0, 0.05);
+$input-focus-bg: #ffffff;
+$input-btn-focus-color: $primary;
+$input-btn-focus-width: 2px;
+$input-box-shadow: 0 0 0 0 $black;
+$input-border-color: transparent;
+$input-btn-line-height: 2;
+$input-btn-focus-box-shadow: 0 0 0 $input-btn-focus-width rgba($input-btn-focus-color, 0.2);
 
-$white: #fafafa;
-$gray-100: #f5f5f5;
-$gray-200: #eee;
-$gray-300: #e0e0e0;
-$gray-400: #bdbdbd;
-$gray-500: #9e9e9e;
-$gray-600: #757575;
-$gray-700: #616161;
-$gray-800: #424242;
-$gray-900: #212121;
-$black: #000;
-
-$blue: #2196f3;
-$indigo: #3f51b5;
-$purple: #9c27b0;
-$pink: #e91e63;
-$red: #f44336;
-$orange: #ff9800;
-$yellow: #ffeb3b;
-$green: #4caf50;
-$teal: #009688;
-$cyan: #00bcd4;
-
-$theme-colors: (
-  primary: $primary,
-  secondary: $secondary,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-900,
-);
-
-$enable-shadows: true;
-
-$grid-gutter-width: 1rem;
-
-$border-radius: 0.3rem;
-$border-radius-sm: 0.25rem;
-$border-radius-lg: 0.35rem;
-
-$input-btn-focus-width: 0;
-
-$btn-focus-width: 0;
-
-$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
-  "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-weight-lighter: 100;
-$font-weight-light: 300;
-$font-weight-normal: 400;
-$font-weight-bold: 700;
-$font-weight-bolder: 900;
-
-$dropdown-padding-x: 0;
-$dropdown-padding-y: 0;
+$btn-line-height: 1.5;
+$btn-border-radius: 50rem;
+$btn-white-space: nowrap;
 
 $link-decoration: none;
+$link-shade-percentage: 10%;
 
-$btn-close-width: 12px;
-$btn-close-height: $btn-close-width;
-$btn-close-padding-x: 0.25em;
-$btn-close-padding-y: $btn-close-padding-x;
-$btn-close-color: $gray-900;
-$btn-close-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 352 512'><path fill='currentColor' d='M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z'></path></svg>");
-$btn-close-focus-shadow: none;
-$btn-close-opacity: 0.7;
-$btn-close-hover-opacity: 0.9;
-$btn-close-focus-opacity: 1;
-$btn-close-disabled-opacity: 0.25;
-$btn-close-white-filter: invert(1) grayscale(100%) brightness(200%);
+$border-radius: 0.35rem;
 
-$form-label-margin-bottom: 0.15rem;
-$form-label-font-size: 12px;
-$form-label-font-style: null;
-$form-label-font-weight: 500;
-$form-label-color: null;
+$font-family-sans-serif: "SF Pro Text", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+  "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji";
+$headings-font-family: "SF Pro Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+  "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji";
 
-// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
-// in components.
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
+$box-shadow: 0 0 1px rgba($black, 0.1);
+$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075);
+
+$modal-content-border-radius: $border-radius;
+$modal-backdrop-opacity: 0.2;
+$modal-fade-transform: none;
+$modal-show-transform: none;
+$modal-transition: none;
+
+// ROOT VARS
+:root {
+  --input-border-color: #{$divider};
+  --input-bg-color: #{$input-bg};
+  --input-focus-color: #{$input-focus-bg};
+  --disabled-color: #{$disabled-color};
+  --box-shadow-inset: #{$box-shadow-inset};
+}
+
+@media (prefers-color-scheme: dark) {
+  $background: $dark;
+}
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
