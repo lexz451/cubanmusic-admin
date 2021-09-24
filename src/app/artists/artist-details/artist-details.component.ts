@@ -1,25 +1,28 @@
-import { TableAction } from './../../@shared/models/table-actions';
-import { ActionsRendererComponent } from './../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
+import { RouteReusableStrategy } from './../../@shared/route-reusable-strategy';
+import { Genre } from './../../@shared/models/genre';
+import { Country } from './../../@shared/models/country';
+import { Recordlabel } from './../../@shared/models/recordlabel';
+import { Album } from './../../@shared/models/albums';
+import { Instrument } from './../../@shared/models/instrument';
+import { JobTitle } from './../../@shared/models/job-title';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ColDef } from 'ag-grid-community';
 import { Image } from '@shared/models/image';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { Artist } from '@app/@shared/models/artist';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
-import { SelectorService } from '@app/@shared/services/selector.service';
-import { forkJoin, Observable } from 'rxjs';
+import { DataService } from '@app/@shared/services/data.service';
+import { Observable } from 'rxjs';
 import { ArtistsService } from '@app/artists/artists.service';
 import { UiService } from '@shared/services/ui.service';
-import { finalize, map, switchMap } from 'rxjs/operators';
-import { NotifierService } from 'angular-notifier';
+import { finalize, map, share } from 'rxjs/operators';
 import { Location } from '@shared/models/location';
 import { ImagesService } from '@app/@shared/services/images.service';
-import { Quote } from '@app/@shared/models/quote';
-import { Article } from '@app/@shared/models/article';
+import { Award } from '@app/@shared/models/award';
+import { Organization } from '@app/@shared/models/organization';
 
 @UntilDestroy()
 @Component({
@@ -30,16 +33,27 @@ import { Article } from '@app/@shared/models/article';
 export class ArtistDetailsComponent implements OnInit {
   artist = new Artist();
 
-  countries: ISelectableItem[] = [];
-  awards: ISelectableItem[] = [];
-  organizations: ISelectableItem[] = [];
-  instruments: ISelectableItem[] = [];
-  genres: ISelectableItem[] = [];
-  jobTitles: ISelectableItem[] = [];
-  recordLabels: ISelectableItem[] = [];
-  artists: ISelectableItem[] = [];
+  jobTitle: JobTitle = new JobTitle();
+  instrument: Instrument = new Instrument();
+  location = new Location();
+  album = new Album();
+  award = new Award();
+  label = new Recordlabel();
+  genre = new Genre();
 
-  artistImages: Image[] = [];
+  locations$: Observable<ISelectableItem[]>;
+  jobTitles$: Observable<ISelectableItem[]>;
+  albums$: Observable<ISelectableItem[]>;
+  awards$: Observable<Award[]>;
+  organizations$: Observable<Organization[]>;
+  genres$: Observable<ISelectableItem[]>;
+  instruments$: Observable<ISelectableItem[]>;
+  artists$: Observable<ISelectableItem[]>;
+  recordLabels$: Observable<ISelectableItem[]>;
+  countries$: Observable<ISelectableItem[]>;
+  fullCountries$: Observable<Country[]>;
+
+  artistImages$: Observable<Image[]>;
 
   tabs: any[] = [
     { label: 'Datos Personales', fragment: 'personal' },
@@ -48,74 +62,56 @@ export class ArtistDetailsComponent implements OnInit {
     { label: 'Galeria', fragment: 'gallery' },
   ];
 
-  quote: Quote = new Quote();
-  article: Article = new Article();
-
   constructor(
-    private selector: SelectorService,
     private route: ActivatedRoute,
     private router: Router,
+    private modal: NgbModal,
+    private datePipe: DatePipe,
+    //
+    private dataService: DataService,
     private artistService: ArtistsService,
     private uiService: UiService,
-    private imagesService: ImagesService,
-    private modal: NgbModal,
-    private datePipe: DatePipe
+    private imagesService: ImagesService
   ) {}
 
   get genders(): ISelectableItem[] {
-    return this.selector.genders;
+    return this.dataService.genders;
   }
 
   get currentFragment() {
     return this.route.fragment;
   }
 
-  ngOnInit() {
-    const id = this.route.snapshot.params.id;
-    const req: Observable<any>[] = [];
-    req.push(
-      this.selector.countries,
-      this.selector.organizations,
-      this.selector.awards,
-      this.selector.instruments,
-      this.selector.genres,
-      this.selector.jobTitles,
-      this.selector.recordLabels,
-      this.selector.artists
-    );
-
-    if (id) {
-      req.push(this.artistService.getById(id));
-    }
-
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        this.organizations = res[1] || [];
-        this.awards = res[2] || [];
-        this.instruments = res[3] || [];
-        this.genres = res[4] || [];
-        this.jobTitles = res[5] || [];
-        this.recordLabels = res[6] || [];
-        this.artists = res[7] || [];
-        if (id) {
-          this.artist = res[8] || new Artist();
-          if (this.artist.id) {
-            this.artists = this.artists.filter((a) => a.id !== this.artist.id);
-            this.fetchImages();
-          }
-        }
-      });
+  get isEditMode(): boolean {
+    return !!this.artist.id;
   }
 
-  fetchImages() {
-    this.imagesService
-      .fetchImages(this.artist.images)
-      .pipe(untilDestroyed(this))
-      .subscribe((images) => {
-        this.artistImages = images;
-      });
+  ngOnInit() {
+    this.locations$ = this.dataService.locations;
+    this.jobTitles$ = this.dataService.jobTitles;
+    this.albums$ = this.dataService.albums;
+    this.awards$ = this.dataService.awards;
+    this.instruments$ = this.dataService.instruments;
+    this.genres$ = this.dataService.genres;
+    this.artists$ = this.dataService.artists;
+    this.recordLabels$ = this.dataService.recordLabels;
+    this.countries$ = this.dataService.countries;
+    this.fullCountries$ = this.dataService.fullCountries;
+
+    const id = this.route.snapshot.params.id;
+    id &&
+      this.artistService
+        .getById(id)
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          this.artist = res;
+          this.artists$ = this.dataService.artists.pipe(
+            map((artists) => artists.filter((artist) => artist.id !== this.artist.id))
+          );
+        });
+    if (id) {
+      this.artistImages$ = this.imagesService.getArtistImages(id).pipe(untilDestroyed(this));
+    }
   }
 
   onSubmit(form: NgForm) {
@@ -133,9 +129,9 @@ export class ArtistDetailsComponent implements OnInit {
         this.artistService
           .createArtist(this.artist)
           .pipe(untilDestroyed(this))
-          .subscribe(() => {
+          .subscribe((res) => {
             this.uiService.notifySuccess('Artista creado con exito.');
-            this.router.navigate(['artists']);
+            this.router.navigate(['artists', res]);
           });
       }
     }
@@ -143,194 +139,226 @@ export class ArtistDetailsComponent implements OnInit {
 
   uploadArtistImage(image: Image) {
     this.imagesService
-      .uploadImage(image)
+      .uploadImage(this.artist.id, image)
       .pipe(untilDestroyed(this))
       .subscribe((id) => {
-        if (id) {
-          this.artist.images.push(+id);
-          this.artistService
-            .updateArtist(this.artist)
-            .pipe(
-              untilDestroyed(this),
-              finalize(() => {
-                this.fetchImages();
-              })
-            )
-            .subscribe(() => {
-              this.uiService.notifySuccess('Imagen agregada con exito.');
-            });
-        }
+        this.artistImages$ = this.imagesService.getArtistImages(this.artist.id).pipe(untilDestroyed(this));
+        this.uiService.notifySuccess('Imagen creada con exito.');
       });
   }
 
-  get isEditMode(): boolean {
-    return !!this.artist.id;
+  deleteArtistImage(id: number): void {
+    this.imagesService
+      .deleteImage(id)
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        this.artistImages$ = this.imagesService.getArtistImages(this.artist.id).pipe(untilDestroyed(this));
+        this.uiService.notifySuccess('Imagen eliminada con exito.');
+      });
   }
 
-  get quotes(): Quote[] {
-    return this.artist.quotes;
-  }
-
-  get articles(): Article[] {
-    return this.artist.relatedArticles;
-  }
-
-  get quotesColumns(): ColDef[] {
-    return [
-      {
-        field: 'quote',
-        headerName: 'Comentario',
-        width: 450,
-        wrapText: true,
-        autoHeight: true,
-        cellStyle: {
-          fontStyle: 'italic',
-          lineHeight: '1.5',
-        },
-      },
-      {
-        field: 'author',
-        headerName: 'Autor',
-      },
-      {
-        field: 'source',
-        headerName: 'Fuente',
-      },
-      {
-        field: 'date',
-        headerName: 'Fecha',
-        cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
-        },
-      },
-      {
-        cellRendererFramework: ActionsRendererComponent,
-        cellRendererParams: {
-          useActions: (): TableAction[] => {
-            return [TableAction.DELETE];
-          },
-          onAction: (type: TableAction, row: any) => {
-            const uuid = row?.uuid;
-            const id = this.artist?.id;
-            if (type == TableAction.DELETE) {
-              if (uuid != null && id != null) {
-                this.artistService
-                  .deleteQuote(id, uuid)
-                  .pipe(
-                    untilDestroyed(this),
-                    switchMap(() => this.artistService.getById(id)),
-                    finalize(() => this.uiService.notifySuccess('Quote eliminado con exito.'))
-                  )
-                  .subscribe((res) => {
-                    this.artist = res;
-                  });
-              }
-            }
-          },
-        },
-        width: 100,
-      },
-    ];
-  }
-
-  get articlesColumns(): ColDef[] {
-    return [
-      {
-        field: 'title',
-        headerName: 'Titulo',
-        wrapText: true,
-        autoHeight: true,
-        cellStyle: {
-          lineHeight: '1.5',
-          whiteSpace: 'break-spaces',
-        },
-      },
-      {
-        field: 'source',
-        headerName: 'Medio',
-      },
-      {
-        field: 'author',
-        headerName: 'Autor',
-      },
-      {
-        field: 'date',
-        headerName: 'Fecha',
-        cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
-        },
-      },
-      {
-        cellRendererFramework: ActionsRendererComponent,
-        cellRendererParams: {
-          useActions: (): TableAction[] => {
-            return [TableAction.DELETE];
-          },
-          onAction: (type: TableAction, row: any) => {
-            const uuid = row?.uuid;
-            const id = this.artist?.id;
-            if (type == TableAction.DELETE) {
-              if (uuid != null && id != null) {
-                this.artistService
-                  .deleteArticle(id, uuid)
-                  .pipe(
-                    untilDestroyed(this),
-                    switchMap(() => this.artistService.getById(id)),
-                    finalize(() => this.uiService.notifySuccess('Articulo eliminado con exito.'))
-                  )
-                  .subscribe((res) => {
-                    this.artist = res;
-                  });
-              }
-            }
-          },
-        },
-        width: 100,
-      },
-    ];
-  }
-
-  addArticle(articleModal: any): void {
-    this.article = new Article();
+  createBirthPlace(locationModal: any): void {
+    this.location = new Location();
     this.modal
-      .open(articleModal, {
+      .open(locationModal, {
         centered: true,
-        size: 'md',
+        size: 'lg',
       })
       .result.then(
         () => {
-          this.artistService
-            .createArticle(this.artist.id, this.article)
-            .pipe(
-              untilDestroyed(this),
-              switchMap(() => this.artistService.getById(this.artist.id))
-            )
-            .subscribe((res) => {
-              this.artist = res;
+          this.dataService
+            .createLocation(this.location)
+            .pipe(untilDestroyed(this))
+            .subscribe((id) => {
+              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.artist.birthPlace = id;
+              this.locations$ = this.dataService.locations;
             });
         },
         () => {}
       );
   }
 
-  addQuote(quoteModal: any): void {
-    this.quote = new Quote();
+  createDeathPlace(locationModal: any): void {
+    this.location = new Location();
     this.modal
-      .open(quoteModal, {
+      .open(locationModal, {
+        centered: true,
+        size: 'lg',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createLocation(this.location)
+            .pipe(untilDestroyed(this))
+            .subscribe((id) => {
+              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.artist.deathPlace = id;
+              this.locations$ = this.dataService.locations;
+            });
+        },
+        () => {}
+      );
+  }
+
+  createResidencePlace(locationModal: any): void {
+    this.location = new Location();
+    this.modal
+      .open(locationModal, {
+        centered: true,
+        size: 'lg',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createLocation(this.location)
+            .pipe(untilDestroyed(this))
+            .subscribe((id) => {
+              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.artist.residencePlace = id;
+              this.locations$ = this.dataService.locations;
+            });
+        },
+        () => {}
+      );
+  }
+
+  createAward(awardModal: any): void {
+    this.award = new Award();
+    this.modal
+      .open(awardModal, {
+        size: 'xl',
+        centered: true,
+        backdrop: 'static',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createAward(this.award)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.artist.awards?.push(res);
+              this.awards$ = this.dataService.awards;
+              this.uiService.notifySuccess('Premio creado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  createAlbum(albumModal: any): void {
+    this.album = new Album();
+    this.modal
+      .open(albumModal, {
+        size: 'xl',
+        centered: true,
+        backdrop: 'static',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createAlbum(this.album)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.artist.albums?.push(res);
+              this.albums$ = this.dataService.albums;
+              this.uiService.notifySuccess('Album creado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  onDoneAlbumModal(modal: any, form: NgForm): void {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
+    }
+  }
+
+  createJobTitle(jobTitleModal: any): void {
+    this.jobTitle = new JobTitle();
+    this.modal
+      .open(jobTitleModal, {
         centered: true,
         size: 'md',
       })
       .result.then(
         () => {
-          this.artistService
-            .createQuote(this.artist.id, this.quote)
-            .pipe(
-              untilDestroyed(this),
-              switchMap(() => this.artistService.getById(this.artist.id))
-            )
+          this.dataService
+            .createJobTitle(this.jobTitle)
+            .pipe(untilDestroyed(this))
+            .subscribe((id) => {
+              this.jobTitles$ = this.dataService.jobTitles;
+              this.artist.jobTitle = id;
+              this.uiService.notifySuccess('Job title creado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  createGenre(genreModal: any): void {
+    this.genre = new Genre();
+    this.modal
+      .open(genreModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createGenre(this.genre)
+            .pipe(untilDestroyed(this))
+            .subscribe((id) => {
+              this.genres$ = this.dataService.genres;
+              this.artist.genres.push(id);
+              this.uiService.notifySuccess('Genero creado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  createRecordLabel(recordLabelModal: any): void {
+    this.label = new Recordlabel();
+    this.modal
+      .open(recordLabelModal, {
+        size: 'md',
+        centered: true,
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createRecordLabel(this.label)
+            .pipe(untilDestroyed(this))
             .subscribe((res) => {
-              this.artist = res;
-              this.uiService.notifySuccess('Quote agregado con exito.');
+              this.artist.label = res;
+              this.recordLabels$ = this.dataService.recordLabels;
+              this.uiService.notifySuccess('Sello creado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  createInstrument(instrumentModal: any): void {
+    this.instrument = new Instrument();
+    this.modal
+      .open(instrumentModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createInstrument(this.instrument)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.artist.instruments?.push(res);
+              this.instruments$ = this.dataService.instruments;
+              this.uiService.notifySuccess('Instrumento creado con exito.');
             });
         },
         () => {}

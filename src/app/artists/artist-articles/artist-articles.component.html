@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="d-flex mb-2">
+      <button class="btn btn-primary ms-auto" type="button" (click)="addArticle(articleModal)">Agregar Articulo</button>
+    </div>
+    <app-table [columns]="articlesColumns" [data]="articles"></app-table>
+  </div>
+</div>
+
+<ng-template #articleModal let-modal>
+  <div class="modal-header">
+    <h5 class="mb-0 fw-bold">Nuevo Articulo Relacionado</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-input [placeholder]="'Titulo'" class="col-sm-12" [(ngModel)]="article.title"></app-input>
+      <app-input [placeholder]="'Medio'" class="col-sm-12" [(ngModel)]="article.source"></app-input>
+      <app-input [placeholder]="'Autor'" class="col-sm-12" [(ngModel)]="article.author"></app-input>
+      <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="article.date"></app-datepicker>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>

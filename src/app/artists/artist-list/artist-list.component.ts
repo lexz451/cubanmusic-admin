@@ -1,3 +1,6 @@
+import { DataService } from '@app/@shared/services/data.service';
+import { forkJoin } from 'rxjs';
+import { ISelectableItem } from './../../@shared/models/selectable-item';
 import { Logger } from './../../@shared/logger.service';
 import { TableAction } from './../../@shared/models/table-actions';
 import { ActionsRendererComponent } from './../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
@@ -21,12 +24,14 @@ const log = new Logger('Artists');
 })
 export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
+  locations: ISelectableItem[] = [];
 
   constructor(
     private router: Router,
-    private artistsService: ArtistsService,
-    private uiService: UiService,
-    private datePipe: DatePipe
+    private _artistsService: ArtistsService,
+    private _dataService: DataService,
+    private _uiService: UiService,
+    private _datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -34,11 +39,11 @@ export class ArtistListComponent implements OnInit {
   }
 
   fetchData(): void {
-    this.artistsService
-      .getAll()
+    forkJoin([this._artistsService.getAll(), this._dataService.locations])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.artists = res || [];
+        this.artists = res[0];
+        this.locations = res[1];
       });
   }
 
@@ -49,52 +54,56 @@ export class ArtistListComponent implements OnInit {
   get columns(): ColDef[] {
     return [
       {
+        width: 150,
         field: 'name',
         sortable: true,
         headerName: 'Nombre',
       },
       {
+        width: 150,
         field: 'birthDate',
         headerName: 'Fecha de Nacimiento',
         cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+          return this._datePipe.transform(params.value, 'YYYY-MM-dd') || '-';
         },
       },
       {
+        width: 150,
         field: 'deathDate',
         headerName: 'Fecha de Muerte',
         cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+          return this._datePipe.transform(params.value, 'YYYY-MM-dd') || '-';
         },
       },
       {
         field: 'birthPlace',
-        width: 150,
+        width: 200,
         headerName: 'Lugar de Nacimiento',
         cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+          if (!params.value) return '-';
+          const location = this.locations?.find((e) => e.id == params.value);
+          return location.name;
         },
       },
       {
         field: 'deathPlace',
-        width: 150,
-        headerName: 'Lugar de Muerte',
+        width: 200,
+        headerName: 'Lugar de Fallecimiento',
         cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+          if (!params.value) return '-';
+          const location = this.locations?.find((e) => e.id == params.value);
+          return location.name;
         },
       },
       {
         field: 'residencePlace',
-        width: 100,
-        headerName: 'Residencia',
+        width: 200,
+        headerName: 'Lugar de Residencia',
         cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
+          if (!params.value) return '-';
+          const location = this.locations?.find((e) => e.id == params.value);
+          return location.name;
         },
-      },
-      {
-        field: 'gender',
-        width: 50,
-        headerName: 'Género',
       },
       {
         field: 'jobTitle',
@@ -103,13 +112,6 @@ export class ArtistListComponent implements OnInit {
         cellRenderer: (params) => {
           return params?.value?.title || '-';
         },
-      },
-      {
-        field: 'jobRoles',
-        width: 100,
-        headerName: 'Roles',
-        cellRendererFramework: ListRendererComponent,
-        cellRendererParams: {},
       },
       {
         cellRendererFramework: ActionsRendererComponent,
@@ -124,17 +126,17 @@ export class ArtistListComponent implements OnInit {
             }
             if (type == TableAction.DELETE) {
               id &&
-                this.artistsService
+                this._artistsService
                   .delete(id)
                   .pipe(untilDestroyed(this))
                   .subscribe(() => {
-                    this.uiService.notifySuccess('Artista eliminado con exito.');
+                    this._uiService.notifySuccess('Artista eliminado con exito.');
                     this.fetchData();
                   });
             }
           },
         },
-        width: 100,
+        width: 50,
       },
     ];
   }

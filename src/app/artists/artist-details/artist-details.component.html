@@ -1,85 +1,87 @@
-<div class="artist-container container-fluid px-4 h-100">
-  <div class="d-flex align-items-center mb-4">
-    <span class="btn-icon me-3" routerLink="/artists">
-      <i class="fas fa-angle-left"></i>
-    </span>
+<div class="artist-container container-fluid h-100 px-3" scrollbar>
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/artists">
+      <i class="icon-arrow-left" style="font-size: 14px"></i>
+      <span style="font-size: 18px">Atrás</span>
+    </button>
     <h2 class="mb-0 fw-bold">{{ artist?.name || 'Crear nuevo Artista' }}</h2>
   </div>
-  <form class="form d-flex flex-column h-100" #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <form class="form d-flex flex-column flex-grow-1" #form="ngForm" novalidate>
     <ul #nav="ngbNav" class="nav nav-tabs mb-2" ngbNav [activeId]="currentFragment | async">
       <li ngbNavItem="personal">
         <a ngbNavLink routerLink="." fragment="personal">Datos Personales</a>
         <ng-template ngbNavContent>
           <div class="col-sm-12">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <app-input name="nombre" [(ngModel)]="artist.name" placeholder="Nombre" required></app-input>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <app-input name="alias" [(ngModel)]="artist.alias" placeholder="Alias"></app-input>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-4">
                 <app-tags
                   name="nombresAdicionales"
                   [(ngModel)]="artist.additionalNames"
                   label="Nombres adicionales"
-                  placeholder="Añadir nombre"
+                  placeholder="Nombres adicionales"
                 ></app-tags>
               </div>
               <div class="col-sm-12">
                 <app-input
-                  [(ngModel)]="artist.description"
+                  [(ngModel)]="artist.biography"
                   [controlType]="'textarea'"
-                  name="description"
-                  [placeholder]="'Descripción'"
+                  name="biography"
+                  [placeholder]="'Biografia'"
                 ></app-input>
               </div>
 
               <div class="col-sm-4">
-                <app-location
-                  placeholder="Lugar de Nacimiento"
+                <app-selector
+                  placeholder="Lugar de nacimiento"
                   name="birthPlace"
-                  [(location)]="artist.birthPlace"
-                  [countries]="countries"
-                ></app-location>
+                  [data$]="locations$"
+                  [(ngModel)]="artist.birthPlace"
+                  [showCreate]="true"
+                  (create)="createBirthPlace(locationModal)"
+                >
+                </app-selector>
               </div>
               <div class="col-sm-4">
-                <app-location
+                <app-selector
                   name="deathPlace"
-                  placeholder="Lugar de Muerte"
-                  [(location)]="artist.deathPlace"
-                  [countries]="countries"
+                  [data$]="locations$"
+                  [placeholder]="'Lugar de fallecimiento'"
+                  [(ngModel)]="artist.deathPlace"
+                  [showCreate]="true"
+                  (create)="createDeathPlace(locationModal)"
                 >
-                </app-location>
+                </app-selector>
               </div>
               <div class="col-sm-4">
-                <app-location
+                <app-selector
+                  placeholder="Lugar de residencia"
                   name="residencePlace"
-                  placeholder="Lugar de Residencia"
-                  [(location)]="artist.residencePlace"
-                  [countries]="countries"
+                  [data$]="locations$"
+                  [(ngModel)]="artist.residencePlace"
+                  [showCreate]="true"
+                  (create)="createResidencePlace(locationModal)"
                 >
-                </app-location>
+                </app-selector>
               </div>
 
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <app-input name="nationality" [placeholder]="'Nacionalidad'" [(ngModel)]="artist.nationality">
                 </app-input>
               </div>
 
-              <div class="col-sm-3">
-                <app-datepicker
-                  name="birthDate"
-                  [(ngModel)]="artist.birthDate"
-                  placeholder="Fecha de Nacimiento"
-                ></app-datepicker>
+              <div class="col-sm-4">
+                <app-datepicker name="birthDate" [(ngModel)]="artist.birthDate" label="Fecha de Nacimiento">
+                </app-datepicker>
               </div>
-              <div class="col-sm-3">
-                <app-datepicker
-                  name="deathDate"
-                  [(ngModel)]="artist.deathDate"
-                  placeholder="Fecha de Muerte"
-                ></app-datepicker>
+              <div class="col-sm-4">
+                <app-datepicker name="deathDate" [(ngModel)]="artist.deathDate" label="Fecha de Muerte">
+                </app-datepicker>
               </div>
 
               <div class="col-sm-4">
@@ -95,117 +97,153 @@
           </div>
         </ng-template>
       </li>
-      <li ngbNavItem="professional">
+      <li ngbNavItem="professional" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="professional">Datos Profesionales</a>
         <ng-template ngbNavContent>
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-4">
-                <app-select
+                <app-selector
                   [(ngModel)]="artist.jobTitle"
                   name="jobTitle"
                   [placeholder]="'Job Title'"
-                  [items]="jobTitles"
-                ></app-select>
+                  [data$]="jobTitles$"
+                  [showCreate]="true"
+                  (create)="createJobTitle(jobTitleModal)"
+                >
+                </app-selector>
               </div>
               <div class="col-sm-8">
                 <app-tags name="roles" [(ngModel)]="artist.jobRoles" placeholder="Roles"></app-tags>
               </div>
               <div class="col-sm-4">
-                <app-input name="isniCode" [(ngModel)]="artist.isniCode" [placeholder]="'ISNI'"> </app-input>
+                <app-input name="isniCode" [(ngModel)]="artist.isniCode" [placeholder]="'ISNI'">
+                  <button class="btn btn-link bg-transparent shadow-none">
+                    <a
+                      class="fw-light"
+                      [class.disabled]="!artist.isniCode"
+                      href="https://isni.org/isni/{{ artist.isniCode }}"
+                    >
+                      isni.com
+                    </a>
+                  </button>
+                </app-input>
               </div>
               <div class="col-sm-4">
-                <app-select
+                <app-input name="activeSince" type="number" [(ngModel)]="artist.activeSince" placeholder="Activo desde">
+                </app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input name="activeUntil" type="number" [(ngModel)]="artist.activeUntil" placeholder="Activo hasta">
+                </app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-selector
                   name="relatedTo"
                   [(ngModel)]="artist.relatedTo"
                   [placeholder]="'Relacionado con'"
-                  [items]="artists"
-                ></app-select>
+                  [data$]="artists$"
+                ></app-selector>
               </div>
-              <!--<div class="col-sm-4">
-                <app-select
-                  name="country"
-                  [placeholder]="'Nacionalidad'"
-                  [items]="countries"
-                  [(ngModel)]="artist.country"
-                ></app-select>
+              <div class="col-sm-8">
+                <app-selector
+                  name="albums"
+                  [multiple]="true"
+                  [(ngModel)]="artist.albums"
+                  [placeholder]="'Albums'"
+                  [data$]="albums$"
+                  [showCreate]="true"
+                  (create)="createAlbum(albumModal)"
+                  [optionTemplate]="optionTemp"
+                  [labelTemplate]="labelTemp"
+                >
+                  <ng-template #optionTemp let-item="item">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ item?.title }}</h5>
+                        <p class="card-text text-truncate">{{ item?.description }}</p>
+                        <div class="d-flex">
+                          <span class="card-text text-muted">{{ item?.releaseDate }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template #labelTemp let-item="item" let-clear="clear">
+                    <span class="ng-value-label">
+                      {{ item?.title }}
+                    </span>
+                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">
+                      <i class="icon-close"></i>
+                    </span>
+                  </ng-template>
+                </app-selector>
+              </div>
 
-              </div>-->
               <div class="col-sm-4">
-                <app-input
-                  name="activeSince"
-                  type="number"
-                  [(ngModel)]="artist.activeSince"
-                  placeholder="Activo desde"
-                ></app-input>
-              </div>
-              <div class="col-sm-4">
-                <app-input
-                  name="activeUntil"
-                  type="number"
-                  [(ngModel)]="artist.activeUntil"
-                  placeholder="Activo hasta"
-                ></app-input>
-              </div>
-              <div class="col-sm-4">
-                <app-multiselect
-                  name="awards"
-                  [placeholder]="'Premios'"
-                  [items]="awards"
-                  [(ngModel)]="artist.awards"
-                ></app-multiselect>
-              </div>
-              <div class="col-sm-4">
-                <app-multiselect
-                  name="colabs"
-                  [placeholder]="'Colaboraciones'"
-                  [(ngModel)]="artist.collaborations"
-                ></app-multiselect>
-              </div>
-              <div class="col-sm-4">
-                <app-multiselect
+                <app-selector
                   name="genres"
                   [placeholder]="'Géneros'"
-                  [items]="genres"
+                  [data$]="genres$"
                   [(ngModel)]="artist.genres"
-                ></app-multiselect>
+                  [showCreate]="true"
+                  [multiple]="true"
+                  (create)="createGenre(genreModal)"
+                >
+                </app-selector>
               </div>
               <div class="col-sm-4">
-                <app-multiselect
+                <app-selector
+                  name="awards"
+                  [placeholder]="'Premios'"
+                  [data$]="awards$"
+                  [(ngModel)]="artist.awards"
+                  [showCreate]="true"
+                  [multiple]="true"
+                  (create)="createAward(awardModal)"
+                >
+                </app-selector>
+              </div>
+
+              <div class="col-sm-4">
+                <app-selector
                   name="instruments"
                   [placeholder]="'Instrumentos'"
-                  [items]="instruments"
+                  [multiple]="true"
+                  [showCreate]="true"
+                  (create)="createInstrument(instrumentModal)"
+                  [data$]="instruments$"
                   [(ngModel)]="artist.instruments"
-                ></app-multiselect>
+                >
+                </app-selector>
               </div>
               <div class="col-sm-4">
-                <app-select
+                <app-selector
                   name="affiliation"
                   [placeholder]="'Afiliación'"
-                  [items]="organizations"
+                  [data$]="organizations$"
                   [(ngModel)]="artist.affiliation"
-                ></app-select>
+                ></app-selector>
               </div>
               <div class="col-sm-4">
-                <app-select
-                  name="studyAt"
-                  [placeholder]="'Centro de Estudios'"
-                  [(ngModel)]="artist.studyAt"
-                ></app-select>
+                <app-selector name="studyAt" [placeholder]="'Centro de Estudios'" [(ngModel)]="artist.studyAt">
+                </app-selector>
               </div>
               <div class="col-sm-4">
-                <app-multiselect
+                <app-selector
                   name="labels"
-                  [placeholder]="'Sellos Discográficos'"
-                  [items]="recordLabels"
-                  [(ngModel)]="artist.labels"
-                ></app-multiselect>
+                  [placeholder]="'Sellos Discográfico'"
+                  [data$]="recordLabels$"
+                  [showCreate]="true"
+                  (create)="createRecordLabel(recordLabelModal)"
+                  [multiple]="false"
+                  [(ngModel)]="artist.label"
+                ></app-selector>
               </div>
             </div>
           </div>
         </ng-template>
       </li>
-      <li ngbNavItem="contact">
+      <li ngbNavItem="contact" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="contact">Datos de Contacto</a>
         <ng-template ngbNavContent>
           <div class="col-sm-12">
@@ -247,11 +285,8 @@
                 <app-input [placeholder]="'TikTok'" [(ngModel)]="artist.tiktok" name="tiktok"></app-input>
               </div>
               <div class="col-sm-4">
-                <app-input
-                  [placeholder]="'Biblioteca del Congreso'"
-                  [(ngModel)]="artist.libOfCongress"
-                  name="loc"
-                ></app-input>
+                <app-input [placeholder]="'Biblioteca del Congreso'" [(ngModel)]="artist.libOfCongress" name="loc">
+                </app-input>
               </div>
             </div>
           </div>
@@ -260,27 +295,29 @@
       <li ngbNavItem="quotes" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="quotes">Quotes</a>
         <ng-template ngbNavContent>
-          <div class="col-sm-12">
+          <app-artist-quotes class="col-sm-12" [artist]="artist"></app-artist-quotes>
+          <!--<div class="col-sm-12">
             <div class="d-flex mb-2">
               <button class="btn btn-primary ms-auto" type="button" (click)="addQuote(quoteModal)">
                 <i class="fas fa-comment me-2"></i> Agregar Quote
               </button>
             </div>
             <app-table [columns]="quotesColumns" [data]="quotes" [rowHeight]="100"></app-table>
-          </div>
+          </div>-->
         </ng-template>
       </li>
       <li ngbNavItem="articles" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="articles">Articulos Relacionados</a>
         <ng-template ngbNavContent>
-          <div class="col-sm-12">
+          <app-artist-articles class="col-sm-12" [artist]="artist"></app-artist-articles>
+          <!--<div class="col-sm-12">
             <div class="d-flex mb-2">
               <button class="btn btn-primary ms-auto" type="button" (click)="addArticle(articleModal)">
                 <i class="fas fa-link me-2"></i> Agregar Articulo
               </button>
             </div>
             <app-table [columns]="articlesColumns" [data]="articles"></app-table>
-          </div>
+          </div>-->
         </ng-template>
       </li>
       <li ngbNavItem="gallery" [disabled]="!isEditMode">
@@ -290,9 +327,11 @@
             <div class="row">
               <app-gallery
                 class="col-sm-12"
-                [images]="artistImages"
+                [images]="artistImages$"
+                (deleteImage)="deleteArtistImage($event)"
                 (submitImage)="uploadArtistImage($event)"
-              ></app-gallery>
+              >
+              </app-gallery>
             </div>
           </div>
         </ng-template>
@@ -302,46 +341,205 @@
     <div class="row">
       <div class="col-sm-12 mb-3">
         <div class="d-flex">
-          <button type="submit" class="btn btn-primary ms-auto">Guardar</button>
+          <button type="button" (click)="onSubmit(form)" class="btn btn-primary ms-auto">Guardar</button>
         </div>
       </div>
     </div>
   </form>
 </div>
 
-<ng-template #quoteModal let-modal>
+<ng-template #jobTitleModal let-modal>
   <div class="modal-header">
-    <h5 class="mb-0 fw-bold">Nuevo Quote</h5>
+    <h5 class="mb-0 fw-bold">Nuevo Job Title</h5>
   </div>
   <div class="modal-body">
-    <div class="row">
-      <app-input [placeholder]="'Autor'" class="col-sm-12" [(ngModel)]="quote.author"></app-input>
-      <app-input [placeholder]="'Fuente'" class="col-sm-12" [(ngModel)]="quote.source"></app-input>
-      <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="quote.date"></app-datepicker>
-      <app-input class="col-sm-12" [placeholder]="'Comentario'" controlType="textarea" [(ngModel)]="quote.quote">
-      </app-input>
-    </div>
+    <app-input [placeholder]="'Nombre'" [(ngModel)]="jobTitle.name" class="col-sm-12"></app-input>
+    <app-input
+      controlType="textarea"
+      [placeholder]="'Descripcion'"
+      [(ngModel)]="jobTitle.description"
+      class="col-sm-12"
+    ></app-input>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-secondary" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-light text-primary" type="button" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
   </div>
 </ng-template>
 
-<ng-template #articleModal let-modal>
+<ng-template #instrumentModal let-modal>
   <div class="modal-header">
-    <h5 class="mb-0 fw-bold">Nuevo Articulo Relacionado</h5>
+    <h5 class="mb-0 fw-bold">Nuevo Instrumento</h5>
+  </div>
+  <div class="modal-body">
+    <app-input [placeholder]="'Nombre'" [(ngModel)]="instrument.name" class="col-sm-12"></app-input>
+    <app-input
+      controlType="textarea"
+      [placeholder]="'Descripcion'"
+      [(ngModel)]="instrument.description"
+      class="col-sm-12"
+    ></app-input>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #genreModal let-modal>
+  <div class="modal-header">
+    <h5 class="mb-0 fw-bold">Nuevo Genero</h5>
+  </div>
+  <div class="modal-body">
+    <app-input [placeholder]="'Nombre'" [(ngModel)]="genre.name" class="col-sm-12"></app-input>
+    <app-input controlType="textarea" [placeholder]="'Descripcion'" [(ngModel)]="genre.description" class="col-sm-12">
+    </app-input>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #locationModal let-modal>
+  <div class="modal-header">
+    <h4 class="mb-0 fw-bold">Nueva ubicacion</h4>
   </div>
   <div class="modal-body">
     <div class="row">
-      <app-input [placeholder]="'Titulo'" class="col-sm-12" [(ngModel)]="article.title"></app-input>
-      <app-input [placeholder]="'Medio'" class="col-sm-12" [(ngModel)]="article.source"></app-input>
-      <app-input [placeholder]="'Autor'" class="col-sm-12" [(ngModel)]="article.author"></app-input>
-      <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="article.date"></app-datepicker>
+      <app-input [(ngModel)]="location.city" class="col-sm-4" placeholder="Pueblo/Ciudad"></app-input>
+      <app-input [(ngModel)]="location.state" class="col-sm-4" placeholder="Provincia/Estado"></app-input>
+      <app-selector [(ngModel)]="location.country" [data$]="countries$" class="col-sm-4" placeholder="País">
+      </app-selector>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-secondary" type="button" (click)="modal.dismiss()">Cerrar</button>
-    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+    <button class="btn btn-light" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #awardModal let-modal>
+  <div class="modal-header">
+    <h4 class="mb-0 fw-bold">Nuevo Premio</h4>
+  </div>
+  <form class="modal-body">
+    <div class="row">
+      <app-input placeholder="Nombre" name="name" [(ngModel)]="award.title" class="col-sm-6" required></app-input>
+      <app-input
+        placeholder="Descripción"
+        name="description"
+        [(ngModel)]="award.description"
+        class="col-sm-12"
+        controlType="textarea"
+      ></app-input>
+
+      <app-selector class="col-sm-4" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="award.country">
+      </app-selector>
+
+      <app-selector
+        class="col-sm-4"
+        name="granted"
+        placeholder="Otorgado por"
+        [data$]="organizations$"
+        [(ngModel)]="award.grantedBy"
+      ></app-selector>
+
+      <app-tags
+        name="categories"
+        label="Categorías"
+        placeholder="Añadir Categoría"
+        [(ngModel)]="award.categories"
+        class="col-sm-8"
+      ></app-tags>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #albumModal let-modal>
+  <div class="modal-header">
+    <h3 class="mb-0 fw-bold">Crear nuevo album</h3>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <div class="row">
+      <app-input placeholder="Titulo" name="title" [(ngModel)]="album.title" class="col-sm-6" required></app-input>
+      <app-input
+        placeholder="Descripción"
+        name="description"
+        [(ngModel)]="album.description"
+        class="col-sm-12"
+        controlType="textarea"
+      ></app-input>
+      <app-datepicker
+        name="releasedOn"
+        class="col-sm-3"
+        placeholder="Fecha de lanzamiento"
+        [(ngModel)]="album.releasedOn"
+      ></app-datepicker>
+      <app-input
+        name="copyrightYear"
+        class="col-sm-3"
+        placeholder="Copyright Year"
+        [(ngModel)]="album.copyrightYear"
+        type="number"
+      ></app-input>
+      <div class="row"></div>
+      <app-selector
+        name="recordLabel"
+        class="col-sm-4"
+        placeholder="Sello Discografico"
+        [data$]="recordLabels$"
+        [(ngModel)]="album.recordLabel"
+        [showCreate]="true"
+        (create)="createRecordLabel(recordLabelModal)"
+      >
+      </app-selector>
+
+      <app-selector
+        name="contributors"
+        class="col-sm-4"
+        placeholder="Contribuidores"
+        [data$]="artists$"
+        [(ngModel)]="album.contributors"
+      ></app-selector>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onDoneAlbumModal(modal, form)">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #recordLabelModal let-modal>
+  <div class="modal-header">
+    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discografico</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-6" required></app-input>
+      <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-6" required></app-input>
+      <app-input placeholder="Nombre" name="name" [(ngModel)]="label.name" class="col-sm-12" required></app-input>
+      <app-input
+        placeholder="Descripción"
+        name="description"
+        [(ngModel)]="label.description"
+        class="col-sm-12"
+        controlType="textarea"
+      ></app-input>
+      <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
+      <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
+      <app-selector class="col-sm-6" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="label.country">
+      </app-selector>
+      <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
+      <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
   </div>
 </ng-template>
