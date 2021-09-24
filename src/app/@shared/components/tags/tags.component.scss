@@ -1,52 +1,83 @@
-:host {
-  .helper-text {
-    font-size: 12px;
-  }
-  ::ng-deep .ng2-tag-input {
-    border: 1px solid #bdbdbd !important;
-    border-radius: 0.3rem;
-    padding: 0.25rem 0.5rem !important;
+$primary: #f4655f;
 
+.tags-container {
+  .tags-label {
+    font-size: 12px;
+    margin-bottom: 0.1rem;
+  }
+  ::ng-deep .tags-control {
+    border-radius: 0.35rem;
+    font-size: 1rem !important;
+    .ng2-tags-container {
+      align-items: center;
+    }
+    .ng2-tag-input {
+      padding: 0;
+      border: none !important;
+      border-radius: 0.35rem;
+      background-color: var(--input-bg-color);
+      border: 1px solid transparent !important;
+      box-shadow: none;
+      border-color: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      &--focused {
+        box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%), 0 0 0 2px rgb(244 101 95 / 25%) !important;
+        border-color: #fab2af !important;
+        background-color: var(--input-focus-bg-color);
+      }
+    }
     .ng2-tag-input__text-input {
       background: transparent !important;
-      height: 28px;
-      padding: 0 0.25rem !important;
+      font-family: "SF Pro Text";
+      font-weight: 300;
+      padding: 0.375rem 0.75rem !important;
+      height: 42px;
+      font-size: 16px !important;
     }
-
     tag {
-      border-radius: 0.3rem !important;
-      background-color: var(--app-secondary) !important;
-      line-height: 22px !important;
-      font-weight: 700 !important;
-      font-size: 14px !important;
-      letter-spacing: normal !important;
-      height: unset !important;
+      background-color: rgba($primary, 0.1);
+      color: $primary;
+      border-radius: 0.35rem !important;
+      font-family: "SF Pro Text";
+      margin-left: 4px;
+      margin-right: 4px;
+      height: 30px;
       &:hover {
-        box-shadow: 0 0px 2px 0px #d4d1d1 !important;
+        color: $primary !important;
+        background-color: rgba($primary, 0.1) !important;
+        box-shadow: none !important;
       }
-      .tag-wrapper {
+      div:first-child {
         display: flex;
         align-items: center;
+        justify-content: center;
+      }
+      .tag-wrapper {
+        line-height: 1 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        font-family: "SF Pro Text" !important;
         .tag__text {
-          margin-right: 0.3rem;
-          color: var(--app-gray-800) !important;
-          line-height: 23px;
+          margin-right: 4px !important;
         }
-        delete-icon {
-          height: unset !important;
-          &:hover {
-            transform: none !important;
-          }
-          span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          svg {
-            height: unset !important;
-          }
+      }
+      delete-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &::before {
+          content: "\e082";
+          font-family: "simple-line-icons";
+        }
+        svg {
+          display: none;
+        }
+        &:hover {
+          transform: none !important;
         }
       }
     }
+  }
+  .helper-text {
+    font-size: 12px;
   }
 }

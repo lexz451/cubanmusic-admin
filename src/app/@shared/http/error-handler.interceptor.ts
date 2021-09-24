@@ -28,22 +28,20 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   // Customize the default error handler here if needed
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
     if (!environment.production) {
-      // Do something with the error
-      log.error('Request error', response);
+      log.error('HttpErrorResponse', response.message || response.error?.message, response);
     }
 
     let errorMessage = 'Ocurrio un error inesperado. Intente nuevamente.';
 
-    if (response instanceof ErrorEvent) {
-      log.error('An error ocurred on the client side.');
-      errorMessage = 'Ocurrio un error inesperado. Revise su conexion a internet.';
-    } else {
-      if (response.error) {
-        if (response.status == 401 || response.status == 403) {
-          errorMessage = 'Su sesion expiro o no tiene permisos para acceder. Inicie sesion.';
-        } else {
-          errorMessage = response.error.message || response.error || 'Error desconocido. Intente nuevamente.';
-        }
+    if (response.error) {
+      if (response.status == 401 || response.status == 403) {
+        errorMessage = 'Su sesion expiro o no tiene permisos para acceder. Inicie sesion.';
+      } else if (response.status == 0) {
+        errorMessage = 'No se pudo contactar con el servidor. Revise su conexion a Internet e intente nuevamente.';
+      } else if (response.status == 500) {
+        errorMessage = 'Error en el servidor: ' + response.error?.message || response.message;
+      } else {
+        errorMessage = 'Error desconocido. Intente nuevamente.';
       }
     }
 

@@ -1,18 +1,23 @@
 <div class="form-group" (clickOutside)="isOpen = false">
-  <i class="input-icon fas fa-angle-down select-caret" (click)="toggleMenu()"></i>
   <label class="form-label">{{ label || placeholder }}</label>
-  <input
-    #input="uid"
-    [placeholder]="placeholder || label"
-    [readonly]="true"
-    class="form-control"
-    [ngModel]="item?.name"
-    [disabled]="isDisabled"
-    [class.disabled]="isDisabled"
-    uid
-    [class.is-invalid]="showInvalid"
-    (click)="isOpen = !isOpen"
-  />
+  <div class="input-group">
+    <input
+      #input="uid"
+      [placeholder]="placeholder || label"
+      [readonly]="true"
+      class="form-control"
+      [ngModel]="item?.name"
+      [disabled]="isDisabled"
+      [class.disabled]="isDisabled"
+      uid
+      [class.is-invalid]="showInvalid"
+      (click)="isOpen = !isOpen"
+    />
+    <button class="btn btn-input" (click)="toggleMenu()" type="button">
+      <i class="input-icon fas fa-angle-down select-caret"></i>
+    </button>
+    <ng-content></ng-content>
+  </div>
   <div class="invalid-tooltip" *ngIf="showInvalid">
     <span *ngFor="let error; in: errors">{{ error }}</span>
   </div>

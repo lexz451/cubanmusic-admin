@@ -1,0 +1,50 @@
+<div class="form-group selector-container">
+  <label class="form-label selector-label">{{ label || placeholder }}</label>
+  <div class="d-flex align-items-center">
+    <ng-select
+      class="selector-control flex-grow-1 ng-select"
+      [class.is-empty]="isEmpty"
+      [multiple]="multiple"
+      [ngModel]="value"
+      (change)="onModelChange($event)"
+      (clear)="onModelClear()"
+      bindLabel="name"
+      bindValue="id"
+      [placeholder]="placeholder"
+      [closeOnSelect]="!multiple"
+      [clearable]="true"
+      [disabled]="isDisabled"
+      [items]="data$ | async"
+    >
+      <ng-template ng-option-tmp let-item="item">
+        <span *ngIf="!optionTemplate">
+          {{ item.name }}
+        </span>
+        <ng-template [ngTemplateOutlet]="optionTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-template>
+      </ng-template>
+
+      <ng-template ng-label-tmp let-item="item" let-clear="clear">
+        <span *ngIf="!labelTemplate">
+          <span class="ng-value-label">
+            {{ item.name }}
+          </span>
+          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </span>
+        <ng-template
+          [ngTemplateOutlet]="labelTemplate"
+          [ngTemplateOutletContext]="{ item: item, clear: clear }"
+        ></ng-template>
+      </ng-template>
+    </ng-select>
+    <span
+      type="button"
+      class="btn btn-link selector-btn-create text-primary fw-lighter"
+      *ngIf="showCreate"
+      (click)="onCreate()"
+    >
+      Crear
+    </span>
+  </div>
+</div>

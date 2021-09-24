@@ -3,10 +3,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
+  Output,
   Self,
   SimpleChanges,
   TemplateRef,
@@ -27,6 +29,7 @@ export class SelectComponent implements OnInit, OnChanges, ControlValueAccessor 
   @Input() placeholder = 'Seleccionar';
   @Input() label = '';
   @Input() items: ISelectableItem[] = [];
+  @Input() showAddAction = false;
 
   item?: ISelectableItem;
 

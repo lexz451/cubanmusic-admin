@@ -13,6 +13,10 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private _uiService: UiService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Bypass suggestion endpoints
+    if (req.url.indexOf('suggestions') != -1) {
+      return next.handle(req);
+    }
     if (this.activeRequests == 0) {
       this._uiService.showLoading();
     }

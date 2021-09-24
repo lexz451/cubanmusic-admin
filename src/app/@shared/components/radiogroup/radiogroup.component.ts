@@ -2,7 +2,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Component, OnInit, Input, Self } from '@angular/core';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { Optional } from 'ag-grid-community';
-import { SelectorService } from '@app/@shared/services/selector.service';
+import { DataService } from '@app/@shared/services/data.service';
 
 @Component({
   selector: 'app-radiogroup',
