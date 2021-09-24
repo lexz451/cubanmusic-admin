@@ -4,7 +4,7 @@ export class Album {
   description?: string;
   releasedOn?: string;
   recordLabel?: number;
-  artists?: number[];
-  collaborations?: number[];
-  organizations?: number[];
+  artists?: number[] = [];
+  copyrightYear?: string;
+  contributors?: number[] = [];
 }

@@ -12,22 +12,23 @@ export class Artist {
   deathDate?: string;
   activeSince: number;
   activeUntil?: number;
-  birthPlace?: Location = new Location();
-  deathPlace?: Location = new Location();
-  residencePlace?: Location = new Location();
+  birthPlace?: number;
+  deathPlace?: number;
+  residencePlace?: number;
   gender?: string = 'OTHER';
-  jobTitle?: JobTitle;
-  jobRoles?: string;
+  jobTitle?: number;
+  jobRoles?: string[] = [];
   relatedTo?: Artist;
-  description?: string;
+  biography?: string;
   country?: number;
   nationality?: string;
   instruments?: number[] = [];
   awards: number[] = [];
+  albums: number[] = [];
   collaborations: number[] = [];
   affiliation: number;
   studyAt: number;
-  labels: number[] = [];
+  label?: number;
   genres: number[] = [];
   email?: string;
   website?: string;
@@ -43,7 +44,4 @@ export class Artist {
   twitter?: string;
   tiktok?: string;
   libOfCongress?: string;
-  images: number[] = [];
-  quotes: Quote[] = [];
-  relatedArticles: Article[] = [];
 }

@@ -1,3 +1,5 @@
+import { SelectorComponent } from './components/selector/selector.component';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { FileInputComponent } from './components/fileinput/fileinput.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { NgModule } from '@angular/core';
@@ -28,7 +30,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
 import { TagInputModule } from 'ngx-chips';
 import { CoordinatesModule } from 'angular-coordinates';
 import { CoordinateValidator } from './validation/coordinates-validator';
-import { Masonry, MasonryModule } from '@thisissoon/angular-masonry';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // @ts-ignore
 @NgModule({
@@ -52,6 +54,7 @@ import { Masonry, MasonryModule } from '@thisissoon/angular-masonry';
     TagInputModule,
     CoordinatesModule,
     NgbNavModule,
+    NgSelectModule,
   ],
   declarations: [
     CheckComponent,
@@ -65,15 +68,16 @@ import { Masonry, MasonryModule } from '@thisissoon/angular-masonry';
     TableHeaderComponent,
     TagsComponent,
     FileInputComponent,
-
-    ClickOutsideDirective,
-    CoordinateValidator,
-    UidDirective,
     DatepickerComponent,
     ActionsRendererComponent,
     ListRendererComponent,
     GalleryComponent,
+    SelectorComponent,
     PhoneInputComponent,
+    AutocompleteComponent,
+    ClickOutsideDirective,
+    CoordinateValidator,
+    UidDirective,
   ],
   exports: [
     CheckComponent,
@@ -87,8 +91,10 @@ import { Masonry, MasonryModule } from '@thisissoon/angular-masonry';
     DatepickerComponent,
     GalleryComponent,
     PhoneInputComponent,
+    SelectorComponent,
     TagsComponent,
     FileInputComponent,
+    AutocompleteComponent,
 
     ClickOutsideDirective,
     CoordinateValidator,

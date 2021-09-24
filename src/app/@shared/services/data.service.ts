@@ -1,22 +1,25 @@
+import { zipWith } from 'lodash';
+import { Album } from '../models/albums';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, zip, concat, forkJoin } from 'rxjs';
 import { Country } from '../models/country';
 import { ISelectableItem } from '../models/selectable-item';
 import { ApiService } from './api.service';
 import { Organization } from '@shared/models/organization';
 import { Award } from '@shared/models/award';
-import { map } from 'rxjs/operators';
+import { concatMap, map, mergeMap, share, shareReplay, zipAll, switchMap } from 'rxjs/operators';
 import { Instrument } from '@shared/models/instrument';
 import { Genre } from '@shared/models/genre';
 import { JobTitle } from '@shared/models/job-title';
 import { Recordlabel } from '@shared/models/recordlabel';
 import { Artist } from '@shared/models/artist';
+import { Location } from '../models/location';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SelectorService {
-  constructor(private api: ApiService) {}
+export class DataService {
+  constructor(private apiService: ApiService) {}
 
   get yesOrNo(): ISelectableItem[] {
     return [
@@ -35,15 +38,15 @@ export class SelectorService {
     return [
       {
         id: 'MALE',
-        name: 'Male',
+        name: 'Hombre',
       },
       {
         id: 'FEMALE',
-        name: 'Female',
+        name: 'Mujer',
       },
       {
         id: 'OTHER',
-        name: 'Other',
+        name: 'Otro',
       },
     ];
   }
@@ -114,7 +117,7 @@ export class SelectorService {
   }
 
   get countries(): Observable<ISelectableItem[]> {
-    return this.api.get<Country[]>('/countries').pipe(
+    return this.apiService.get<Country[]>('/countries').pipe(
       map((countries) =>
         countries?.map((c) => {
           return {
@@ -123,12 +126,17 @@ export class SelectorService {
             icon: c.emoji,
           };
         })
-      )
+      ),
+      share()
     );
   }
 
+  get fullCountries(): Observable<Country[]> {
+    return this.apiService.get<Country[]>('/countries');
+  }
+
   get organizations(): Observable<ISelectableItem[]> {
-    return this.api.get<Organization[]>('/organizations').pipe(
+    return this.apiService.get<Organization[]>('/organizations').pipe(
       map((orgs) =>
         orgs?.map((o) => {
           return {
@@ -141,7 +149,7 @@ export class SelectorService {
   }
 
   get awards(): Observable<ISelectableItem[]> {
-    return this.api.get<Award[]>('/awards').pipe(
+    return this.apiService.get<Award[]>('/awards').pipe(
       map((awards) =>
         awards?.map((a) => {
           return {
@@ -154,7 +162,7 @@ export class SelectorService {
   }
 
   get instruments(): Observable<ISelectableItem[]> {
-    return this.api.get<Instrument[]>('/instruments').pipe(
+    return this.apiService.get<Instrument[]>('/instruments').pipe(
       map((instruments) =>
         instruments?.map((i) => {
           return {
@@ -167,7 +175,7 @@ export class SelectorService {
   }
 
   get genres(): Observable<ISelectableItem[]> {
-    return this.api.get<Genre[]>('/genres').pipe(
+    return this.apiService.get<Genre[]>('/genres').pipe(
       map((genres) =>
         genres?.map((g) => {
           return {
@@ -180,12 +188,12 @@ export class SelectorService {
   }
 
   get jobTitles(): Observable<ISelectableItem[]> {
-    return this.api.get<JobTitle[]>('/jobtitles').pipe(
+    return this.apiService.get<JobTitle[]>('/jobtitles').pipe(
       map((titles) =>
         titles?.map((t) => {
           return {
             id: t.id,
-            name: t.title,
+            name: t.name,
           };
         })
       )
@@ -193,7 +201,7 @@ export class SelectorService {
   }
 
   get recordLabels(): Observable<ISelectableItem[]> {
-    return this.api.get<Recordlabel[]>('/recordlabels').pipe(
+    return this.apiService.get<Recordlabel[]>('/recordlabels').pipe(
       map((labels) =>
         labels?.map((l) => {
           return {
@@ -205,8 +213,26 @@ export class SelectorService {
     );
   }
 
+  get locations(): Observable<ISelectableItem[]> {
+    const countries$ = this.countries.pipe(share());
+    const locations$ = this.apiService.get<Location[]>('/locations');
+    return zip(countries$, locations$).pipe(
+      map((e) =>
+        e[1].map((l) => {
+          const country = e[0].find((c) => c.id == l.country);
+          const res = `${l.city}, ${l.state}, ${country.name}`;
+          return {
+            id: l.id,
+            name: res,
+          };
+        })
+      ),
+      share()
+    );
+  }
+
   get artists(): Observable<ISelectableItem[]> {
-    return this.api.get<Artist[]>('/persons').pipe(
+    return this.apiService.get<Artist[]>('/persons').pipe(
       map((persons) =>
         persons?.map((p) => {
           return {
@@ -216,5 +242,51 @@ export class SelectorService {
         })
       )
     );
+  }
+
+  get albums(): Observable<Album[]> {
+    return this.apiService.get<Album[]>('/albums');
+  }
+
+  get selectableAlbums(): Observable<ISelectableItem[]> {
+    return this.apiService.get<Album[]>('/albums').pipe(
+      map((albums) =>
+        albums?.map(
+          (a) =>
+            <ISelectableItem>{
+              id: a.id,
+              name: a.title,
+            }
+        )
+      )
+    );
+  }
+
+  createJobTitle(jobTitle: JobTitle): Observable<number> {
+    return this.apiService.post('/jobtitles/new', jobTitle);
+  }
+
+  createInstrument(instrument: Instrument): Observable<number> {
+    return this.apiService.post('/instruments/new', instrument);
+  }
+
+  createLocation(location: Location): Observable<number> {
+    return this.apiService.post('/locations/new', location);
+  }
+
+  createAlbum(album: Album): Observable<number> {
+    return this.apiService.post('/albums/new', album);
+  }
+
+  createGenre(genre: Genre): Observable<number> {
+    return this.apiService.post('/genres/new', genre);
+  }
+
+  createAward(award: Award): Observable<number> {
+    return this.apiService.post('/awards/new', award);
+  }
+
+  createRecordLabel(label: Recordlabel): Observable<number> {
+    return this.apiService.post('/recordlabels/new', label);
   }
 }
