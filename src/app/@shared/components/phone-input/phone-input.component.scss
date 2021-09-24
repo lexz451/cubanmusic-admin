@@ -18,6 +18,20 @@
   }
 }
 
-.form-control {
-  background: transparent;
+.phone-input-container {
+  .phone-input-label {
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 0.1rem;
+  }
+  .phone-input-selector {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    max-height: 45px !important;
+    min-width: 0 !important;
+  }
+  .phone-input-control {
+    border-radius: 0.35rem !important;
+  }
 }

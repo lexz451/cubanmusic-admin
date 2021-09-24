@@ -1,4 +1,17 @@
-import { Component, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  Optional,
+  Self,
+  SimpleChanges,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+} from '@angular/core';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -7,13 +20,23 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   selector: 'app-multiselect',
   templateUrl: './multiselect.component.html',
   styleUrls: ['./multiselect.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MultiselectComponent implements OnInit, ControlValueAccessor, OnChanges {
+export class MultiselectComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnChanges {
   @Input() placeholder = 'Seleccionar';
   @Input() label = '';
   @Input() items: ISelectableItem[] = [];
+  @Input() showAction = false;
 
-  selectedItems: ISelectableItem[] = [];
+  @Output() actionClicked = new EventEmitter(true);
+
+  getSelection(): ISelectableItem[] {
+    if (this.items && this.items.length && this.value) {
+      const selection = this.items.filter((item) => this.value.indexOf(item.id) != -1);
+      return selection;
+    }
+    return [];
+  }
 
   onChange: (_: any) => {};
   onTouch: () => {};
@@ -27,24 +50,24 @@ export class MultiselectComponent implements OnInit, ControlValueAccessor, OnCha
     unSelectAllText: 'Deseleccionar Todo',
   };
 
+  ngAfterViewInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
+
   onItemSelected(item: ISelectableItem) {
     this.value.push(item.id);
     this.onChange?.(this.value);
     this.onTouch?.();
   }
 
+  onActionClicked() {
+    this.actionClicked.emit();
+  }
+
   onSelectAll(items: ISelectableItem[]) {
     this.value = items.map((e) => e.id);
     this.onChange?.(this.value);
     this.onTouch?.();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.items) {
-      if (this.value && this.value.length) {
-        this.selectedItems = this.items.filter((e) => this.value.includes(e.id));
-      }
-    }
   }
 
   constructor(
@@ -71,7 +94,6 @@ export class MultiselectComponent implements OnInit, ControlValueAccessor, OnCha
   writeValue(value: any): void {
     if (value) {
       this.value = value;
-      this.selectedItems = this.items.filter((e) => this.value.includes(e.id));
     }
   }
 }

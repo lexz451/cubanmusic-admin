@@ -28,7 +28,7 @@ export class PhoneInputComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.countries && this.countries.length) {
+    if (changes.countries && this.countries?.length) {
       this.selectedCountry = this.countries.find((e) => e.phoneCode == '53');
       this.phone.code = this.selectedCountry.phoneCode;
     }

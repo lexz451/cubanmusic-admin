@@ -1,7 +1,7 @@
-<div class="form-group">
-  <label class="form-label">{{ label || placeholder }}</label>
+<div class="form-group phone-input-container">
+  <label class="form-label phone-input-label">{{ label || placeholder }}</label>
   <div class="input-group" ngbDropdown>
-    <button class="btn btn-secondary" type="button" ngbDropdownToggle>
+    <button class="btn btn-light phone-input-selector" type="button" ngbDropdownToggle>
       <span>
         {{ selectedCountry?.emoji }}
         {{ selectedCountry?.phoneCode }}
@@ -17,7 +17,7 @@
     <input
       [placeholder]="placeholder | translate"
       type="text"
-      class="form-control"
+      class="form-control phone-input-control"
       [(ngModel)]="phone.number"
       (ngModelChange)="valueChange()"
     />
