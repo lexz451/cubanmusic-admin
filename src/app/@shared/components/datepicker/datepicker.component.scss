@@ -1,9 +1,25 @@
-::ng-deep ngb-datepicker {
-  width: 15rem;
-}
-
-:host {
-  .btn {
-    min-width: unset !important;
+.datepicker-container {
+  margin-bottom: 1rem;
+  position: relative;
+  .datepicker-label {
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 0.1rem;
+  }
+  .datepicker-control {
+    background-color: var(--input-bg-color);
+    transition: all 0.5s ease;
+    font-weight: 300;
+    &:focus,
+    &.is-open {
+      background-color: var(--input-focus-bg-color);
+      box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%), 0 0 0 2px rgb(244 101 95 / 25%) !important;
+      border-color: #fab2af !important;
+    }
+  }
+  .calendar-toggle {
+    position: absolute;
+    right: 20px;
+    top: 38px;
   }
 }

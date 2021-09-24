@@ -74,6 +74,8 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   onChange?: (value: any) => {};
   onTouch?: () => {};
 
+  isOpen = false;
+
   constructor(
     private dateAdapter: NgbDateAdapter<string>,
     private calendar: NgbCalendar,
@@ -126,9 +128,20 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     };
   }
 
-  onDateChange(date: NgbDate): void {
+  onDateChange(date: NgbDate, datepicker: any): void {
     this.value = this.dateAdapter.toModel(date);
     this.onChange?.(this.value);
     this.onTouch?.();
+    this.close(datepicker);
+  }
+
+  toggle(datepicker: any): void {
+    this.isOpen = !this.isOpen;
+    datepicker.toggle();
+  }
+
+  close(datepicker: any): void {
+    this.isOpen = false;
+    datepicker.close();
   }
 }

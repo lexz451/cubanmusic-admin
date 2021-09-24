@@ -1,20 +1,22 @@
-<div class="form-group">
-  <label class="form-label">{{ label || placeholder }}</label>
-  <div class="input-group">
-    <input
-      [placeholder]="placeholder"
-      [(ngModel)]="value"
-      ngbDatepicker
-      #d="ngbDatepicker"
-      class="form-control"
-      [startDate]="today"
-      [minDate]="minDate"
-      [maxDate]="maxDate"
-      (dateSelect)="onDateChange($event)"
-      (click)="d.toggle()"
-    />
-    <button class="btn btn-secondary text-primary" (click)="d.toggle()" type="button">
-      <i class="fas fa-calendar-alt"></i>
-    </button>
-  </div>
+<div class="form-group datepicker-container">
+  <label class="form-label datepicker-label">{{ label || placeholder }}</label>
+  <input
+    [(ngModel)]="value"
+    ngbDatepicker
+    #d="ngbDatepicker"
+    class="form-control datepicker-control"
+    [placeholder]="placeholder"
+    [startDate]="today"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    [class.active]="!!value"
+    (dateSelect)="onDateChange($event, d)"
+    (click)="toggle(d)"
+    (closed)="close(d)"
+    [class.is-open]="isOpen"
+    [restoreFocus]="'btn'"
+    [autoClose]="true"
+  />
+
+  <span class="calendar-toggle icon-calendar" (click)="toggle(d)" type="button"> </span>
 </div>

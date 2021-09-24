@@ -11,15 +11,12 @@
         readonly
         (click)="selectFile()"
       />
-      <small [hidden]="valid || untouched" class="validation-error" translate>
-        {{ validationMessages }}
-      </small>
-      <button class="btn btn-secondary text-primary" type="button" (click)="selectFile()">
-        <i class="fas fa-file-upload"></i>
-      </button>
     </div>
     <small class="form-text text-muted text-help" *ngIf="!!helperText">
       {{ helperText }}
+    </small>
+    <small [hidden]="valid || untouched" class="validation-error" translate>
+      {{ validationMessages }}
     </small>
   </label>
 </div>

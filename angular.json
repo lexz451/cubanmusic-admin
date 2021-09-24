@@ -32,8 +32,11 @@
               "src/assets"
             ],
             "styles": ["src/main.scss"],
-            "scripts": ["./node_modules/masonry-layout/dist/masonry.pkgd.js"],
-            "allowedCommonJsDependencies": ["angular-coordinates", "lodash"]
+            "scripts": [
+              "./node_modules/smooth-scrollbar/dist/smooth-scrollbar.js",
+              "./node_modules/smooth-scrollbar/dist/plugins/overscroll.js"
+            ],
+            "allowedCommonJsDependencies": ["angular-coordinates"]
           },
           "configurations": {
             "production": {

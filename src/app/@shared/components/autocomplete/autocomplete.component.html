@@ -1,0 +1,23 @@
+<div class="form-group">
+  <label class="form-label">{{ label || placeholder }}</label>
+  <div class="input-group">
+    <input
+      class="form-control"
+      [placeholder]="placeholder"
+      [ngbTypeahead]="search$"
+      [(ngModel)]="selectedItem"
+      (ngModelChange)="onModelChange()"
+      [inputFormatter]="inputFormatter"
+      [resultTemplate]="rt"
+    />
+    <button class="btn btn-input" (click)="onActionClick()" type="button">
+      <i class="fas fa-search"></i>
+    </button>
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<ng-template #rt let-result="result" let-term="term">
+  <span *ngIf="!!result.icon">{{ result.icon }}</span>
+  <ngb-highlight [term]="term" [result]="result?.name"></ngb-highlight>
+</ng-template>

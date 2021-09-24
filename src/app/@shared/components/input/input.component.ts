@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Optional, Self } from '@angular/core';
+import { Component, OnInit, Input, Optional, Self, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ValidationControl } from '@app/@shared/validation/validation-control';
 
@@ -14,6 +14,7 @@ export class InputComponent extends ValidationControl implements OnInit, Control
   @Input() type = 'text';
   @Input() helperText?: string;
   @Input() controlType: 'input' | 'textarea' = 'input';
+  @Input() showAction = false;
 
   value?: any;
   disabled = false;

@@ -1,27 +1,30 @@
-<div class="form-group">
-  <label class="d-block">
-    <label class="form-label">{{ label || placeholder }}</label>
+<div class="form-group input-container">
+  <label class="form-label input-label">{{ label || placeholder }}</label>
+  <div class="input-group">
     <input
-      [placeholder]="placeholder | translate"
       [type]="type"
-      class="form-control"
+      [placeholder]="placeholder"
+      class="form-control input-control"
+      [class.active]="!!value"
       *ngIf="controlType === 'input'"
       [ngModel]="value"
       (ngModelChange)="onValueChange($event)"
     />
-    <textarea
-      [rows]="5"
-      [placeholder]="placeholder | translate"
-      class="form-control"
-      *ngIf="controlType === 'textarea'"
-      [ngModel]="value"
-      (ngModelChange)="onValueChange($event)"
-    ></textarea>
-    <small class="form-text text-muted text-help" *ngIf="!!helperText">
-      {{ helperText }}
-    </small>
-    <small [hidden]="valid || untouched" class="validation-error" translate>
-      {{ validationMessages }}
-    </small>
-  </label>
+    <ng-content></ng-content>
+  </div>
+  <textarea
+    [placeholder]="placeholder"
+    [rows]="4"
+    [class.active]="!!value"
+    class="form-control input-control"
+    *ngIf="controlType === 'textarea'"
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+  ></textarea>
+  <small class="form-text text-muted text-help input-text-help" *ngIf="!!helperText">
+    {{ helperText }}
+  </small>
+  <small [hidden]="valid || untouched" class="input-text-error" translate>
+    {{ validationMessages }}
+  </small>
 </div>

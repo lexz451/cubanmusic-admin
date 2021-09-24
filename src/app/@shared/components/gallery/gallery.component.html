@@ -10,8 +10,8 @@
     <!--<div *ngFor="let item of images" class="img-fluid images-item" [photoGallery]="item">
       <img [src]="item" alt="" width="100%" loading="lazy"/>
     </div>-->
-    <div *ngFor="let item of images" [photoGallery]="getImage(item)" class="card">
-      <img class="card-img-top" [src]="getImage(item)" loading="lazy" />
+    <div *ngFor="let item of images | async" class="card">
+      <img class="card-img-top" [src]="getImage(item)" loading="lazy" [photoGallery]="getImage(item)" />
       <div class="card-body">
         <h5 class="card-title">{{ item?.title }}</h5>
         <p class="card-text mb-0">
@@ -21,11 +21,12 @@
           <small class="text-muted">{{ item?.date | date }}</small>
         </p>
         <p class="card-text">
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+          {{ item?.description || '-' }}
         </p>
+        <a class="card-link" (click)="onDeleteImage(item.id)">Eliminar</a>
       </div>
-      <div class="card-footer">
-        <small *ngFor="let _ of item.tags" class="badge bg-primary me-2 text-uppercase">{{ _ }}</small>
+      <div class="card-footer" *ngIf="item.tags && item.tags.length">
+        <small *ngFor="let _ of item.tags" class="badge me-2">{{ _ }}</small>
       </div>
     </div>
   </div>
@@ -52,7 +53,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-light" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" (click)="form.ngSubmit.emit()">Aceptar</button>
   </div>
 </ng-template>

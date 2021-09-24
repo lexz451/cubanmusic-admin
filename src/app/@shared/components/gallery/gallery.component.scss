@@ -6,8 +6,13 @@
     .card {
       cursor: pointer;
       max-width: calc(33.33333% - 0.6rem);
+      min-width: 300px;
       flex-shrink: 1;
       margin: 0.3rem;
+      .card-link {
+        z-index: 99999;
+        pointer-events: fill;
+      }
       .card-img-top {
         height: 300px;
         object-fit: cover;
