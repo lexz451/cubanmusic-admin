@@ -24,7 +24,7 @@
   <small class="form-text text-muted text-help input-text-help" *ngIf="!!helperText">
     {{ helperText }}
   </small>
-  <small [hidden]="valid || untouched" class="input-text-error" translate>
+  <small [hidden]="valid || untouched" class="input-text-error">
     {{ validationMessages }}
   </small>
 </div>

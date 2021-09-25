@@ -9,17 +9,21 @@ export class ValidationControl {
 
   get validationMessages(): string[] {
     if (this._control.invalid) {
-      return Object.keys(this._control.errors).map((key: string) => {
+      const message = Object.keys(this._control.errors).map((key: string) => {
         switch (key) {
           case 'required':
             return 'El campo es requerido.';
           case 'coordinate':
             return 'El valor de la coordenada no es valido.';
+          case 'pwdNotMatch':
+            console.log(key);
+            return 'Las contraseñas no coinciden.';
           default:
             break;
         }
         return null;
       });
+      return message;
     }
     return [];
   }

@@ -68,9 +68,6 @@ export class ShellComponent implements OnInit {
   ngOnInit() {}
 
   prepareRoute(outlet: RouterOutlet) {
-    console.log(
-      outlet.activatedRoute.url + ' ' + outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
-    );
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 }

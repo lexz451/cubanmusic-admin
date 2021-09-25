@@ -7,3 +7,17 @@ q {
   font-size: 1.2rem;
   quotes: "« " " »";
 }
+
+.card {
+  .list-group {
+    .list-group-item {
+      position: relative;
+      .badge {
+        background-color: #feefef;
+        position: absolute;
+        top: -12px;
+        right: 8px;
+      }
+    }
+  }
+}

@@ -65,4 +65,8 @@ export class InputComponent extends ValidationControl implements OnInit, Control
   get untouched(): boolean {
     return this.ngControl?.untouched;
   }
+
+  get validationMessages() {
+    return super.validationMessages;
+  }
 }

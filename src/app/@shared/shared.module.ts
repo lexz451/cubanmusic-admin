@@ -31,6 +31,7 @@ import { TagInputModule } from 'ngx-chips';
 import { CoordinatesModule } from 'angular-coordinates';
 import { CoordinateValidator } from './validation/coordinates-validator';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PwdMatchValidator } from './validation/pwd-match-validator';
 
 // @ts-ignore
 @NgModule({
@@ -77,6 +78,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AutocompleteComponent,
     ClickOutsideDirective,
     CoordinateValidator,
+    PwdMatchValidator,
     UidDirective,
   ],
   exports: [
@@ -98,6 +100,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
     ClickOutsideDirective,
     CoordinateValidator,
+    PwdMatchValidator,
     UidDirective,
 
     FormsModule,
