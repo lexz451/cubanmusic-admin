@@ -409,7 +409,14 @@
     <div class="row">
       <app-input [(ngModel)]="location.city" class="col-sm-4" placeholder="Pueblo/Ciudad"></app-input>
       <app-input [(ngModel)]="location.state" class="col-sm-4" placeholder="Provincia/Estado"></app-input>
-      <app-selector [(ngModel)]="location.country" [data$]="countries$" class="col-sm-4" placeholder="País">
+      <app-selector
+        [(ngModel)]="location.country"
+        [data$]="countries$"
+        class="col-sm-4"
+        placeholder="País"
+        [showCreate]="true"
+        (create)="createCountry(countryModal)"
+      >
       </app-selector>
     </div>
   </div>
@@ -541,5 +548,32 @@
   <div class="modal-footer">
     <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #countryModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bold mb-0">Agregar Pais</h5>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <app-input placeholder="Nombre" [(ngModel)]="country.name" name="country" class="col-sm-12" required></app-input>
+    <app-input
+      placeholder="Codigo ISO"
+      [(ngModel)]="country.iso2Code"
+      name="iso2Code"
+      class="col-sm-12"
+      required
+    ></app-input>
+    <app-input
+      placeholder="Codigo Telefonico"
+      [(ngModel)]="country.phoneCode"
+      name="telcode"
+      class="col-sm-12"
+      required
+    ></app-input>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onAddCountry(form, modal)">Aceptar</button>
   </div>
 </ng-template>

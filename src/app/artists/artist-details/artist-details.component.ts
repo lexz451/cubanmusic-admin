@@ -40,6 +40,7 @@ export class ArtistDetailsComponent implements OnInit {
   award = new Award();
   label = new Recordlabel();
   genre = new Genre();
+  country = new Country();
 
   locations$: Observable<ISelectableItem[]>;
   jobTitles$: Observable<ISelectableItem[]>;
@@ -363,5 +364,34 @@ export class ArtistDetailsComponent implements OnInit {
         },
         () => {}
       );
+  }
+
+  createCountry(countryModal: any): void {
+    this.country = new Country();
+    this.modal
+      .open(countryModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createCountry(this.country)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.countries$ = this.dataService.countries;
+              this.uiService.notifySuccess('Pais agregado con exito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  onAddCountry(form: NgForm, modal: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
+    }
   }
 }

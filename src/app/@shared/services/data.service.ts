@@ -270,6 +270,10 @@ export class DataService {
     return this.apiService.post('/instruments/new', instrument);
   }
 
+  createCountry(country: Country): Observable<number> {
+    return this.apiService.post('/countries/new', country);
+  }
+
   createLocation(location: Location): Observable<number> {
     return this.apiService.post('/locations/new', location);
   }
