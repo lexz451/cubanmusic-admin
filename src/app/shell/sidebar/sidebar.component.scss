@@ -62,6 +62,12 @@
         align-items: center;
         font-size: 18px;
         &.active {
+          img.building-light {
+            display: inline;
+          }
+          img.building-dark {
+            display: none;
+          }
           a {
             color: #fafafa;
           }
@@ -69,6 +75,17 @@
             color: #fafafa;
           }
           background-color: var(--app-primary);
+        }
+
+        img {
+          margin-left: -3px;
+          width: 23px;
+          &.building-light {
+            display: none;
+          }
+          &.building-dark {
+            display: inline;
+          }
         }
 
         a {
