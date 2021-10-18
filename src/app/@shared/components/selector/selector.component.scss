@@ -7,7 +7,6 @@ $primary: #f4655f;
 
   .selector-btn-create {
     border-radius: 0.35rem !important;
-    font-size: 16px;
     padding: 0.3rem;
   }
   .selector-control {
@@ -41,7 +40,7 @@ $primary: #f4655f;
           }
           .ng-placeholder {
             padding: 0;
-            top: 10px;
+            top: 6px;
             left: 12px;
           }
         }
@@ -61,7 +60,7 @@ $primary: #f4655f;
       border: 1px solid transparent !important;
       background-color: var(--input-bg-color) !important;
       border-radius: 0.35rem !important;
-      min-height: 45px !important;
+      min-height: 37.5px !important;
       box-shadow: none;
       transition: all 0.2s ease;
 
@@ -83,10 +82,10 @@ $primary: #f4655f;
       .ng-value-container {
         .ng-placeholder {
           color: rgba(0, 0, 0, 0.6) !important;
-          font-weight: 300;
+
         }
         .ng-input {
-          margin-top: 5px !important;
+          margin-top: 1px !important;
         }
       }
     }
@@ -95,6 +94,7 @@ $primary: #f4655f;
   .selector-label {
     font-size: 12px;
     margin-bottom: 0.1rem;
+    font-weight: 500;
   }
 
   .ng-dropdown-panel {

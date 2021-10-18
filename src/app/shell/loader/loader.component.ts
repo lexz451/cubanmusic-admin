@@ -49,17 +49,4 @@ export class LoaderComponent implements OnInit, AfterViewInit, OnDestroy {
   onAnimationCreated(anim: AnimationItem): void {
     this.anim = anim;
   }
-
-  private startAnim(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.anim?.play();
-      this.anim?.setSpeed(3);
-    });
-  }
-
-  private stopAnim(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.anim?.stop();
-    });
-  }
 }

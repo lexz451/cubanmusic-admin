@@ -66,7 +66,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   ],
 })
 export class DatepickerComponent implements OnInit, ControlValueAccessor {
-  @Input() placeholder = 'DD-MM-YYYY';
+  @Input() placeholder = 'dd-mm-yyyy';
   @Input() label = '';
   @Input() disabled = false;
 

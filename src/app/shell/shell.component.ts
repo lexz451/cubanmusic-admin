@@ -32,14 +32,12 @@ import { RouterOutlet } from '@angular/router';
             ':enter',
             [
               style({
-                transform: 'scale(0.90)',
                 opacity: 0,
               }),
               animate(
-                '100ms ease-in-out',
+                '100ms ease',
                 style({
                   opacity: 1,
-                  transform: 'scale(1)',
                 })
               ),
             ],
@@ -49,7 +47,7 @@ import { RouterOutlet } from '@angular/router';
             ':leave',
             [
               animate(
-                '100ms ease-in-out',
+                '100ms ease',
                 style({
                   opacity: 0,
                 })

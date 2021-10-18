@@ -3,13 +3,14 @@
   .input-label {
     font-size: 12px;
     margin-bottom: 0.1rem;
-    font-weight: 300;
+    font-weight: 500;
   }
   .input-control {
-    font-weight: 300;
+    font-weight: 400;
     border-top-right-radius: 0.35rem !important;
     border-bottom-right-radius: 0.35rem !important;
     transition: all 0.2s ease !important;
+    padding: 0.2rem 0.7rem;
   }
   .input-text-error {
     margin-left: 2px;

@@ -47,6 +47,10 @@ a.disabled {
   min-width: 100px;
 }
 
+.btn {
+  font-weight: 500 !important;
+}
+
 .btn.btn-primary {
   color: $white;
 }
@@ -63,6 +67,15 @@ a.disabled {
 
 .btn.btn-light {
   color: $secondary;
+}
+
+.btn-back {
+  i {
+    font-size: 12px;
+  }
+  span {
+    font-size: 16px;
+  }
 }
 
 .nav-tabs {

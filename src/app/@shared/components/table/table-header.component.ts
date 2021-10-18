@@ -5,9 +5,9 @@ import { IHeaderParams } from 'ag-grid-community';
 @Component({
   template: `
     <div class="column-header">
-      <span class="column-header-name mr-2">{{ params?.displayName }}</span>
-      <i class="column-header-sort fas fa-angle-up" *ngIf="sort === 'asc'"></i>
-      <i class="column-header-sort fas fa-angle-down" *ngIf="sort === 'desc'"></i>
+      <span class="column-header-name me-1">{{ params?.displayName }}</span>
+      <i class="column-header-sort icon-arrow-up small" *ngIf="sort === 'asc'"></i>
+      <i class="column-header-sort icon-arrow-down small" *ngIf="sort === 'desc'"></i>
     </div>
   `,
   styles: [
@@ -20,6 +20,10 @@ import { IHeaderParams } from 'ag-grid-community';
         .column-header {
           display: flex;
           align-items: center;
+          .column-header-name {
+            white-space: break-spaces;
+            text-align: center;
+          }
           .column-header-sort {
             margin-left: 0.2rem;
           }

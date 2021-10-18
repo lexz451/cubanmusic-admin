@@ -10,13 +10,13 @@ import { Component, OnInit } from '@angular/core';
       state(
         'open',
         style({
-          width: '300px',
+          width: '275px',
         })
       ),
       state(
         'close',
         style({
-          width: '100px',
+          width: '275px',
         })
       ),
     ]),
