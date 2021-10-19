@@ -14,7 +14,7 @@ export class HomeService {
   }
 
   getLogs(): Observable<any[]> {
-    return this._apiService.get('/logs');
+    return this._apiService.get('/logs/latest');
   }
 
   createUser(user: User): Observable<void> {
