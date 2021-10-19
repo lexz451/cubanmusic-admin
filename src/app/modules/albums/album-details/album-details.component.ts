@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumsService } from '../albums.service';
 import { Component, OnInit, Optional } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { Recordlabel } from '@app/@shared/models/recordlabel';
+import { Country } from '@app/@shared/models/country';
 
 @UntilDestroy()
 @Component({
@@ -21,9 +23,13 @@ import { UntilDestroy, untilDestroyed } from '@app/@shared';
 export class AlbumDetailsComponent implements OnInit {
   album: Album = new Album();
 
-  recordLabels: ISelectableItem[] = [];
-  artists: ISelectableItem[] = [];
-  organizations: ISelectableItem[] = [];
+  label = new Recordlabel();
+
+  recordLabels$: Observable<ISelectableItem[]>;
+  artists$: Observable<ISelectableItem[]>;
+  organizations$: Observable<ISelectableItem[]>;
+  fullCountries$: Observable<Country[]>;
+  countries$: Observable<ISelectableItem[]>;
 
   constructor(
     private albumService: AlbumsService,
@@ -31,30 +37,49 @@ export class AlbumDetailsComponent implements OnInit {
     private router: Router,
     private uiService: UiService,
     private dataService: DataService,
+    private modal: NgbModal,
     @Optional()
     private modalRef: NgbActiveModal
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.params.id;
-    const req: Observable<any>[] = [];
-    req.push(this.dataService.recordLabels);
-    req.push(this.dataService.artists);
-    req.push(this.dataService.organizations);
+
+    this.recordLabels$ = this.dataService.recordLabels;
+    this.artists$ = this.dataService.artists;
+    this.organizations$ = this.dataService.organizations;
+    this.fullCountries$ = this.dataService.fullCountries;
+    this.countries$ = this.dataService.countries;
+
     if (id) {
-      req.push(this.albumService.getById(id));
+      this.albumService.getById(id).pipe(
+        untilDestroyed(this)
+      ).subscribe(res => {
+        this.album = res || new Album();
+      })
     }
 
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.recordLabels = res[0] || [];
-        this.artists = res[1] || [];
-        this.organizations = res[2] || [];
-        if (id) {
-          this.album = res[3] || new Album();
-        }
-      });
+  }
+
+  createRecordLabel(recordLabelModal: any): void {
+    this.label = new Recordlabel();
+    this.modal
+      .open(recordLabelModal, {
+        size: 'md',
+        centered: true,
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createRecordLabel(this.label)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.recordLabels$ = this.dataService.recordLabels;
+              this.uiService.notifySuccess('Sello creado con éxito.');
+            });
+        },
+        () => {}
+      );
   }
 
   onSubmit(form: NgForm) {
@@ -66,14 +91,14 @@ export class AlbumDetailsComponent implements OnInit {
           .update(this.album)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Album actualizado con exito.');
+            this.uiService.notifySuccess('Album actualizado con éxito.');
           });
       } else {
         this.albumService
           .create(this.album)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Album creado con exito.');
+            this.uiService.notifySuccess('Album creado con éxito.');
             this.router.navigate(['albums']);
           });
       }

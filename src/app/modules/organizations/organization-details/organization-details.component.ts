@@ -3,14 +3,14 @@ import { finalize } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { UiService } from '../../../@shared/services/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Organization } from '@shared/models/organization';
 import { NgForm } from '@angular/forms';
 import { OrganizationService } from '@app/modules/organizations/organization.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Country } from '@shared/models/country';
 import { ISelectableItem } from '@shared/models/selectable-item';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subscription } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -20,11 +20,13 @@ import { Observable, forkJoin } from 'rxjs';
 })
 export class OrganizationDetailsComponent implements OnInit {
   org: Organization = new Organization();
-  countries: Country[] = [];
+
+  fullCountries: Observable<Country[]>;
+  countries: Observable<ISelectableItem[]>;
 
   constructor(
     private organizationService: OrganizationService,
-    private selectorService: DataService,
+    private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private uiService: UiService
@@ -33,31 +35,15 @@ export class OrganizationDetailsComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
 
-    const req: Observable<any>[] = [];
-    req.push(this.organizationService.countries);
+    this.countries = this.dataService.countries;
+    this.fullCountries = this.dataService.fullCountries;
 
     if (id) {
-      req.push(this.organizationService.getById(id));
+      this.organizationService.getById(id)
+      .pipe(untilDestroyed(this)).subscribe(res => {
+        this.org = res || new Organization();
+      })
     }
-
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        if (id) {
-          this.org = res[1] || new Organization();
-        }
-      });
-  }
-
-  get selectableCountries(): ISelectableItem[] {
-    return this.countries.map((e) => {
-      return {
-        id: e.id,
-        name: e.name,
-        icon: e.emoji,
-      };
-    });
   }
 
   onSubmit(form: NgForm) {

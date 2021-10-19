@@ -43,65 +43,21 @@ export class GroupListComponent implements OnInit {
         field: 'name',
         sortable: true,
         headerName: 'Nombre',
+        width: 250,
+        autoHeight: true
       },
+
       {
-        field: 'birthDate',
-        headerName: 'Fecha de Nacimiento',
-        cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
-        },
-      },
-      {
-        field: 'deathDate',
-        headerName: 'Fecha de Muerte',
-        cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
-        },
-      },
-      {
-        field: 'birthPlace',
-        width: 150,
-        headerName: 'Lugar de Nacimiento',
-        cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
-        },
-      },
-      {
-        field: 'deathPlace',
-        width: 150,
-        headerName: 'Lugar de Muerte',
-        cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
-        },
-      },
-      {
-        field: 'residencePlace',
         width: 100,
-        headerName: 'Residencia',
+        field: 'isniCode',
+        sortable: false,
+        headerName: 'ISNI',
         cellRenderer: (params) => {
-          return `${params.value?.city || '-'} / ${params.value?.state || '-'} / ${params.value?.country?.name || '-'}`;
-        },
+          if (!params.value) return '-';
+          return `<a href="https://isni.org/isni/${params.value}">${params.value}</a>`;
+        }
       },
-      {
-        field: 'gender',
-        width: 50,
-        headerName: 'Género',
-      },
-      {
-        field: 'jobTitle',
-        width: 50,
-        headerName: 'Ocupación',
-        cellRenderer: (params) => {
-          return params?.value?.title || '-';
-        },
-      },
-      {
-        field: 'jobRoles',
-        width: 100,
-        headerName: 'Roles',
-        cellRendererFramework: ListRendererComponent,
-        cellRendererParams: {},
-      },
+
       {
         cellRendererFramework: ActionsRendererComponent,
         cellRendererParams: {

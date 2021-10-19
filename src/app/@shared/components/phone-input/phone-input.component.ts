@@ -8,7 +8,7 @@ import { Country } from '@shared/models/country';
   styleUrls: ['./phone-input.component.scss'],
 })
 export class PhoneInputComponent implements OnInit, OnChanges {
-  selectedCountry = new Country();
+  selectedCountry: Country;
 
   @Input() phone: Phone = new Phone();
   @Output() phoneChange = new EventEmitter();
@@ -25,12 +25,16 @@ export class PhoneInputComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.countries && this.countries?.length) {
-      this.selectedCountry = this.countries.find((e) => e.phoneCode == '53');
-      this.phone.code = this.selectedCountry.phoneCode;
+    if (this.countries && this.countries.length) {
+      if (!this.selectedCountry) {
+        this.selectedCountry = this.countries[0];
+        this.phone.code = this.selectedCountry.phoneCode;
+      }
     }
   }
 

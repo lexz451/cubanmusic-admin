@@ -2,8 +2,8 @@
   <label class="form-label phone-input-label">{{ label || placeholder }}</label>
   <div class="input-group" ngbDropdown>
     <button class="btn btn-light phone-input-selector" type="button" ngbDropdownToggle>
-      <span>
-        {{ selectedCountry?.emoji }}
+      <span class="d-flex align-items-center justify-content-center text-primary">
+        <i class="icon-phone me-1"></i>
         {{ selectedCountry?.phoneCode }}
       </span>
     </button>

@@ -56,13 +56,6 @@ export class ArtistDetailsComponent implements OnInit {
 
   artistImages$: Observable<Image[]>;
 
-  tabs: any[] = [
-    { label: 'Datos Personales', fragment: 'personal' },
-    { label: 'Datos Profesionales', fragment: 'professional' },
-    { label: 'Datos de Contacto', fragment: 'contact' },
-    { label: 'Galeria', fragment: 'gallery' },
-  ];
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -100,7 +93,7 @@ export class ArtistDetailsComponent implements OnInit {
     this.fullCountries$ = this.dataService.fullCountries;
 
     const id = this.route.snapshot.params.id;
-    id &&
+    if (id) {
       this.artistService
         .getById(id)
         .pipe(untilDestroyed(this))
@@ -110,7 +103,6 @@ export class ArtistDetailsComponent implements OnInit {
             map((artists) => artists.filter((artist) => artist.id !== this.artist.id))
           );
         });
-    if (id) {
       this.artistImages$ = this.imagesService.getArtistImages(id).pipe(untilDestroyed(this));
     }
   }

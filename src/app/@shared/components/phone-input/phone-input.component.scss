@@ -21,7 +21,7 @@
 .phone-input-container {
   .phone-input-label {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 500;
     margin-bottom: 0.1rem;
   }
   .phone-input-selector {
@@ -33,5 +33,6 @@
   }
   .phone-input-control {
     border-radius: 0.35rem !important;
+    padding: 0.2rem 0.7rem;
   }
 }

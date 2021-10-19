@@ -11,7 +11,7 @@ export class Group {
   awards: number[] = [];
   collaborations: number[] = [];
   affiliation: number;
-  labels: number[] = [];
+  label?: number;
   genres: number[] = [];
   email?: string;
   website?: string;
@@ -28,4 +28,5 @@ export class Group {
   tiktok?: string;
   libOfCongress?: string;
   members: Artist[] = [];
+  albums: number[] = [];
 }

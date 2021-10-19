@@ -1,6 +1,6 @@
 <div class="artist-container container-fluid px-4 py-2" scrollbar>
   <div class="d-flex flex-column align-items-start mb-2">
-    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/artists">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/artists">
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
@@ -106,7 +106,7 @@
                 <app-selector
                   [(ngModel)]="artist.jobTitle"
                   name="jobTitle"
-                  [placeholder]="'Job Title'"
+                  [placeholder]="'Ocupación'"
                   [data$]="jobTitles$"
                   [showCreate]="true"
                   (create)="createJobTitle(jobTitleModal)"
@@ -120,7 +120,7 @@
                 <app-input name="isniCode" [(ngModel)]="artist.isniCode" [placeholder]="'ISNI'">
                   <button class="btn btn-link bg-transparent shadow-none">
                     <a
-                      class="fw-light"
+                      class="fw-normal"
                       [class.disabled]="!artist.isniCode"
                       href="https://isni.org/isni/{{ artist.isniCode }}"
                     >
@@ -231,7 +231,7 @@
               <div class="col-sm-4">
                 <app-selector
                   name="labels"
-                  [placeholder]="'Sellos Discográfico'"
+                  [placeholder]="'Sellos Discográficos'"
                   [data$]="recordLabels$"
                   [showCreate]="true"
                   (create)="createRecordLabel(recordLabelModal)"

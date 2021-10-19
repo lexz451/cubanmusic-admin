@@ -1,8 +1,9 @@
-<div class="container-fluid px-4 h-100 d-flex flex-column">
-  <div class="d-flex align-items-center mb-4">
-    <span class="btn-icon me-3" routerLink="/albums">
-      <i class="fas fa-angle-left"></i>
-    </span>
+<div class="container-fluid px-4 h-100 d-flex flex-column px-4 py-2">
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/albums">
+      <i class="icon-arrow-left"></i>
+      <span>Atrás</span>
+    </button>
     <h2 class="mb-0 fw-bold">{{ album?.title || 'Crear nuevo Album' }}</h2>
   </div>
 
@@ -24,27 +25,30 @@
             placeholder="Fecha de lanzamiento"
             [(ngModel)]="album.releasedOn"
           ></app-datepicker>
-          <app-select
+          <app-selector
             name="recordLabel"
             class="col-sm-4"
-            placeholder="Sello Discografico"
-            [items]="recordLabels"
+            placeholder="Sello Discográfico"
+            [data$]="recordLabels$"
             [(ngModel)]="album.recordLabel"
-          ></app-select>
-          <app-multiselect
+            [showCreate]="true"
+            (create)="createRecordLabel(recordLabelModal)"
+          ></app-selector>
+          <!--<app-multiselect
             name="artists"
             class="col-sm-4"
             placeholder="Artistas"
             [items]="artists"
             [(ngModel)]="album.artists"
-          ></app-multiselect>
-          <app-multiselect
+          ></app-multiselect>-->
+          <app-selector
+            [multiple]="true"
             name="collaborations"
             class="col-sm-4"
             placeholder="Colaboradores"
-            [items]="artists"
+            [data$]="artists$"
             [(ngModel)]="album.contributors"
-          ></app-multiselect>
+          ></app-selector>
         </div>
       </div>
     </div>
@@ -53,3 +57,33 @@
     </div>
   </form>
 </div>
+
+<ng-template #recordLabelModal let-modal>
+  <div class="modal-header">
+    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discografico</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-6" required></app-input>
+      <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-6" required></app-input>
+      <app-input placeholder="Nombre" name="name" [(ngModel)]="label.name" class="col-sm-12" required></app-input>
+      <app-input
+        placeholder="Descripción"
+        name="description"
+        [(ngModel)]="label.description"
+        class="col-sm-12"
+        controlType="textarea"
+      ></app-input>
+      <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
+      <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
+      <app-selector class="col-sm-6" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="label.country">
+      </app-selector>
+      <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
+      <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>

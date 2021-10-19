@@ -17,3 +17,16 @@
     user-select: none;
   }
 }
+
+.search-input {
+  position: relative;
+  .form-control {
+    min-width: 250px;
+    border-radius: 0.35rem !important;
+  }
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+  }
+}

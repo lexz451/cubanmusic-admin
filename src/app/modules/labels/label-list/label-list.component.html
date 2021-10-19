@@ -1,7 +1,8 @@
-<div class="container-fluid d-flex flex-column h-100">
-  <div class="actions-container w-100 d-flex">
+<div class="container-fluid d-flex flex-column h-100 px-4 py-2">
+  <div class="actions-container w-100 d-flex align-items-center">
+    <h2 class="mb-0 fw-bold">Sellos Discográficos</h2>
     <button class="btn btn-primary ms-auto" (click)="addLabel()">
-      <i class="fas fa-microphone me-2"></i>Crear Sello Discográfico
+      Crear Sello Discográfico
     </button>
   </div>
   <app-table class="mt-2" [columns]="columns" [data]="labels"></app-table>

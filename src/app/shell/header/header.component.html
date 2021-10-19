@@ -1,15 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <div class="form-group mb-0">
-      <input class="form-control" placeholder="Buscar" />
+     <div class="search-input input-group">
+      <input class="form-control form-control-sm" placeholder="Buscar" />
+      <span class="search-icon">
+        <i class="icon-magnifier"></i>
+      </span>
+     </div>
     </div>
     <div id="navbar-menu" class="">
       <div class="navbar-nav ms-auto">
         <!--<app-language-selector [inNavbar]="true" menuClass="dropdown-menu dropdown-menu-right"></app-language-selector>-->
         <div class="nav-item" ngbDropdown>
-          <a id="user-dropdown" class="nav-link" ngbDropdownToggle>
-            <i class="fas fa-user-circle me-1"></i>
-            <span>{{ email }}</span>
+          <a id="user-dropdown" class="nav-link d-flex align-items-center" ngbDropdownToggle>
+            <i class="icon-user me-2"></i>
+            <small class="fw-light">{{ email }}</small>
           </a>
           <div ngbDropdownMenu aria-labelledby="user-dropdown" class="dropdown-menu dropdown-menu-right">
             <button class="dropdown-item" (click)="logout()" translate>Logout</button>

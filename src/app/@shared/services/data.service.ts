@@ -293,4 +293,8 @@ export class DataService {
   createRecordLabel(label: Recordlabel): Observable<number> {
     return this.apiService.post('/recordlabels/new', label);
   }
+
+  createOrganization(org: Organization): Observable<number>  {
+    return this.apiService.post('/organizations/new', org);
+  }
 }

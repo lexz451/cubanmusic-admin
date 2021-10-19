@@ -1,12 +1,12 @@
 import { DataService } from '../../../@shared/services/data.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../../../@shared/models/country';
 import { Recordlabel } from '../../../@shared/models/recordlabel';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { LabelService } from '../label.service';
 
@@ -18,44 +18,34 @@ import { LabelService } from '../label.service';
 })
 export class LabelDetailsComponent implements OnInit {
   label: Recordlabel = new Recordlabel();
-  countries: Country[] = [];
+  countries: Observable<ISelectableItem[]>;
+  fullCountries: Observable<Country[]>;
+
 
   constructor(
     private labelService: LabelService,
-    private selectorService: DataService,
+    private dataService: DataService,
     private router: Router,
     private route: ActivatedRoute,
     private notifierService: NotifierService
   ) {}
 
+
+
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
 
-    const req: Observable<any>[] = [];
-    req.push(this.labelService.countries);
+    this.countries = this.dataService.countries;
+    this.fullCountries = this.dataService.fullCountries;
 
     if (id) {
-      req.push(this.labelService.getById(id));
+      this.labelService.getById(id)
+        .pipe(untilDestroyed(this)).subscribe(res => {
+        this.label = res || new Recordlabel();
+      })
     }
 
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        if (id) {
-          this.label = res[1] || new Recordlabel();
-        }
-      });
-  }
 
-  get mappedCountries(): ISelectableItem[] {
-    return this.countries.map((e) => {
-      return {
-        id: e.id,
-        name: e.name,
-        icon: e.emoji,
-      };
-    });
   }
 
   onSubmit(form: NgForm) {

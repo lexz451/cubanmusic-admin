@@ -57,9 +57,28 @@ export class ArtistListComponent implements OnInit {
         width: 150,
         field: 'name',
         sortable: true,
+        sort: 'desc',
         headerName: 'Nombre',
       },
       {
+        width: 100,
+        field: 'isniCode',
+        sortable: false,
+        headerName: 'ISNI',
+        cellRenderer: (params) => {
+          if (!params.value) return '-';
+          return `<a href="https://isni.org/isni/${params.value}">${params.value}</a>`;
+        }
+      },
+      {
+        field: 'jobTitle',
+        width: 50,
+        headerName: 'Ocupación',
+        cellRenderer: (params) => {
+          return params?.value?.title || '-';
+        },
+      },
+      /*{
         width: 150,
         field: 'birthDate',
         headerName: 'Fecha de Nacimiento',
@@ -112,7 +131,7 @@ export class ArtistListComponent implements OnInit {
         cellRenderer: (params) => {
           return params?.value?.title || '-';
         },
-      },
+      },*/
       {
         cellRendererFramework: ActionsRendererComponent,
         cellRendererParams: {

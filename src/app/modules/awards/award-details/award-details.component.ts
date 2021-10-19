@@ -6,10 +6,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AwardService } from '../award.service';
 import { NgForm } from '@angular/forms';
 import { Award } from '../../../@shared/models/award';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, NgZone } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, NgZone, OnDestroy } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { publishReplay, refCount } from 'rxjs/operators';
+import { Organization } from '@app/@shared/models/organization';
+import { Country } from '@app/@shared/models/country';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('Award');
 
@@ -21,35 +24,35 @@ const log = new Logger('Award');
 })
 export class AwardDetailsComponent implements OnInit {
   award: Award = new Award();
+  org: Organization = new Organization();
+  country: Country = new Country();
 
-  countries: ISelectableItem[] = [];
-  orgs: ISelectableItem[] = [];
+  countries$: Observable<ISelectableItem[]>;
+  fullCountries$: Observable<Country[]>;
+  orgs$: Observable<ISelectableItem[]>;
 
   constructor(
     private awardService: AwardService,
     private uiService: UiService,
     private router: Router,
     private route: ActivatedRoute,
-    private selector: DataService
+    private dataService: DataService,
+    private modal: NgbModal,
   ) {}
 
   ngOnInit() {
-    const req: Observable<any>[] = [];
-    req.push(this.selector.countries);
-    req.push(this.selector.organizations);
     const id = this.route.snapshot.params.id;
+
+    this.countries$ = this.dataService.countries;
+    this.orgs$ = this.dataService.organizations;
+    this.fullCountries$ = this.dataService.fullCountries;
+
     if (id) {
-      req.push(this.awardService.getById(id));
+      this.awardService.getById(id)
+        .pipe(untilDestroyed(this)).subscribe((res) => {
+        this.award = res || new Award();
+      })
     }
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        this.orgs = res[1] || [];
-        if (id) {
-          this.award = res[2] || new Award();
-        }
-      });
   }
 
   onSubmit(form: NgForm): void {
@@ -72,6 +75,61 @@ export class AwardDetailsComponent implements OnInit {
             this.router.navigate(['awards']);
           });
       }
+    }
+  }
+
+  createCountry(countryModal: any): void {
+    this.country = new Country();
+    this.modal
+      .open(countryModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createCountry(this.country)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.countries$ = this.dataService.countries;
+              this.uiService.notifySuccess('País creado con éxito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  createOrg(orgModal: any): void {
+    this.org = new Organization();
+    this.modal.open(orgModal, {
+      centered: true,
+      size: 'lg'
+    }).result.then(
+      () => {
+        this.dataService.createOrganization(this.org)
+          .pipe(untilDestroyed(this))
+          .subscribe(res => {
+            this.orgs$ = this.dataService.organizations;
+            this.uiService.notifySuccess('Institución creada con éxito.')
+          })
+      },
+      () => {}
+    )
+  }
+
+  onAddCountry(form: NgForm, modal: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
+    }
+  }
+
+  onAddOrg(form: NgForm, modal: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
     }
   }
 }

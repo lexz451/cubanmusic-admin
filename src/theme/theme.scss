@@ -78,6 +78,10 @@ a.disabled {
   }
 }
 
+.tab-content {
+  min-height: 400px;
+}
+
 .nav-tabs {
   background-color: $light;
   border-radius: $border-radius;
@@ -150,7 +154,7 @@ a.disabled {
       backface-visibility: hidden;
       box-shadow: $box-shadow;
 
-      border: 1px solid $divider;
+
 
       p {
         margin: 0;
@@ -201,10 +205,12 @@ a.disabled {
       &--success {
         background-color: #eff9ef;
         color: $success;
+        border: 1px solid $success;
       }
       &--error {
         background-color: #fdedeb;
         color: $danger;
+        border: 1px solid $danger;
       }
     }
   }

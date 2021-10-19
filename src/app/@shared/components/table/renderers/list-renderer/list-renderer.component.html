@@ -1,5 +1,5 @@
 <div class="list-container">
-  <span class="list-item badge rounded-pill bg-primary" *ngFor="let item of data">
-    {{ isObject ? item[nameField] : item }}
+  <span class="item badge bg-primary text-light" *ngFor="let item of data">
+    <small>{{ isObject ? item[nameField] : item }}</small>
   </span>
 </div>

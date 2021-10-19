@@ -62,12 +62,15 @@ export class LabelListComponent implements OnInit {
         headerName: 'Teléfono',
         cellRenderer: (params) => {
           const phone = params.value;
-          return `(${phone.code}) ${phone.number}`;
+          return `(${phone.code || "-"}) ${phone.number || "-"}`;
         },
       },
       {
         field: 'email',
         headerName: 'Email',
+        cellRenderer: params => {
+          return params.value || "-";
+        }
       },
       {
         field: 'country',
@@ -82,10 +85,9 @@ export class LabelListComponent implements OnInit {
       {
         field: 'website',
         headerName: 'Sitio web',
-      },
-      {
-        field: 'address',
-        headerName: 'Dirección',
+        cellRenderer: params => {
+          return params.value || "-";
+        }
       },
       {
         cellRendererFramework: ActionsRendererComponent,

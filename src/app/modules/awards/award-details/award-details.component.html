@@ -1,8 +1,9 @@
-<div class="org-container container-fluid px-4">
-  <div class="d-flex align-items-center mb-4">
-    <span class="btn-icon me-3" routerLink="/awards">
-      <i class="fas fa-angle-left"></i>
-    </span>
+<div class="org-container container-fluid px-4 py-2">
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/awards">
+      <i class="icon-arrow-left"></i>
+      <span>Atrás</span>
+    </button>
     <h2 class="mb-0 fw-bold">{{ award?.title || 'Crear nuevo Premio' }}</h2>
   </div>
 
@@ -16,21 +17,25 @@
       controlType="textarea"
     ></app-input>
 
-    <app-select
+    <app-selector
       class="col-sm-4"
       name="country"
       placeholder="País"
-      [items]="countries"
+      [data$]="countries$"
       [(ngModel)]="award.country"
-    ></app-select>
+      (create)="createCountry(countryModal)"
+      [showCreate]="true"
+    ></app-selector>
 
-    <app-select
+    <app-selector
       class="col-sm-4"
       name="granted"
       placeholder="Otorgado por"
-      [items]="orgs"
+      [data$]="orgs$"
+      [showCreate]="true"
+      (create)="createOrg(orgModal)"
       [(ngModel)]="award.grantedBy"
-    ></app-select>
+    ></app-selector>
 
     <app-tags
       name="categories"
@@ -52,3 +57,71 @@
     </div>
   </form>
 </div>
+
+<ng-template #countryModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bold mb-0">Agregar Pais</h5>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <app-input placeholder="Nombre" [(ngModel)]="country.name" name="country" class="col-sm-12" required></app-input>
+    <app-input
+      placeholder="Codigo ISO"
+      [(ngModel)]="country.iso2Code"
+      name="iso2Code"
+      class="col-sm-12"
+      required
+    ></app-input>
+    <app-input
+      placeholder="Codigo Telefonico"
+      [(ngModel)]="country.phoneCode"
+      name="telcode"
+      class="col-sm-12"
+      required
+    ></app-input>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onAddCountry(form, modal)">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #orgModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bold mb-0">Agregar Institución</h5>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <div class="row">
+     <div class="col-sm-6">
+       <div class="row">
+        <app-input placeholder="Nombre" [(ngModel)]="org.name" name="name" class="col-sm-12" required></app-input>
+        <app-phone-input placeholder="Teléfono" [(phone)]="org.phone" [countries]="fullCountries$ | async" class="col-sm-12" name="phone"></app-phone-input>
+        <app-input class="col-sm-12" placeholder="Email" [(ngModel)]="org.email" name="email"></app-input>
+        <app-selector [data$]="countries$" placeholder="País" name="country" [(ngModel)]="org.country"></app-selector>
+        <app-input class="col-sm-12" name="website" placeholder="Sitio Web" [(ngModel)]="org.website"></app-input>
+       </div>
+     </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <app-input
+            placeholder="Descripción"
+            [(ngModel)]="org.description"
+            name="desc"
+            class="col-sm-12"
+            controlType="textarea"
+          ></app-input>
+          <app-input
+            class="col-sm-12"
+            name="address"
+            placeholder="Dirección"
+            [(ngModel)]="org.address"
+            controlType="textarea"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onAddOrg(form, modal)">Aceptar</button>
+  </div>
+</ng-template>

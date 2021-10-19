@@ -1,8 +1,9 @@
-<div class="org-container container-fluid px-4">
-  <div class="d-flex align-items-center mb-4">
-    <span class="btn-icon me-3" routerLink="/labels">
-      <i class="fas fa-angle-left"></i>
-    </span>
+<div class="org-container container-fluid px-4 py-2">
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/labels">
+      <i class="icon-arrow-left"></i>
+      <span>Atrás</span>
+    </button>
     <h2 class="mb-0 fw-bold">{{ label?.name || 'Crear nuevo Sello Discográfico' }}</h2>
   </div>
 
@@ -17,22 +18,26 @@
       class="col-sm-12"
       controlType="textarea"
     ></app-input>
-    <app-phone-input class="col-sm-2" [(phone)]="label.phone" [countries]="countries"></app-phone-input>
-    <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-4"></app-input>
-    <app-select
-      class="col-sm-2"
-      name="country"
-      placeholder="País"
-      [items]="mappedCountries"
-      [(ngModel)]="label.country"
-    ></app-select>
-    <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
+    <div class="col-sm-6">
+      <div class="row">
+        <app-phone-input class="col-sm-6" [(phone)]="label.phone" [countries]="fullCountries | async"></app-phone-input>
+        <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-6"></app-input>
+        <app-selector
+          class="col-sm-6"
+          name="country"
+          placeholder="País"
+          [data$]="countries"
+          [(ngModel)]="label.country"
+        ></app-selector>
+        <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
+      </div>
+    </div>
     <app-input
       name="address"
       [(ngModel)]="label.address"
       placeholder="Dirección"
       controlType="textarea"
-      class="col-sm-12"
+      class="col-sm-6"
     ></app-input>
     <div class="col-sm-12 d-flex mt-4">
       <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
