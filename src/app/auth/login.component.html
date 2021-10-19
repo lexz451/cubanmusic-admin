@@ -56,8 +56,12 @@
               </div>
             </div>
             <div class="m-3">
-              <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
-                <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+              <button
+                class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                type="submit"
+                [disabled]="loginForm.invalid || isLoading"
+              >
+                <i class="icon-settings spin me-2" [hidden]="!isLoading"></i>
                 <span translate>Login</span>
               </button>
             </div>
