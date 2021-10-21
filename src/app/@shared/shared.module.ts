@@ -1,5 +1,4 @@
 import { SelectorComponent } from './components/selector/selector.component';
-import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { FileInputComponent } from './components/fileinput/fileinput.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { NgModule } from '@angular/core';
@@ -12,10 +11,8 @@ import { CheckgroupComponent } from './components/checkgroup/checkgroup.componen
 import { InputComponent } from './components/input/input.component';
 import { LocationComponent } from './components/location/location.component';
 import { RadiogroupComponent } from './components/radiogroup/radiogroup.component';
-import { SelectComponent } from './components/select/select.component';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MultiselectComponent } from './components/multiselect/multiselect.component';
 import { UidDirective } from './directives/uid.directive';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { TableComponent } from './components/table/table.component';
@@ -62,9 +59,9 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     CheckgroupComponent,
     InputComponent,
     LocationComponent,
-    MultiselectComponent,
+
     RadiogroupComponent,
-    SelectComponent,
+
     TableComponent,
     TableHeaderComponent,
     TagsComponent,
@@ -75,7 +72,7 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     GalleryComponent,
     SelectorComponent,
     PhoneInputComponent,
-    AutocompleteComponent,
+
     ClickOutsideDirective,
     CoordinateValidator,
     PwdMatchValidator,
@@ -86,9 +83,9 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     CheckgroupComponent,
     InputComponent,
     LocationComponent,
-    MultiselectComponent,
+
     RadiogroupComponent,
-    SelectComponent,
+
     TableComponent,
     DatepickerComponent,
     GalleryComponent,
@@ -96,7 +93,6 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     SelectorComponent,
     TagsComponent,
     FileInputComponent,
-    AutocompleteComponent,
 
     ClickOutsideDirective,
     CoordinateValidator,

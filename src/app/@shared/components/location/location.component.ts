@@ -49,9 +49,9 @@ export class LocationComponent implements OnInit, ControlValueAccessor, OnChange
   onTouch?: () => {};
 
   location = new Location();
-
-  countries: ISelectableItem[] = [];
   locations: ISelectableItem[] = [];
+
+  countries$: Observable<ISelectableItem[]>;
 
   searchFailed = false;
   searching = false;
@@ -93,11 +93,10 @@ export class LocationComponent implements OnInit, ControlValueAccessor, OnChange
   }
 
   ngOnInit() {
+    this.countries$ = this.dataService.countries;
     this.subscriptions$.push(
-      forkJoin([this.dataService.countries, this.dataService.locations]).subscribe((res) => {
-        this.countries = res[0] || [];
-        this.locations = res[1] || [];
-
+      this.dataService.locations.subscribe((res) => {
+        this.locations = res || [];
         if (this.value) {
           this.location = this.locations.find((l) => l.id == this.value);
         }

@@ -220,7 +220,7 @@ export class DataService {
       map((e) =>
         e[1].map((l) => {
           const country = e[0].find((c) => c.id == l.country);
-          const res = `${l.city}, ${l.state}, ${country.name}`;
+          const res = `${l.city || '-'}, ${l.state || '-'}, ${country?.name || '-'}`;
           return {
             id: l.id,
             name: res,
@@ -294,7 +294,7 @@ export class DataService {
     return this.apiService.post('/recordlabels/new', label);
   }
 
-  createOrganization(org: Organization): Observable<number>  {
+  createOrganization(org: Organization): Observable<number> {
     return this.apiService.post('/organizations/new', org);
   }
 }

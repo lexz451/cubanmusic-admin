@@ -1,7 +1,7 @@
 <ngx-loading-bar [includeSpinner]="false" [height]="'3px'" [color]="'#ff4141'"></ngx-loading-bar>
+<app-loader></app-loader>
 <app-sidebar></app-sidebar>
 <main>
-  <app-loader></app-loader>
   <app-header></app-header>
   <div [@routeAnimations]="prepareRoute(outlet)" class="routes-container">
     <router-outlet #outlet="outlet"></router-outlet>

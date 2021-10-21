@@ -40,7 +40,12 @@
     <div class="row">
       <app-input [(ngModel)]="location.city" class="col-sm-4" placeholder="Pueblo/Ciudad"></app-input>
       <app-input [(ngModel)]="location.state" class="col-sm-4" placeholder="Provincia/Estado"></app-input>
-      <app-select [(ngModel)]="location.country" [items]="countries" class="col-sm-4" placeholder="País"></app-select>
+      <app-selector
+        [(ngModel)]="location.country"
+        [data$]="countries$"
+        class="col-sm-4"
+        placeholder="País"
+      ></app-selector>
     </div>
   </div>
   <div class="modal-footer">
