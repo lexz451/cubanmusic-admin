@@ -62,15 +62,15 @@ export class LabelListComponent implements OnInit {
         headerName: 'Teléfono',
         cellRenderer: (params) => {
           const phone = params.value;
-          return `(${phone.code || "-"}) ${phone.number || "-"}`;
+          return `(${phone.code || '-'}) ${phone.number || '-'}`;
         },
       },
       {
         field: 'email',
         headerName: 'Email',
-        cellRenderer: params => {
-          return params.value || "-";
-        }
+        cellRenderer: (params) => {
+          return params.value || '-';
+        },
       },
       {
         field: 'country',
@@ -85,9 +85,9 @@ export class LabelListComponent implements OnInit {
       {
         field: 'website',
         headerName: 'Sitio web',
-        cellRenderer: params => {
-          return params.value || "-";
-        }
+        cellRenderer: (params) => {
+          return params.value || '-';
+        },
       },
       {
         cellRendererFramework: ActionsRendererComponent,
@@ -103,6 +103,16 @@ export class LabelListComponent implements OnInit {
               } else {
                 log.error('Row id not found!...');
               }
+            }
+            if (type == TableAction.DELETE) {
+              const id = row?.id;
+              id &&
+                this.labelService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.fetchData();
+                  });
             }
           },
         },

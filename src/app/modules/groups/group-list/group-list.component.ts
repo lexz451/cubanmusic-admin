@@ -22,9 +22,18 @@ const log = new Logger('Groups');
 export class GroupListComponent implements OnInit {
   groups: Group[] = [];
 
-  constructor(private groupService: GroupService, private datePipe: DatePipe, private router: Router) {}
+  constructor(
+    private groupService: GroupService,
+    private uiService: UiService,
+    private datePipe: DatePipe,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.fetchData();
+  }
+
+  private fetchData(): void {
     this.groupService
       .getAll()
       .pipe(untilDestroyed(this))
@@ -44,7 +53,7 @@ export class GroupListComponent implements OnInit {
         sortable: true,
         headerName: 'Nombre',
         width: 250,
-        autoHeight: true
+        autoHeight: true,
       },
 
       {
@@ -55,7 +64,7 @@ export class GroupListComponent implements OnInit {
         cellRenderer: (params) => {
           if (!params.value) return '-';
           return `<a href="https://isni.org/isni/${params.value}">${params.value}</a>`;
-        }
+        },
       },
 
       {
@@ -72,6 +81,17 @@ export class GroupListComponent implements OnInit {
               } else {
                 log.error('Row id not found!...');
               }
+            }
+            if (type == TableAction.DELETE) {
+              const id = row?.id;
+              id &&
+                this.groupService
+                  .delete(id)
+                  .pipe(untilDestroyed(this))
+                  .subscribe(() => {
+                    this.uiService.notifySuccess('Artista eliminado con exito.');
+                    this.fetchData();
+                  });
             }
           },
         },

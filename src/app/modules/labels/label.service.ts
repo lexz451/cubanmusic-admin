@@ -26,6 +26,10 @@ export class LabelService {
     return this.apiService.post<void, Recordlabel>('/recordlabels/new', label);
   }
 
+  delete(id: any): Observable<void> {
+    return this.apiService.delete(`/recordlabels/${id}`);
+  }
+
   get countries(): Observable<Country[]> {
     return this.apiService.get('/countries');
   }

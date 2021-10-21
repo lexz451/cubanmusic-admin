@@ -23,4 +23,8 @@ export class GroupService {
   createGroup(artist: Group): Observable<void> {
     return this.apiService.post<void, Group>('/groups/new', artist);
   }
+
+  delete(id: number): Observable<void> {
+    return this.apiService.delete(`/groups/${id}`);
+  }
 }
