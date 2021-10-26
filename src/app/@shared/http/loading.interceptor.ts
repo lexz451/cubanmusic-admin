@@ -14,7 +14,7 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Bypass suggestion endpoints
-    if (req.url.indexOf('suggestions') != -1) {
+    if (req.url.indexOf('search') != -1) {
       return next.handle(req);
     }
     if (this.activeRequests == 0) {

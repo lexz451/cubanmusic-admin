@@ -40,11 +40,11 @@
     <form class="row" #form="ngForm" (ngSubmit)="onSubmitModal(form, modal)">
       <app-fileinput name="file" placeholder="Archivos" [(ngModel)]="image.filedata" class="col-sm-12" required>
       </app-fileinput>
-      <app-input name="title" placeholder="Titulo" [(ngModel)]="image.title" class="col-sm-12" required></app-input>
+      <app-input name="title" placeholder="Título" [(ngModel)]="image.title" class="col-sm-12" required></app-input>
       <app-input name="author" placeholder="Autor" [(ngModel)]="image.author" class="col-sm-12"></app-input>
       <app-input
         name="desc"
-        placeholder="Descripcion"
+        placeholder="Descripción"
         controlType="textarea"
         [(ngModel)]="image.description"
         class="col-sm-12"

@@ -21,9 +21,14 @@ export class ApiService {
     });
   }
 
-  post<T, D>(url: string, data: D): Observable<T> {
+  post<T, D>(url: string, data: D, ignoreLoadingBar = false): Observable<T> {
+    if (ignoreLoadingBar) {
+      this._headers = this._headers.append('ignoreLoadingBar', '');
+    } else {
+      this._headers = this._headers.delete('ignoreLoadingBar');
+    }
     return this._httpClient.post<T>(url, data, {
-      headers: this._headers,
+      headers: this._headers
     });
   }
 

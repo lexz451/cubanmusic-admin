@@ -122,7 +122,7 @@
                     <a
                       class="fw-normal"
                       [class.disabled]="!artist.isniCode"
-                      href="https://isni.org/isni/{{ artist.isniCode }}"
+                      href="https://isni.org/isni/{{ formatISNI(artist.isniCode) }}"
                     >
                       isni.com
                     </a>
@@ -276,6 +276,9 @@
                 <app-input [placeholder]="'Vibrate'" [(ngModel)]="artist.viberate" name="vibrate"></app-input>
               </div>
               <div class="col-sm-4">
+                <app-input [placeholder]="'Reverb Nation'" [(ngModel)]="artist.reverbNation" name="reverbNation"></app-input>
+              </div>
+              <div class="col-sm-4">
                 <app-input [placeholder]="'Facebook'" [(ngModel)]="artist.facebook" name="facebook"></app-input>
               </div>
               <div class="col-sm-4">
@@ -350,13 +353,13 @@
 
 <ng-template #jobTitleModal let-modal>
   <div class="modal-header">
-    <h5 class="mb-0 fw-bold">Nuevo Job Title</h5>
+    <h5 class="mb-0 fw-bold">Nueva Ocupación</h5>
   </div>
   <div class="modal-body">
     <app-input [placeholder]="'Nombre'" [(ngModel)]="jobTitle.name" class="col-sm-12"></app-input>
     <app-input
       controlType="textarea"
-      [placeholder]="'Descripcion'"
+      [placeholder]="'Descripción'"
       [(ngModel)]="jobTitle.description"
       class="col-sm-12"
     ></app-input>
@@ -388,7 +391,7 @@
 
 <ng-template #genreModal let-modal>
   <div class="modal-header">
-    <h5 class="mb-0 fw-bold">Nuevo Genero</h5>
+    <h5 class="mb-0 fw-bold">Nuevo Género</h5>
   </div>
   <div class="modal-body">
     <app-input [placeholder]="'Nombre'" [(ngModel)]="genre.name" class="col-sm-12"></app-input>
@@ -403,7 +406,7 @@
 
 <ng-template #locationModal let-modal>
   <div class="modal-header">
-    <h4 class="mb-0 fw-bold">Nueva ubicacion</h4>
+    <h4 class="mb-0 fw-bold">Nueva ubicación</h4>
   </div>
   <div class="modal-body">
     <div class="row">
@@ -498,7 +501,7 @@
       <app-selector
         name="recordLabel"
         class="col-sm-4"
-        placeholder="Sello Discografico"
+        placeholder="Sello Discográfico"
         [data$]="recordLabels$"
         [(ngModel)]="album.recordLabel"
         [showCreate]="true"
@@ -523,7 +526,7 @@
 
 <ng-template #recordLabelModal let-modal>
   <div class="modal-header">
-    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discografico</h3>
+    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discográfico</h3>
   </div>
   <div class="modal-body">
     <div class="row">
@@ -558,14 +561,14 @@
   <form #form="ngForm" class="modal-body">
     <app-input placeholder="Nombre" [(ngModel)]="country.name" name="country" class="col-sm-12" required></app-input>
     <app-input
-      placeholder="Codigo ISO"
+      placeholder="Código ISO"
       [(ngModel)]="country.iso2Code"
       name="iso2Code"
       class="col-sm-12"
       required
     ></app-input>
     <app-input
-      placeholder="Codigo Telefonico"
+      placeholder="Código Telefónico"
       [(ngModel)]="country.phoneCode"
       name="telcode"
       class="col-sm-12"

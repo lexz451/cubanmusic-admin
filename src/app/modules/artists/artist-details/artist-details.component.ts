@@ -123,7 +123,7 @@ export class ArtistDetailsComponent implements OnInit {
           .createArtist(this.artist)
           .pipe(untilDestroyed(this))
           .subscribe((res) => {
-            this.uiService.notifySuccess('Artista creado con exito.');
+            this.uiService.notifySuccess('Artista creado con éxito.');
             this.router.navigate(['artists', res]);
           });
       }
@@ -136,7 +136,7 @@ export class ArtistDetailsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((id) => {
         this.artistImages$ = this.imagesService.getArtistImages(this.artist.id).pipe(untilDestroyed(this));
-        this.uiService.notifySuccess('Imagen creada con exito.');
+        this.uiService.notifySuccess('Imagen creada con éxito.');
       });
   }
 
@@ -146,7 +146,7 @@ export class ArtistDetailsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.artistImages$ = this.imagesService.getArtistImages(this.artist.id).pipe(untilDestroyed(this));
-        this.uiService.notifySuccess('Imagen eliminada con exito.');
+        this.uiService.notifySuccess('Imagen eliminada con éxito.');
       });
   }
 
@@ -163,7 +163,7 @@ export class ArtistDetailsComponent implements OnInit {
             .createLocation(this.location)
             .pipe(untilDestroyed(this))
             .subscribe((id) => {
-              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.uiService.notifySuccess('Ubicación creada con éxito.');
               this.artist.birthPlace = id;
               this.locations$ = this.dataService.locations;
             });
@@ -185,7 +185,7 @@ export class ArtistDetailsComponent implements OnInit {
             .createLocation(this.location)
             .pipe(untilDestroyed(this))
             .subscribe((id) => {
-              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.uiService.notifySuccess('Ubicación creada con éxito.');
               this.artist.deathPlace = id;
               this.locations$ = this.dataService.locations;
             });
@@ -207,7 +207,7 @@ export class ArtistDetailsComponent implements OnInit {
             .createLocation(this.location)
             .pipe(untilDestroyed(this))
             .subscribe((id) => {
-              this.uiService.notifySuccess('Ubicacion creada con exito.');
+              this.uiService.notifySuccess('Ubicación creada con éxito.');
               this.artist.residencePlace = id;
               this.locations$ = this.dataService.locations;
             });
@@ -232,7 +232,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.artist.awards?.push(res);
               this.awards$ = this.dataService.awards;
-              this.uiService.notifySuccess('Premio creado con exito.');
+              this.uiService.notifySuccess('Premio creado con éxito.');
             });
         },
         () => {}
@@ -255,7 +255,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.artist.albums?.push(res);
               this.albums$ = this.dataService.albums;
-              this.uiService.notifySuccess('Album creado con exito.');
+              this.uiService.notifySuccess('Album creado con éxito.');
             });
         },
         () => {}
@@ -285,7 +285,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((id) => {
               this.jobTitles$ = this.dataService.jobTitles;
               this.artist.jobTitle = id;
-              this.uiService.notifySuccess('Job title creado con exito.');
+              this.uiService.notifySuccess('Ocupación creada con éxito.');
             });
         },
         () => {}
@@ -307,7 +307,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((id) => {
               this.genres$ = this.dataService.genres;
               this.artist.genres.push(id);
-              this.uiService.notifySuccess('Genero creado con exito.');
+              this.uiService.notifySuccess('Género creado con éxito.');
             });
         },
         () => {}
@@ -329,7 +329,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.artist.label = res;
               this.recordLabels$ = this.dataService.recordLabels;
-              this.uiService.notifySuccess('Sello creado con exito.');
+              this.uiService.notifySuccess('Sello creado con éxito.');
             });
         },
         () => {}
@@ -351,7 +351,7 @@ export class ArtistDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.artist.instruments?.push(res);
               this.instruments$ = this.dataService.instruments;
-              this.uiService.notifySuccess('Instrumento creado con exito.');
+              this.uiService.notifySuccess('Instrumento creado con éxito.');
             });
         },
         () => {}
@@ -372,7 +372,7 @@ export class ArtistDetailsComponent implements OnInit {
             .pipe(untilDestroyed(this))
             .subscribe((res) => {
               this.countries$ = this.dataService.countries;
-              this.uiService.notifySuccess('Pais agregado con exito.');
+              this.uiService.notifySuccess('País agregado con éxito.');
             });
         },
         () => {}
@@ -385,5 +385,9 @@ export class ArtistDetailsComponent implements OnInit {
     } else {
       modal.close('accept');
     }
+  }
+
+  formatISNI(isni: string): string {
+    return isni?.trim()?.replace(/ /g, '');
   }
 }

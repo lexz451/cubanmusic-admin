@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="form-group mb-0">
      <div class="search-input input-group">
-      <input class="form-control form-control-sm" placeholder="Buscar" />
+      <input class="form-control form-control-sm" placeholder="Buscar" [ngbTypeahead]="search" [inputFormatter]="inputFormatter"
+        [resultFormatter]="resultFormatter" [resultTemplate]="tmp" />
       <span class="search-icon">
         <i class="icon-magnifier"></i>
       </span>
@@ -24,3 +25,19 @@
     </div>
   </div>
 </nav>
+
+<ng-template #tmp let-r="result" let-t="term">
+  <div class="d-flex align-items-center">
+    <i class="icon-user me-2" *ngIf="r.type === 'Artist'"></i>
+    <i class="icon-disc me-2" *ngIf="r.type === 'Album'"></i>
+    <i class="icon-people me-2" *ngIf="r.type === 'Group'"></i>
+    <i class="icon-microphone me-2" *ngIf="r.type === 'RecordLabel'"></i>
+    <img class="building me-2" *ngIf="r.type === 'Organization'" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAABKklEQVR4nO3cwQ6CMBBF0WL8/58y/pa4IhGiofYO7RDu2ZFUwccTGRaWIkmSJOlvE3z9HHIU4zXncIs8iiu6B70PbfIo+BtkA6GoAOeyPpvPUsoj8fb2eJsd1cBXWR9gtu10ws5oJ+kbeBkGCBkgZIBQ1I30N78u0tub7lHrQthAqEeAU6k7+6PWITYQMkDIAKEjf4UXtSPTqHWIDUzChwlqY4CQAULOwpANhJyFIRsIGSBkgJCzMGQDk3AWVhsDhAwQchaGbCDkLAzZQMgAIQOEnIUhG5iEs7DaGCBkgFDmWbiWs/CZ9bgPXM78XjPmzfYvtev29hvCBkIGCBkglGkWPuV+bSB0ZANH/RFF1/3aQMgAIQOEDBCKuuCe6WHqJ/z5baAkSZKk/t7kGFu0UE9xxAAAAABJRU5ErkJggg=="/>
+    <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Artist'">Artista</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Album'">Album</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Group'">Grupo</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'RecordLabel'">Sello Discográfico</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Organization'">Institución</small>
+  </div>
+</ng-template>

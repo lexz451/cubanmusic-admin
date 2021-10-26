@@ -24,7 +24,7 @@ const log = new Logger('Artists');
 })
 export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
-  locations: ISelectableItem[] = [];
+  jobTitles: ISelectableItem[] = [];
 
   constructor(
     private router: Router,
@@ -39,11 +39,11 @@ export class ArtistListComponent implements OnInit {
   }
 
   fetchData(): void {
-    forkJoin([this._artistsService.getAll(), this._dataService.locations])
+    forkJoin([this._artistsService.getAll(), this._dataService.jobTitles])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.artists = res[0];
-        this.locations = res[1];
+        this.jobTitles = res[1];
       });
   }
 
@@ -67,7 +67,7 @@ export class ArtistListComponent implements OnInit {
         headerName: 'ISNI',
         cellRenderer: (params) => {
           if (!params.value) return '-';
-          return `<a href="https://isni.org/isni/${params.value}">${params.value}</a>`;
+          return `<a href="https://isni.org/isni/${params.value.trim().replace(/ /g, '')}">${params.value}</a>`;
         }
       },
       {
@@ -75,7 +75,7 @@ export class ArtistListComponent implements OnInit {
         width: 50,
         headerName: 'Ocupación',
         cellRenderer: (params) => {
-          return params?.value?.title || '-';
+          return this.jobTitles?.find(e => e.id == params.value)?.name || "-";
         },
       },
       /*{

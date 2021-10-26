@@ -297,4 +297,9 @@ export class DataService {
   createOrganization(org: Organization): Observable<number> {
     return this.apiService.post('/organizations/new', org);
   }
+
+  search(name: string): Observable<any[]> {
+    return this.apiService.post('/search', name, true)
+  }
+
 }
