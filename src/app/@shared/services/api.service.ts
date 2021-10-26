@@ -28,7 +28,7 @@ export class ApiService {
       this._headers = this._headers.delete('ignoreLoadingBar');
     }
     return this._httpClient.post<T>(url, data, {
-      headers: this._headers
+      headers: this._headers,
     });
   }
 

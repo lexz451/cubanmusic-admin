@@ -1,9 +1,7 @@
 <div class="container-fluid d-flex flex-column h-100 py-2 px-4">
   <div class="actions-container w-100 d-flex">
     <h2 class="mb-0 fw-bold">Albums</h2>
-    <button class="btn btn-primary ms-auto" (click)="addAlbum()">
-      Crear Album
-    </button>
+    <button class="btn btn-primary ms-auto" (click)="addAlbum()">Crear Album</button>
   </div>
   <app-table class="mt-2" [columns]="columns" [data]="albums"></app-table>
 </div>

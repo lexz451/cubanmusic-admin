@@ -68,14 +68,14 @@ export class ArtistListComponent implements OnInit {
         cellRenderer: (params) => {
           if (!params.value) return '-';
           return `<a href="https://isni.org/isni/${params.value.trim().replace(/ /g, '')}">${params.value}</a>`;
-        }
+        },
       },
       {
         field: 'jobTitle',
         width: 50,
         headerName: 'Ocupación',
         cellRenderer: (params) => {
-          return this.jobTitles?.find(e => e.id == params.value)?.name || "-";
+          return this.jobTitles?.find((e) => e.id == params.value)?.name || '-';
         },
       },
       /*{

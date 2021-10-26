@@ -39,10 +39,12 @@ export class OrganizationDetailsComponent implements OnInit {
     this.fullCountries = this.dataService.fullCountries;
 
     if (id) {
-      this.organizationService.getById(id)
-      .pipe(untilDestroyed(this)).subscribe(res => {
-        this.org = res || new Organization();
-      })
+      this.organizationService
+        .getById(id)
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          this.org = res || new Organization();
+        });
     }
   }
 

@@ -1,3 +1,9 @@
-<div class="anim d-flex align-items-center {{isLoading ? 'loading' : ''}}">
-  <div class="lottie" data-bm-renderer="svg" lottie [options]="animOptions" (animationCreated)="onAnimationCreated($event)"></div>
+<div class="anim d-flex align-items-center {{ isLoading ? 'loading' : '' }}">
+  <div
+    class="lottie"
+    data-bm-renderer="svg"
+    lottie
+    [options]="animOptions"
+    (animationCreated)="onAnimationCreated($event)"
+  ></div>
 </div>

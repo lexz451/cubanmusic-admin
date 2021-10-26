@@ -12,6 +12,10 @@
     transition: all 0.2s ease !important;
     padding: 0.2rem 0.7rem;
   }
+  textarea.input-control {
+    line-height: 1.6;
+    padding-top: 0.6rem;
+  }
   .input-text-error {
     margin-left: 2px;
     font-size: 12px;

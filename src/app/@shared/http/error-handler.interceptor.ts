@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthenticationService } from './../../auth/authentication.service';
 import { UiService } from './../services/ui.service';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
@@ -16,7 +18,7 @@ const log = new Logger('ErrorHandlerInterceptor');
   providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(private _uiService: UiService) {}
+  constructor(private _uiService: UiService, private _authService: AuthenticationService, private _router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -36,6 +38,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     if (response.error) {
       if (response.status == 401 || response.status == 403) {
         errorMessage = 'Su sesion expiro o no tiene permisos para acceder. Inicie sesion.';
+        this._authService.logout().subscribe(() => {
+          this._router.navigate(['/']);
+        });
       } else if (response.status == 0) {
         errorMessage = 'No se pudo contactar con el servidor. Revise su conexion a Internet e intente nuevamente.';
       } else if (response.status == 500) {

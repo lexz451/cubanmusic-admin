@@ -1,4 +1,4 @@
-<div class="container-fluid px-3 mt-2">
+<div class="container-fluid px-4 py-2">
   <div class="actions-container w-100 d-flex">
     <h2 class="mb-0 fw-bold flex-grow-1">Logs</h2>
     <button class="btn btn-primary" (click)="addUser(userModal)">Crear usuario</button>
@@ -10,9 +10,9 @@
     <div class="col-md-4 align-self-stretch">
       <div class="card h-100">
         <div class="card-header">
-          <h5 class="mb-0">Usuarios</h5>
+          <h5 class="mb-0 fw-bold p-1">Usuarios</h5>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
           <ul class="list-group">
             <li class="list-group-item d-flex flex-column" *ngFor="let item of users$ | async">
               <span class="fw-bold">{{ item.name }}</span>
@@ -33,7 +33,7 @@
 
 <ng-template #userModal let-modal>
   <div class="modal-header">
-    <h5 class="fw-bolder">Crear Usuario</h5>
+    <h5 class="fw-bolder mb-0">Crear Usuario</h5>
   </div>
   <div class="modal-body">
     <form #form="ngForm" class="row">

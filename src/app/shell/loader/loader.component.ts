@@ -1,5 +1,16 @@
 import { Subscription } from 'rxjs';
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, Renderer2, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnInit,
+  Renderer2,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
 import { UiService } from '@shared/services/ui.service';
@@ -9,7 +20,7 @@ import { debounceTime, delay } from 'rxjs/operators';
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoaderComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading = false;

@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
@@ -19,7 +20,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private dataService: DataService
+    private dataService: DataService,
+    private modal: NgbModal
   ) {}
 
   ngOnInit() {}
@@ -34,6 +36,23 @@ export class HeaderComponent implements OnInit {
   get email(): string | null {
     const credentials = this.credentialsService.credentials;
     return credentials ? credentials.email : null;
+  }
+
+  get username(): string | null {
+    const credentials = this.credentialsService.credentials;
+    return credentials ? credentials.name : null;
+  }
+
+  showProfile(modal: any) {
+    this.modal
+      .open(modal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {},
+        () => {}
+      );
   }
 
   search: OperatorFunction<string, readonly any[]> = ($query: Observable<string>) =>
@@ -51,7 +70,36 @@ export class HeaderComponent implements OnInit {
       })
     );
 
-  resultFormatter = (item: any) => item?.name
+  resultFormatter = (item: any) => item?.name;
 
-  inputFormatter = (item: any) => item?.name
+  inputFormatter = (item: any) => item?.name;
+
+  goTo(event: any) {
+    let result = event?.item;
+    switch (result.type) {
+      case 'Award':
+        this.router.navigate(['awards', result.id]);
+        break;
+      case 'Venue':
+        this.router.navigate(['venues', result.id]);
+        break;
+      case 'Organization':
+        this.router.navigate(['organizations', result.id]);
+        break;
+      case 'RecordLabel':
+        this.router.navigate(['labels', result.id]);
+        break;
+      case 'Group':
+        this.router.navigate(['groups', result.id]);
+        break;
+      case 'Album':
+        this.router.navigate(['albums', result.id]);
+        break;
+      case 'Artist':
+        this.router.navigate(['artists', result.id]);
+        break;
+      default:
+        break;
+    }
+  }
 }

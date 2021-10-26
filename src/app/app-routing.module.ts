@@ -12,12 +12,14 @@ const routes: Routes = [
   Shell.childRoutes([
     {
       path: 'artists',
-      loadChildren: () => import('./modules/artists/artists.module').then((m) => m.ArtistsModule) },
+      loadChildren: () => import('./modules/artists/artists.module').then((m) => m.ArtistsModule),
+    },
   ]),
   Shell.childRoutes([
     {
       path: 'groups',
-      loadChildren: () => import('./modules/groups/groups.module').then((m) => m.GroupsModule) },
+      loadChildren: () => import('./modules/groups/groups.module').then((m) => m.GroupsModule),
+    },
   ]),
   Shell.childRoutes([
     {
@@ -58,6 +60,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
       onSameUrlNavigation: 'reload',
+      relativeLinkResolution: 'corrected',
       urlUpdateStrategy: 'deferred',
     }),
   ],

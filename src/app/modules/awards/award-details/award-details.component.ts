@@ -37,7 +37,7 @@ export class AwardDetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private modal: NgbModal,
+    private modal: NgbModal
   ) {}
 
   ngOnInit() {
@@ -48,10 +48,12 @@ export class AwardDetailsComponent implements OnInit {
     this.fullCountries$ = this.dataService.fullCountries;
 
     if (id) {
-      this.awardService.getById(id)
-        .pipe(untilDestroyed(this)).subscribe((res) => {
-        this.award = res || new Award();
-      })
+      this.awardService
+        .getById(id)
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          this.award = res || new Award();
+        });
     }
   }
 
@@ -101,20 +103,23 @@ export class AwardDetailsComponent implements OnInit {
 
   createOrg(orgModal: any): void {
     this.org = new Organization();
-    this.modal.open(orgModal, {
-      centered: true,
-      size: 'lg'
-    }).result.then(
-      () => {
-        this.dataService.createOrganization(this.org)
-          .pipe(untilDestroyed(this))
-          .subscribe(res => {
-            this.orgs$ = this.dataService.organizations;
-            this.uiService.notifySuccess('Institución creada con éxito.')
-          })
-      },
-      () => {}
-    )
+    this.modal
+      .open(orgModal, {
+        centered: true,
+        size: 'lg',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createOrganization(this.org)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.orgs$ = this.dataService.organizations;
+              this.uiService.notifySuccess('Institución creada con éxito.');
+            });
+        },
+        () => {}
+      );
   }
 
   onAddCountry(form: NgForm, modal: any) {

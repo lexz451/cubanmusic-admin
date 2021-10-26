@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { catchError } from 'rxjs/operators';
 import { UiService } from './../@shared/services/ui.service';
 import { untilDestroyed, UntilDestroy } from '@shared';
@@ -30,7 +31,12 @@ export class HomeComponent implements OnInit {
 
   user: User = {};
 
-  constructor(private _homeService: HomeService, private _modal: NgbModal, private _uiService: UiService) {
+  constructor(
+    private _homeService: HomeService,
+    private _modal: NgbModal,
+    private _uiService: UiService,
+    private _datePipe: DatePipe
+  ) {
     this.users$ = this._homeService.getUsers();
     this.logs$ = this._homeService.getLogs();
   }
@@ -48,14 +54,27 @@ export class HomeComponent implements OnInit {
       {
         field: 'name',
         headerName: 'Nombre',
+        wrapText: true,
+        cellStyle: {
+          'line-height': '1',
+          'word-break': 'break-word',
+          'justify-content': 'start',
+        },
+        width: 250,
       },
       {
         field: 'createdAt',
         headerName: 'Creado en',
+        cellRenderer: (params) => {
+          return params.value ? this._datePipe.transform(params.value) : '-';
+        },
       },
       {
         field: 'updatedAt',
         headerName: 'Actualizado en',
+        cellRenderer: (params) => {
+          return params.value ? this._datePipe.transform(params.value) : '-';
+        },
       },
       {
         field: 'createdBy',

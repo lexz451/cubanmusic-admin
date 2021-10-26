@@ -1,5 +1,4 @@
 :host {
-
   .anim {
     z-index: 1;
     z-index: 10001;
@@ -8,7 +7,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba($color:#fafafa, $alpha: 0.8);
+    background-color: rgba($color: #fafafa, $alpha: 0.8);
     width: 100%;
     height: 100%;
     visibility: hidden;
@@ -17,6 +16,4 @@
       visibility: visible;
     }
   }
-
-
 }

@@ -45,3 +45,27 @@
   width: 20px;
   margin-left: -2px;
 }
+
+.avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background-color: var(--app-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fafafa;
+}
+
+#user-dropdown .icon-arrow-down {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#user-dropdown .email {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  width: 100%;
+}

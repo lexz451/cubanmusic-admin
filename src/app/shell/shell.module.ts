@@ -17,6 +17,7 @@ import { LottieModule } from 'ngx-lottie';
 import { NotifierModule } from 'angular-notifier';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { AvatarModule } from 'ngx-avatar';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     //LoadingBarRouterModule,
     LoadingBarHttpClientModule,
     SharedModule,
+    AvatarModule,
   ],
   declarations: [HeaderComponent, SidebarComponent, ShellComponent, LoaderComponent],
 })

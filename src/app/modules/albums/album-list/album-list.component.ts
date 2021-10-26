@@ -5,7 +5,7 @@ import { Logger } from '../../../@shared/logger.service';
 import { Router } from '@angular/router';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { UiService } from '../../../@shared/services/ui.service';
 import { AlbumsService } from '../albums.service';
 import { ListRendererComponent } from '../../../@shared/components/table/renderers/list-renderer/list-renderer.component';
@@ -55,18 +55,25 @@ export class AlbumListComponent implements OnInit {
     return [
       {
         field: 'title',
-        headerName: 'Titulo',
+        headerName: 'Título',
+        width: 300,
+        wrapText: true,
+        cellStyle: {
+          'line-height': '1',
+          'word-break': 'break-word',
+          'text-align': 'center',
+        },
       },
       {
         field: 'releasedOn',
         headerName: 'Lanzado en',
         cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+          return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : '-';
         },
       },
       {
         field: 'recordLabel',
-        headerName: 'Sello Discografico',
+        headerName: 'Sello Discográfico',
         cellRenderer: (params) => {
           const labelId = params.value;
           const recordLabel = this.recordLabels.find((e) => e.id == labelId);
@@ -76,10 +83,19 @@ export class AlbumListComponent implements OnInit {
       {
         field: 'artists',
         headerName: 'Artistas',
+        width: 300,
+        autoHeight: true,
+
         cellRenderer: (params) => {
-          const artistIds = params.value;
-          const artists = this.artists.filter((e) => artistIds.includes(e.id));
-          return artists.map((e) => `${e.name}`).toString();
+          const artistIds: number[] = params.value;
+          if (!artistIds || artistIds.length == 0) {
+            return '-';
+          }
+          const artists = this.artists.filter((e) => artistIds?.includes(e.id));
+          const names = artists.map((e) => `${e.name}`);
+          return `<div class="d-flex flex-column">
+                    ${names.map((e) => `<span>${e}</span>`).join('')}
+                  </div>`;
         },
       },
       {

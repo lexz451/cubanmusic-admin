@@ -16,6 +16,8 @@ export class InputComponent extends ValidationControl implements OnInit, Control
   @Input() controlType: 'input' | 'textarea' = 'input';
   @Input() showAction = false;
 
+  @Input() readonly = false;
+
   value?: any;
   disabled = false;
   onChange?: (_: any) => {};

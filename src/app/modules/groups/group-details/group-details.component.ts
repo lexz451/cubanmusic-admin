@@ -20,7 +20,7 @@ import { Album } from '@app/@shared/models/albums';
 import { Genre } from '@app/@shared/models/genre';
 import { Award } from '@app/@shared/models/award';
 
-const log = new Logger("group");
+const log = new Logger('group');
 
 @UntilDestroy()
 @Component({
@@ -207,23 +207,23 @@ export class GroupDetailsComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (form.invalid) {
       form.control.markAllAsTouched();
-      log.debug("Invalid form: " + form.controls.errors);
+      log.debug('Invalid form: ' + form.controls.errors);
     } else {
       if (this.group.id) {
-        this.groupService.updateGroup(this.group)
-          .pipe(
-            untilDestroyed(this)
-          ).subscribe(res => {
+        this.groupService
+          .updateGroup(this.group)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
             this.uiService.notifySuccess('Grupo actualizado con éxito.');
-          })
+          });
       } else {
-        this.groupService.createGroup(this.group)
-          .pipe(
-            untilDestroyed(this)
-          ).subscribe(res => {
+        this.groupService
+          .createGroup(this.group)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
             this.uiService.notifySuccess('Grupo creado con éxito.');
             this.router.navigate(['groups', res]);
-          })
+          });
       }
     }
   }

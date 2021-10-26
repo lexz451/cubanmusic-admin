@@ -21,7 +21,6 @@ export class LabelDetailsComponent implements OnInit {
   countries: Observable<ISelectableItem[]>;
   fullCountries: Observable<Country[]>;
 
-
   constructor(
     private labelService: LabelService,
     private dataService: DataService,
@@ -30,8 +29,6 @@ export class LabelDetailsComponent implements OnInit {
     private notifierService: NotifierService
   ) {}
 
-
-
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
 
@@ -39,13 +36,13 @@ export class LabelDetailsComponent implements OnInit {
     this.fullCountries = this.dataService.fullCountries;
 
     if (id) {
-      this.labelService.getById(id)
-        .pipe(untilDestroyed(this)).subscribe(res => {
-        this.label = res || new Recordlabel();
-      })
+      this.labelService
+        .getById(id)
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          this.label = res || new Recordlabel();
+        });
     }
-
-
   }
 
   onSubmit(form: NgForm) {

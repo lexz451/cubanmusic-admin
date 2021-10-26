@@ -52,13 +52,13 @@ export class AlbumDetailsComponent implements OnInit {
     this.countries$ = this.dataService.countries;
 
     if (id) {
-      this.albumService.getById(id).pipe(
-        untilDestroyed(this)
-      ).subscribe(res => {
-        this.album = res || new Album();
-      })
+      this.albumService
+        .getById(id)
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          this.album = res || new Album();
+        });
     }
-
   }
 
   createRecordLabel(recordLabelModal: any): void {

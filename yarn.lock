@@ -4777,6 +4777,7 @@ __metadata:
     masonry-layout: ^4.2.2
     moment: ^2.29.1
     ng-multiselect-dropdown: ^0.3.4
+    ngx-avatar: ^4.1.0
     ngx-chips: ^2.2.2
     ngx-lottie: ^7.0.3
     ngx-perfect-scrollbar: ^10.1.1
@@ -9205,6 +9206,19 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"ngx-avatar@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "ngx-avatar@npm:4.1.0"
+  dependencies:
+    ts-md5: ^1.2.4
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ^11.1.0
+    "@angular/core": ^11.1.0
+  checksum: 3fd8199a38cdca741414df11045c83c1716849b52732475e429030af119f87374b96fe5be521df0348193f50604af456bfa9ed9605ca7b28fe303834017cb9b4
+  languageName: node
+  linkType: hard
+
 "ngx-chips@npm:^2.2.2":
   version: 2.2.2
   resolution: "ngx-chips@npm:2.2.2"
@@ -13304,6 +13318,13 @@ fsevents@~2.3.2:
   version: 1.0.5
   resolution: "trough@npm:1.0.5"
   checksum: d6c8564903ed00e5258bab92134b020724dbbe83148dc72e4bf6306c03ed8843efa1bcc773fa62410dd89161ecb067432dd5916501793508a9506cacbc408e25
+  languageName: node
+  linkType: hard
+
+"ts-md5@npm:^1.2.4":
+  version: 1.2.9
+  resolution: "ts-md5@npm:1.2.9"
+  checksum: e631e781a3217d37c75d623bedefe1514e0d7c08a0b13ad0fcdf310414be216006e557379702e033b108cb7b57ec2bedfb97c85d2583892f7ed27e43aae2950b
   languageName: node
   linkType: hard
 

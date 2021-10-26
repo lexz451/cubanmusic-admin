@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
@@ -37,6 +37,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
+
+    this.router.routeReuseStrategy.shouldReuseRoute = (route: ActivatedRouteSnapshot) => {
+      if (route.fragment != null) return true;
+      return false;
+    };
 
     const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
 

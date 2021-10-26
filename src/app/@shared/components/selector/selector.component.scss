@@ -27,9 +27,9 @@ $primary: #f4655f;
             background-color: rgba($primary, 0.1) !important;
             border-radius: 0.35rem !important;
             color: $primary;
-            .ng-value-icon {
-              border-left: 1px solid $primary;
-            }
+            font-size: 14px;
+            padding: 0.15rem;
+            font-weight: 400;
             .ng-value-icon:hover {
               background: transparent;
             }
@@ -82,7 +82,6 @@ $primary: #f4655f;
       .ng-value-container {
         .ng-placeholder {
           color: rgba(0, 0, 0, 0.6) !important;
-
         }
         .ng-input {
           margin-top: 1px !important;

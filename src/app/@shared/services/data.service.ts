@@ -299,7 +299,6 @@ export class DataService {
   }
 
   search(name: string): Observable<any[]> {
-    return this.apiService.post('/search', name, true)
+    return this.apiService.post('/search', name, true);
   }
-
 }

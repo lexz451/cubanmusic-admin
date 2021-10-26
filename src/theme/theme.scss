@@ -43,6 +43,11 @@ a.disabled {
   cursor: none;
 }
 
+.form-control[readOnly] {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .btn:not(.btn-icon):not(.btn-link) {
   min-width: 100px;
 }
@@ -153,8 +158,6 @@ a.disabled {
       // See <https://benfrain.com/improving-css-performance-fixed-position-elements/>
       backface-visibility: hidden;
       box-shadow: $box-shadow;
-
-
 
       p {
         margin: 0;

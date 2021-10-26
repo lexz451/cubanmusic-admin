@@ -28,9 +28,7 @@
           <span class="ng-value-label">
             {{ item.name }}
           </span>
-          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">
-            <i class="icon-close"></i>
-          </span>
+          <span class="ng-value-icon fw-bold" (click)="clear(item)" aria-hidden="true"> × </span>
         </span>
         <ng-template
           [ngTemplateOutlet]="labelTemplate"
@@ -38,12 +36,7 @@
         ></ng-template>
       </ng-template>
     </ng-select>
-    <span
-      type="button"
-      class="btn btn-link selector-btn-create text-primary"
-      *ngIf="showCreate"
-      (click)="onCreate()"
-    >
+    <span type="button" class="btn btn-link selector-btn-create text-primary" *ngIf="showCreate" (click)="onCreate()">
       Crear
     </span>
   </div>

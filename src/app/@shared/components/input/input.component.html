@@ -9,6 +9,7 @@
       *ngIf="controlType === 'input'"
       [ngModel]="value"
       (ngModelChange)="onValueChange($event)"
+      [readOnly]="readonly"
     />
     <ng-content></ng-content>
   </div>
@@ -20,6 +21,7 @@
     *ngIf="controlType === 'textarea'"
     [ngModel]="value"
     (ngModelChange)="onValueChange($event)"
+    [readOnly]="readonly"
   ></textarea>
   <small class="form-text text-muted text-help input-text-help" *ngIf="!!helperText">
     {{ helperText }}

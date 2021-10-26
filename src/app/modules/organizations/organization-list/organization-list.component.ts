@@ -54,19 +54,11 @@ export class OrganizationListComponent implements OnInit {
         headerName: 'Nombre',
       },
       {
-        field: 'phone',
-        headerName: 'Teléfono',
-        cellRenderer: (params) => {
-          const phone = params.value;
-          return `(${phone.code || '-'}) ${phone.number || '-'}`;
-        },
-      },
-      {
         field: 'email',
         headerName: 'Email',
         cellRenderer: (params) => {
           return params.value || '-';
-        }
+        },
       },
       {
         field: 'country',
@@ -81,16 +73,20 @@ export class OrganizationListComponent implements OnInit {
       {
         field: 'website',
         headerName: 'Sitio web',
+        wrapText: true,
+        cellStyle: {
+          'line-height': '1',
+        },
         cellRenderer: (params) => {
-          return params.value || '-';
-        }
+          return params.value ? `<a href="${params.value}">${params.value}</a>` : '-';
+        },
       },
       {
         field: 'address',
         headerName: 'Dirección',
         cellRenderer: (params) => {
           return params.value || '-';
-        }
+        },
       },
       {
         cellRendererFramework: ActionsRendererComponent,
