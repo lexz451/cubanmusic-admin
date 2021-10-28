@@ -3,7 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
-import { Album } from '../../../@shared/models/albums';
+import { Album } from '../../../@shared/models/album';
 import { forkJoin, Observable } from 'rxjs';
 import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from '../../../@shared/services/ui.service';
@@ -22,8 +22,8 @@ import { Country } from '@app/@shared/models/country';
 })
 export class AlbumDetailsComponent implements OnInit {
   album: Album = new Album();
-
   label = new Recordlabel();
+  country = new Country();
 
   recordLabels$: Observable<ISelectableItem[]>;
   artists$: Observable<ISelectableItem[]>;
@@ -82,6 +82,35 @@ export class AlbumDetailsComponent implements OnInit {
       );
   }
 
+  createCountry(countryModal: any): void {
+    this.country = new Country();
+    this.modal
+      .open(countryModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createCountry(this.country)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.countries$ = this.dataService.countries;
+              this.uiService.notifySuccess('País agregado con éxito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  onAddCountry(form: NgForm, modal: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
+    }
+  }
+
   onSubmit(form: NgForm) {
     if (form.invalid) {
       form.control.markAllAsTouched();
@@ -107,5 +136,9 @@ export class AlbumDetailsComponent implements OnInit {
 
   cancelModal(): void {
     this.modalRef?.dismiss();
+  }
+
+  onChangeContributor() {
+    console.log(this.album.contributors);
   }
 }

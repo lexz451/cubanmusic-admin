@@ -31,6 +31,10 @@ export class SelectorComponent implements OnInit, ControlValueAccessor {
   multiple = false;
   @Input()
   showCreate = false;
+  @Input()
+  canAdd = false
+  @Input()
+  bindTo = 'id';
 
   @Input() optionTemplate: TemplateRef<any>;
   @Input() labelTemplate: TemplateRef<any>;

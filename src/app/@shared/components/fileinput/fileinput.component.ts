@@ -1,18 +1,20 @@
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ValidationControl } from '@app/@shared/validation/validation-control';
-import { Component, OnInit, Input, Optional, Self, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Optional, Self, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-fileinput',
   templateUrl: './fileinput.component.html',
   styleUrls: ['./fileinput.component.scss'],
 })
-export class FileInputComponent extends ValidationControl implements OnInit, ControlValueAccessor {
+export class FileInputComponent extends ValidationControl implements OnInit, ControlValueAccessor, AfterViewInit {
   @Input() label?: string;
   @Input() placeholder?: string;
   @Input() helperText?: string;
   @Input() multiple: boolean = false;
   @Input() accept = 'image/x-png,image/jpeg';
+
+  @Input() showPanel = false;
 
   value?: File | File[];
   disabled = false;
@@ -20,6 +22,7 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
   onTouch?: () => {};
 
   @ViewChild('input', { static: false }) fileInput: ElementRef<HTMLElement> | undefined;
+  @ViewChild('img', { static: false }) preview: ElementRef<HTMLImageElement> | undefined;
 
   constructor(
     @Optional()
@@ -33,6 +36,16 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
   }
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    if (this.value) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.preview.nativeElement.src = `${reader.result}`;
+      }
+      reader.readAsDataURL(this.multiple ? this.value[0] : this.value);
+    }
+  }
 
   get displayText(): string | null {
     if (!this.value) return null;
@@ -48,6 +61,15 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
       this.value = event.target.files;
     } else {
       this.value = event.target.files[0];
+    }
+    if (this.showPanel) {
+      let file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const res = reader.result;
+        this.preview.nativeElement.src = `${res}`
+      }
     }
     this.onChange?.(this.value);
     this.onTouch?.();

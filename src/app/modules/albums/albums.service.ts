@@ -1,5 +1,5 @@
 import { ApiService } from '../../@shared/services/api.service';
-import { Album } from '../../@shared/models/albums';
+import { Album } from '../../@shared/models/album';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 

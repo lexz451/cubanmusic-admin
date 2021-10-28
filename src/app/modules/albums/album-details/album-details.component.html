@@ -1,54 +1,69 @@
-<div class="container-fluid h-100 d-flex flex-column px-4 py-2">
+<div class="container-fluid h-100 d-flex flex-column px-3">
   <div class="d-flex flex-column align-items-start mb-2">
-    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/albums">
+    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/albums">
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
     <h2 class="mb-0 fw-bold">{{ album?.title || 'Crear nuevo Album' }}</h2>
   </div>
 
-  <form class="form flex-grow-1 d-flex flex-column" #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <form class="form d-flex flex-column" #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="row flex-grow-1">
       <div class="col-sm-12">
         <div class="row">
-          <app-input placeholder="Titulo" name="title" [(ngModel)]="album.title" class="col-sm-6" required></app-input>
-          <app-input
-            placeholder="Descripción"
-            name="description"
-            [(ngModel)]="album.description"
-            class="col-sm-12"
-            controlType="textarea"
-          ></app-input>
-          <app-datepicker
-            name="releasedOn"
-            class="col-sm-4"
-            placeholder="Fecha de lanzamiento"
-            [(ngModel)]="album.releasedOn"
-          ></app-datepicker>
-          <app-selector
-            name="recordLabel"
-            class="col-sm-4"
-            placeholder="Sello Discográfico"
-            [data$]="recordLabels$"
-            [(ngModel)]="album.recordLabel"
-            [showCreate]="true"
-            (create)="createRecordLabel(recordLabelModal)"
-          ></app-selector>
-          <!--<app-multiselect
-            name="artists"
-            class="col-sm-4"
-            placeholder="Artistas"
-            [items]="artists"
-            [(ngModel)]="album.artists"
-          ></app-multiselect>-->
-          <app-selector
-            [multiple]="true"
-            name="collaborations"
-            class="col-sm-4"
-            placeholder="Colaboradores"
-            [data$]="artists$"
-            [(ngModel)]="album.contributors"
-          ></app-selector>
+          <div class="col-sm-7">
+            <div class="row">
+              <app-input
+                placeholder="Titulo"
+                name="title"
+                [(ngModel)]="album.title"
+                class="col-sm-12"
+                required
+              ></app-input>
+              <app-input
+                placeholder="Descripción"
+                name="description"
+                [(ngModel)]="album.description"
+                class="col-sm-12"
+                controlType="textarea"
+                [rows]="6"
+              ></app-input>
+              <app-datepicker
+                name="releasedOn"
+                class="col-sm-6"
+                placeholder="Fecha de lanzamiento"
+                [(ngModel)]="album.releasedDate"
+              ></app-datepicker>
+              <app-selector
+                name="recordLabel"
+                class="col-sm-6"
+                placeholder="Sello Discográfico"
+                [data$]="recordLabels$"
+                [(ngModel)]="album.recordLabel"
+                [showCreate]="true"
+                (create)="createRecordLabel(recordLabelModal)"
+              ></app-selector>
+              <app-selector
+                [multiple]="true"
+                [canAdd]="true"
+                [bindTo]="'-'"
+                name="collaborations"
+                class="col-sm-12"
+                placeholder="Colaboradores"
+                [data$]="artists$"
+                [(ngModel)]="album.contributors"
+                (ngModelChange)="onChangeContributor()"
+              ></app-selector>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <app-fileinput
+              [showPanel]="true"
+              placeholder="Portada"
+              name="portada"
+              [(ngModel)]="album.image"
+            ></app-fileinput>
+          </div>
         </div>
       </div>
     </div>
@@ -60,7 +75,7 @@
 
 <ng-template #recordLabelModal let-modal>
   <div class="modal-header">
-    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discografico</h3>
+    <h3 class="mb-0 fw-bold">Crear nuevo Sello Discográfico</h3>
   </div>
   <div class="modal-body">
     <div class="row">
@@ -76,7 +91,7 @@
       ></app-input>
       <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
-      <app-selector class="col-sm-6" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="label.country">
+      <app-selector class="col-sm-6" name="country" placeholder="País" [showCreate]="true" (create)="createCountry(countryModal)" [data$]="countries$" [(ngModel)]="label.country">
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>
@@ -85,5 +100,32 @@
   <div class="modal-footer">
     <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #countryModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bold mb-0">Agregar Pais</h5>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <app-input placeholder="Nombre" [(ngModel)]="country.name" name="country" class="col-sm-12" required></app-input>
+    <app-input
+      placeholder="Código ISO"
+      [(ngModel)]="country.iso2Code"
+      name="iso2Code"
+      class="col-sm-12"
+      required
+    ></app-input>
+    <app-input
+      placeholder="Código Telefónico"
+      [(ngModel)]="country.phoneCode"
+      name="telcode"
+      class="col-sm-12"
+      required
+    ></app-input>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onAddCountry(form, modal)">Aceptar</button>
   </div>
 </ng-template>

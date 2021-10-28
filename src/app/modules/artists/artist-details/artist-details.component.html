@@ -1,6 +1,6 @@
-<div class="artist-container container-fluid px-4 py-2" scrollbar>
+<div class="artist-container container-fluid px-3" scrollbar>
   <div class="d-flex flex-column align-items-start mb-2">
-    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/artists">
+    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/artists">
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
@@ -328,7 +328,7 @@
         </ng-template>
       </li>
       <li ngbNavItem="gallery" [disabled]="!isEditMode">
-        <a ngbNavLink routerLink="." fragment="gallery">Galeria</a>
+        <a ngbNavLink routerLink="." fragment="gallery">Galería</a>
         <ng-template ngbNavContent>
           <div class="col-sm-12">
             <div class="row">
@@ -492,7 +492,7 @@
         name="releasedOn"
         class="col-sm-3"
         placeholder="Fecha de lanzamiento"
-        [(ngModel)]="album.releasedOn"
+        [(ngModel)]="album.releasedDate"
       ></app-datepicker>
       <app-input
         name="copyrightYear"
@@ -546,7 +546,9 @@
       ></app-input>
       <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
-      <app-selector class="col-sm-6" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="label.country">
+      <app-selector class="col-sm-6" name="country" placeholder="País"
+        [showCreate]="true" (create)="createCountry(countryModal)"
+        [data$]="countries$" [(ngModel)]="label.country">
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>

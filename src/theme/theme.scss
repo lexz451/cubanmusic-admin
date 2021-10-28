@@ -47,6 +47,10 @@ a.disabled {
   border: none !important;
   box-shadow: none !important;
 }
+.form-control::placeholder {
+  color: #575757;
+}
+
 
 .btn:not(.btn-icon):not(.btn-link) {
   min-width: 100px;
@@ -141,7 +145,7 @@ a.disabled {
   .notifier__container-list-item {
     .notifier__notification {
       transition: all 0.05s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
-      min-width: 300px;
+      width: 350px;
       background-color: $light;
       color: $dark;
       padding: 1rem;
@@ -159,12 +163,8 @@ a.disabled {
       backface-visibility: hidden;
       box-shadow: $box-shadow;
 
-      p {
-        margin: 0;
-      }
-
       &-message {
-        display: inline-block;
+        position: relative;
         flex-grow: 1;
         margin: {
           // Reset paragraph default styles
@@ -172,8 +172,10 @@ a.disabled {
           bottom: 0;
         }
         vertical-align: top;
-        line-height: 32px;
+        line-height: 1;
         font-size: 14px;
+        width: 1%;
+        word-break: break-all;
       }
 
       &-button {
@@ -248,3 +250,4 @@ a.disabled {
   border-radius: 20px;
   //border: 3px solid #b7b7b7;
 }
+

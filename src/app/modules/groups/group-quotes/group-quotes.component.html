@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="d-flex mb-2">
+      <button class="btn btn-primary ms-auto" type="button" (click)="addQuote(quoteModal)">Agregar Quote</button>
+    </div>
+    <app-table [columns]="quotesColumns" [data]="quotes"></app-table>
+  </div>
+</div>
+
+<ng-template #quoteModal let-modal>
+  <div class="modal-header">
+    <h5 class="mb-0 fw-bold">Nuevo Quote</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-input [placeholder]="'Autor'" class="col-sm-12" [(ngModel)]="quote.author"></app-input>
+      <app-input [placeholder]="'Fuente'" class="col-sm-12" [(ngModel)]="quote.source"></app-input>
+      <app-datepicker [placeholder]="'Fecha'" class="col-sm-12" [(ngModel)]="quote.date"></app-datepicker>
+      <app-input class="col-sm-12" [placeholder]="'Comentario'" controlType="textarea" [(ngModel)]="quote.quote">
+      </app-input>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="modal.close('accept')">Aceptar</button>
+  </div>
+</ng-template>

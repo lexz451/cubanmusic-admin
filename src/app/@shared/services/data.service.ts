@@ -1,5 +1,5 @@
 import { zipWith } from 'lodash';
-import { Album } from '../models/albums';
+import { Album } from '../models/album';
 import { Injectable } from '@angular/core';
 import { Observable, of, zip, concat, forkJoin } from 'rxjs';
 import { Country } from '../models/country';
@@ -220,7 +220,17 @@ export class DataService {
       map((e) =>
         e[1].map((l) => {
           const country = e[0].find((c) => c.id == l.country);
-          const res = `${l.city || '-'}, ${l.state || '-'}, ${country?.name || '-'}`;
+          const location$ = [];
+          if (l.city) {
+            location$.push(l.city);
+          }
+          if (l.state) {
+            location$.push(l.state);
+          }
+          if (country?.name) {
+            location$.push(country.name);
+          }
+          const res = location$.join(', ');
           return {
             id: l.id,
             name: res,

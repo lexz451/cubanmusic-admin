@@ -1,24 +1,24 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Quote } from '@app/@shared/models/quote';
-import { switchMap, finalize } from 'rxjs/operators';
-import { Artist } from '@app/@shared/models/artist';
-import { TableAction } from '@shared/models/table-actions';
-import { ActionsRendererComponent } from '@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { UiService } from '@shared/services/ui.service';
-import { ArtistsService } from '@app/modules/artists/artists.service';
 import { DatePipe } from '@angular/common';
-import { ColDef } from 'ag-grid-community';
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { ActionsRendererComponent } from '@app/@shared/components/table/renderers/actions-renderer/actions-renderer.component';
+import { Group } from '@app/@shared/models/group';
+import { Quote } from '@app/@shared/models/quote';
+import { TableAction } from '@app/@shared/models/table-actions';
+import { UiService } from '@app/@shared/services/ui.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ColDef } from 'ag-grid-community';
+import { finalize, switchMap } from 'rxjs/operators';
+import { GroupService } from '../group.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-artist-quotes',
-  templateUrl: './artist-quotes.component.html',
-  styleUrls: ['./artist-quotes.component.scss'],
+  selector: 'app-group-quotes',
+  templateUrl: './group-quotes.component.html',
+  styleUrls: ['./group-quotes.component.css']
 })
-export class ArtistQuotesComponent implements OnInit, OnChanges {
-  @Input() artist: Artist;
+export class GroupQuotesComponent implements OnInit, OnChanges {
+  @Input() group: Group;
 
   quote = new Quote();
 
@@ -27,16 +27,16 @@ export class ArtistQuotesComponent implements OnInit, OnChanges {
   constructor(
     private datePipe: DatePipe,
     private modal: NgbModal,
-    private artistService: ArtistsService,
+    private groupService: GroupService,
     private uiService: UiService
   ) {}
 
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.artist.id) {
-      this.artistService
-        .getQuotes(this.artist.id)
+    if (this.group.id) {
+      this.groupService
+        .getQuotes(this.group.id)
         .pipe(untilDestroyed(this))
         .subscribe((res) => {
           this.quotes = res;
@@ -53,15 +53,15 @@ export class ArtistQuotesComponent implements OnInit, OnChanges {
       })
       .result.then(
         () => {
-          this.artistService
-            .createQuote(this.artist.id, this.quote)
+          this.groupService
+            .createQuote(this.group.id, this.quote)
             .pipe(
               untilDestroyed(this),
-              switchMap(() => this.artistService.getQuotes(this.artist.id))
+              switchMap(() => this.groupService.getQuotes(this.group.id))
             )
             .subscribe((res) => {
               this.quotes = res;
-              this.uiService.notifySuccess('Quote agregado con exito.');
+              this.uiService.notifySuccess('Quote agregado con éxito.');
             });
         },
         () => {}
@@ -106,11 +106,11 @@ export class ArtistQuotesComponent implements OnInit, OnChanges {
             const quoteID = row?.id;
             if (type == TableAction.DELETE) {
               if (quoteID != null) {
-                this.artistService
+                this.groupService
                   .deleteQuote(quoteID)
                   .pipe(
                     untilDestroyed(this),
-                    switchMap(() => this.artistService.getQuotes(this.artist.id)),
+                    switchMap(() => this.groupService.getQuotes(this.group.id)),
                     finalize(() => this.uiService.notifySuccess('Quote eliminado con exito.'))
                   )
                   .subscribe((res) => {

@@ -63,7 +63,7 @@ export class GroupListComponent implements OnInit {
         headerName: 'ISNI',
         cellRenderer: (params) => {
           if (!params.value) return '-';
-          return `<a href="https://isni.org/isni/${params.value}">${params.value}</a>`;
+          return `<a href="https://isni.org/isni/${params.value.trim().replace(/ /g, '')}">${params.value}</a>`;
         },
       },
 

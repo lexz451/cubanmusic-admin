@@ -18,7 +18,7 @@
     //justify-content: center;
 
     .sidebar-brand {
-      margin-top: 18px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -39,6 +39,7 @@
     }
 
     .sidebar-toggle {
+      display: none; // temp
       padding-right: 0;
       padding-top: 0;
       i {

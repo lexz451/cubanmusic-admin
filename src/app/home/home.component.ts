@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     private _datePipe: DatePipe
   ) {
     this.users$ = this._homeService.getUsers();
-    this.logs$ = this._homeService.getLogs();
+    //this.logs$ = this._homeService.getLogs();
   }
 
   ngOnInit() {

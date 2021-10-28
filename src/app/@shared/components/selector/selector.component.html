@@ -14,6 +14,8 @@
       [closeOnSelect]="!multiple"
       [clearable]="true"
       [disabled]="isDisabled"
+      [addTag]="canAdd"
+      [addTagText]="'Añadir opción: '"
       [items]="data$ | async"
     >
       <ng-template ng-option-tmp let-item="item">

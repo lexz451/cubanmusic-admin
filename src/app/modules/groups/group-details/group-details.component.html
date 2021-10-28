@@ -1,6 +1,6 @@
-<div class="group-container container-fluid px-4 py-2" scrollbar>
+<div class="group-container container-fluid px-3" scrollbar>
   <div class="d-flex flex-column align-items-start mb-2">
-    <button class="btn btn-icon ps-0 btn-back text-primary" routerLink="/groups">
+    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/groups">
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
@@ -8,145 +8,143 @@
   </div>
   <form class="form d-flex flex-column flex-grow-1" #form="ngForm" novalidate>
     <ul #nav="ngbNav" class="nav nav-tabs mb-2" ngbNav [activeId]="currentFragment | async">
-      <li ngbNavItem="personal">
-        <a ngbNavLink routerLink="." fragment="personal">Datos Personales</a>
-        <ng-template ngbNavContent>
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-sm-4">
-                <div class="row">
-                  <app-input
-                    class="col-sm-12"
-                    name="nombre"
-                    [(ngModel)]="group.name"
-                    placeholder="Nombre"
-                    required
-                  ></app-input>
-                  <app-tags
-                    class="col-sm-12"
-                    name="nombresAdicionales"
-                    [(ngModel)]="group.additionalNames"
-                    label="Nombres adicionales"
-                    placeholder="Nombres adicionales"
-                  ></app-tags>
-                </div>
-              </div>
-              <app-input
-                class="col-sm-8"
-                [(ngModel)]="group.description"
-                [controlType]="'textarea'"
-                name="biography"
-                [placeholder]="'Biografia'"
-              ></app-input>
-            </div>
-          </div>
-        </ng-template>
-      </li>
-      <li ngbNavItem="professional" [disabled]="!isEditMode">
+
+      <li ngbNavItem="professional">
         <a ngbNavLink routerLink="." fragment="professional">Datos Profesionales</a>
         <ng-template ngbNavContent>
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-sm-4">
-                <app-input name="isniCode" [(ngModel)]="group.isniCode" [placeholder]="'ISNI'">
-                  <button class="btn btn-link bg-transparent shadow-none">
-                    <a
-                      class="fw-normal"
-                      [class.disabled]="!group.isniCode"
-                      href="https://isni.org/isni/{{ group.isniCode }}"
-                    >
-                      isni.com
-                    </a>
-                  </button>
-                </app-input>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <app-input
+                      class="col-sm-12"
+                      name="nombre"
+                      [(ngModel)]="group.name"
+                      placeholder="Nombre"
+                      required
+                    ></app-input>
+                    <app-tags
+                      class="col-sm-12"
+                      name="nombresAdicionales"
+                      [(ngModel)]="group.additionalNames"
+                      label="Nombres adicionales"
+                      placeholder="Nombres adicionales"
+                    ></app-tags>
+                  </div>
+                </div>
+                <app-input
+                  class="col-sm-8"
+                  [(ngModel)]="group.description"
+                  [controlType]="'textarea'"
+                  name="biography"
+                  [placeholder]="'Biografia'"
+                ></app-input>
               </div>
-              <div class="col-sm-4">
-                <app-input name="activeSince" type="number" [(ngModel)]="group.activeSince" placeholder="Activo desde">
-                </app-input>
-              </div>
-              <div class="col-sm-4">
-                <app-input name="activeUntil" type="number" [(ngModel)]="group.activeUntil" placeholder="Activo hasta">
-                </app-input>
-              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-4">
+                  <app-input name="isniCode" [(ngModel)]="group.isniCode" [placeholder]="'ISNI'">
+                    <button class="btn btn-link bg-transparent shadow-none">
+                      <a
+                        class="fw-normal"
+                        [class.disabled]="!group.isniCode"
+                        href="https://isni.org/isni/{{ formatISNI(group.isniCode) }}"
+                      >
+                        isni.com
+                      </a>
+                    </button>
+                  </app-input>
+                </div>
+                <div class="col-sm-4">
+                  <app-input name="activeSince" type="number" [(ngModel)]="group.activeSince" placeholder="Activo desde">
+                  </app-input>
+                </div>
+                <div class="col-sm-4">
+                  <app-input name="activeUntil" type="number" [(ngModel)]="group.activeUntil" placeholder="Activo hasta">
+                  </app-input>
+                </div>
 
-              <div class="col-sm-8">
-                <app-selector
-                  name="albums"
-                  [multiple]="true"
-                  [(ngModel)]="group.albums"
-                  [placeholder]="'Albums'"
-                  [data$]="albums$"
-                  [showCreate]="true"
-                  (create)="createAlbum(albumModal)"
-                  [optionTemplate]="optionTemp"
-                  [labelTemplate]="labelTemp"
-                >
-                  <ng-template #optionTemp let-item="item">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">{{ item?.title }}</h5>
-                        <p class="card-text text-truncate">{{ item?.description }}</p>
-                        <div class="d-flex">
-                          <span class="card-text text-muted">{{ item?.releaseDate }}</span>
+                <div class="col-sm-8">
+                  <app-selector
+                    name="albums"
+                    [multiple]="true"
+                    [(ngModel)]="group.albums"
+                    [placeholder]="'Albums'"
+                    [data$]="albums$"
+                    [showCreate]="true"
+                    (create)="createAlbum(albumModal)"
+                    [optionTemplate]="optionTemp"
+                    [labelTemplate]="labelTemp"
+                  >
+                    <ng-template #optionTemp let-item="item">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ item?.title }}</h5>
+                          <p class="card-text">{{ item?.description }}</p>
+                          <div class="d-flex">
+                            <span class="card-text text-muted">{{ item?.releaseDate }}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-template>
-                  <ng-template #labelTemp let-item="item" let-clear="clear">
-                    <span class="ng-value-label">
-                      {{ item?.title }}
-                    </span>
-                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">
-                      <i class="icon-close"></i>
-                    </span>
-                  </ng-template>
-                </app-selector>
-              </div>
+                    </ng-template>
+                    <ng-template #labelTemp let-item="item" let-clear="clear">
+                      <span class="ng-value-label">
+                        {{ item?.title }}
+                      </span>
+                      <span class="ng-value-icon right fw-bold" (click)="clear(item)" aria-hidden="true">
+                        ×
+                      </span>
+                    </ng-template>
+                  </app-selector>
+                </div>
 
-              <div class="col-sm-4">
-                <app-selector
-                  name="genres"
-                  [placeholder]="'Géneros'"
-                  [data$]="genres$"
-                  [(ngModel)]="group.genres"
-                  [showCreate]="true"
-                  [multiple]="true"
-                  (create)="createGenre(genreModal)"
-                >
-                </app-selector>
-              </div>
-              <div class="col-sm-4">
-                <app-selector
-                  name="awards"
-                  [placeholder]="'Premios'"
-                  [data$]="awards$"
-                  [(ngModel)]="group.awards"
-                  [showCreate]="true"
-                  [multiple]="true"
-                  (create)="createAward(awardModal)"
-                >
-                </app-selector>
-              </div>
+                <div class="col-sm-4">
+                  <app-selector
+                    name="genres"
+                    [placeholder]="'Géneros'"
+                    [data$]="genres$"
+                    [(ngModel)]="group.genres"
+                    [showCreate]="true"
+                    [multiple]="true"
+                    (create)="createGenre(genreModal)"
+                  >
+                  </app-selector>
+                </div>
+                <div class="col-sm-4">
+                  <app-selector
+                    name="awards"
+                    [placeholder]="'Premios'"
+                    [data$]="awards$"
+                    [(ngModel)]="group.awards"
+                    [showCreate]="true"
+                    [multiple]="true"
+                    (create)="createAward(awardModal)"
+                  >
+                  </app-selector>
+                </div>
 
-              <div class="col-sm-4">
-                <app-selector
-                  name="affiliation"
-                  [placeholder]="'Afiliación'"
-                  [data$]="organizations$"
-                  [(ngModel)]="group.affiliation"
-                ></app-selector>
-              </div>
+                <div class="col-sm-4">
+                  <app-selector
+                    name="affiliation"
+                    [placeholder]="'Afiliación'"
+                    [data$]="organizations$"
+                    [(ngModel)]="group.affiliation"
+                  ></app-selector>
+                </div>
 
-              <div class="col-sm-4">
-                <app-selector
-                  name="labels"
-                  [placeholder]="'Sellos Discográficos'"
-                  [data$]="recordLabels$"
-                  [showCreate]="true"
-                  (create)="createRecordLabel(recordLabelModal)"
-                  [multiple]="false"
-                  [(ngModel)]="group.label"
-                ></app-selector>
+                <div class="col-sm-4">
+                  <app-selector
+                    name="labels"
+                    [placeholder]="'Sellos Discográficos'"
+                    [data$]="recordLabels$"
+                    [showCreate]="true"
+                    (create)="createRecordLabel(recordLabelModal)"
+                    [multiple]="false"
+                    [(ngModel)]="group.label"
+                  ></app-selector>
+                </div>
               </div>
             </div>
           </div>
@@ -185,6 +183,13 @@
                 <app-input [placeholder]="'Vibrate'" [(ngModel)]="group.viberate" name="vibrate"></app-input>
               </div>
               <div class="col-sm-4">
+                <app-input
+                  [placeholder]="'Reverb Nation'"
+                  [(ngModel)]="group.reverbNation"
+                  name="reverbNation"
+                ></app-input>
+              </div>
+              <div class="col-sm-4">
                 <app-input [placeholder]="'Facebook'" [(ngModel)]="group.facebook" name="facebook"></app-input>
               </div>
               <div class="col-sm-4">
@@ -201,7 +206,34 @@
           </div>
         </ng-template>
       </li>
-
+      <li ngbNavItem="quotes" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="quotes">Quotes</a>
+        <ng-template ngbNavContent>
+          <app-group-quotes class="col-sm-12" [group]="group"></app-group-quotes>
+          <!--<div class="col-sm-12">
+            <div class="d-flex mb-2">
+              <button class="btn btn-primary ms-auto" type="button" (click)="addQuote(quoteModal)">
+                <i class="fas fa-comment me-2"></i> Agregar Quote
+              </button>
+            </div>
+            <app-table [columns]="quotesColumns" [data]="quotes" [rowHeight]="100"></app-table>
+          </div>-->
+        </ng-template>
+      </li>
+      <li ngbNavItem="articles" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="articles">Artículos Relacionados</a>
+        <ng-template ngbNavContent>
+          <app-group-articles class="col-sm-12" [group]="group"></app-group-articles>
+          <!--<div class="col-sm-12">
+            <div class="d-flex mb-2">
+              <button class="btn btn-primary ms-auto" type="button" (click)="addArticle(articleModal)">
+                <i class="fas fa-link me-2"></i> Agregar Articulo
+              </button>
+            </div>
+            <app-table [columns]="articlesColumns" [data]="articles"></app-table>
+          </div>-->
+        </ng-template>
+      </li>
       <li ngbNavItem="gallery" [disabled]="!isEditMode">
         <a ngbNavLink routerLink="." fragment="gallery">Galeria</a>
         <ng-template ngbNavContent>
@@ -250,7 +282,9 @@
       ></app-input>
       <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
-      <app-selector class="col-sm-6" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="label.country">
+      <app-selector class="col-sm-6" name="country" placeholder="País"
+        [showCreate]="true" (create)="createCountry(countryModal)"
+       [data$]="countries$" [(ngModel)]="label.country">
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>
@@ -333,10 +367,10 @@
         controlType="textarea"
       ></app-input>
       <app-datepicker
-        name="releasedOn"
+        name="releasedDate"
         class="col-sm-3"
         placeholder="Fecha de lanzamiento"
-        [(ngModel)]="album.releasedOn"
+        [(ngModel)]="album.releasedDate"
       ></app-datepicker>
       <app-input
         name="copyrightYear"
@@ -369,5 +403,32 @@
   <div class="modal-footer">
     <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
     <button class="btn btn-primary" (click)="onDoneAlbumModal(modal, form)">Aceptar</button>
+  </div>
+</ng-template>
+
+<ng-template #countryModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bold mb-0">Agregar Pais</h5>
+  </div>
+  <form #form="ngForm" class="modal-body">
+    <app-input placeholder="Nombre" [(ngModel)]="country.name" name="country" class="col-sm-12" required></app-input>
+    <app-input
+      placeholder="Código ISO"
+      [(ngModel)]="country.iso2Code"
+      name="iso2Code"
+      class="col-sm-12"
+      required
+    ></app-input>
+    <app-input
+      placeholder="Código Telefónico"
+      [(ngModel)]="country.phoneCode"
+      name="telcode"
+      class="col-sm-12"
+      required
+    ></app-input>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="onAddCountry(form, modal)">Aceptar</button>
   </div>
 </ng-template>

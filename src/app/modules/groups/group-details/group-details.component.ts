@@ -1,12 +1,10 @@
-import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Group } from '@shared/models/group';
 import { ISelectableItem } from '@shared/models/selectable-item';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Logger, untilDestroyed } from '@shared';
-import { finalize, map } from 'rxjs/operators';
 import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from '@shared/services/ui.service';
 import { NgForm } from '@angular/forms';
@@ -16,7 +14,7 @@ import { Recordlabel } from '@app/@shared/models/recordlabel';
 import { Country } from '@app/@shared/models/country';
 import { ImagesService } from '@app/@shared/services/images.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Album } from '@app/@shared/models/albums';
+import { Album } from '@app/@shared/models/album';
 import { Genre } from '@app/@shared/models/genre';
 import { Award } from '@app/@shared/models/award';
 
@@ -35,6 +33,7 @@ export class GroupDetailsComponent implements OnInit {
   album = new Album();
   genre = new Genre();
   award = new Award();
+  country = new Country();
 
   albums$: Observable<ISelectableItem[]>;
   genres$: Observable<ISelectableItem[]>;
@@ -226,5 +225,38 @@ export class GroupDetailsComponent implements OnInit {
           });
       }
     }
+  }
+
+  createCountry(countryModal: any): void {
+    this.country = new Country();
+    this.modal
+      .open(countryModal, {
+        centered: true,
+        size: 'md',
+      })
+      .result.then(
+        () => {
+          this.dataService
+            .createCountry(this.country)
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              this.countries$ = this.dataService.countries;
+              this.uiService.notifySuccess('País agregado con éxito.');
+            });
+        },
+        () => {}
+      );
+  }
+
+  onAddCountry(form: NgForm, modal: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+    } else {
+      modal.close('accept');
+    }
+  }
+
+  formatISNI(isni: string): string {
+    return isni?.trim()?.replace(/ /g, '');
   }
 }

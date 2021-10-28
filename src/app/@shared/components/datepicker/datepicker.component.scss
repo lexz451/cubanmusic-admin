@@ -10,7 +10,8 @@
     padding: 0.2rem 0.7rem;
     background-color: var(--input-bg-color);
     transition: all 0.5s ease;
-
+    font-weight: 400;
+    color: #212121;
     &:focus,
     &.is-open {
       background-color: var(--input-focus-bg-color);

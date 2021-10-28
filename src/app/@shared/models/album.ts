@@ -2,9 +2,10 @@ export class Album {
   id?: number;
   title?: string;
   description?: string;
-  releasedOn?: string;
+  releasedDate?: string;
   recordLabel?: number;
   artists?: number[] = [];
   copyrightYear?: string;
   contributors?: number[] = [];
+  image?: string;
 }

@@ -18,6 +18,8 @@ export class InputComponent extends ValidationControl implements OnInit, Control
 
   @Input() readonly = false;
 
+  @Input() rows = 4;
+
   value?: any;
   disabled = false;
   onChange?: (_: any) => {};

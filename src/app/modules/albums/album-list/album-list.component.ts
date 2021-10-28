@@ -11,7 +11,7 @@ import { AlbumsService } from '../albums.service';
 import { ListRendererComponent } from '../../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { ColDef } from 'ag-grid-community';
 import { Component, OnInit } from '@angular/core';
-import { Album } from '@app/@shared/models/albums';
+import { Album } from '@app/@shared/models/album';
 import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { forkJoin } from 'rxjs';
 
@@ -65,8 +65,8 @@ export class AlbumListComponent implements OnInit {
         },
       },
       {
-        field: 'releasedOn',
-        headerName: 'Lanzado en',
+        field: 'releasedDate',
+        headerName: 'Fecha de Lanzamiento',
         cellRenderer: (params) => {
           return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : '-';
         },

@@ -23,6 +23,7 @@ export class Group {
   youtube?: string;
   instagram?: string;
   viberate?: string;
+  reverbNation?: string;
   facebook?: string;
   twitter?: string;
   tiktok?: string;

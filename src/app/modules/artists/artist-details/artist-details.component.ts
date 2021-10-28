@@ -2,7 +2,7 @@ import { RouteReusableStrategy } from '../../../@shared/route-reusable-strategy'
 import { Genre } from '../../../@shared/models/genre';
 import { Country } from '../../../@shared/models/country';
 import { Recordlabel } from '../../../@shared/models/recordlabel';
-import { Album } from '../../../@shared/models/albums';
+import { Album } from '../../../@shared/models/album';
 import { Instrument } from '../../../@shared/models/instrument';
 import { JobTitle } from '../../../@shared/models/job-title';
 import { DatePipe } from '@angular/common';

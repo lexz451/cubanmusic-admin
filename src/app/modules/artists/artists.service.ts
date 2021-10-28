@@ -1,4 +1,4 @@
-import { Album } from '../../@shared/models/albums';
+import { Album } from '../../@shared/models/album';
 import { Injectable } from '@angular/core';
 import { Article } from '@app/@shared/models/article';
 import { Artist } from '@app/@shared/models/artist';

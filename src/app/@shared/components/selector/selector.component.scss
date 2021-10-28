@@ -15,12 +15,6 @@ $primary: #f4655f;
     border-radius: 0.35rem;
 
     &.ng-select-multiple {
-      .ng-dropdown-panel-items {
-        .ng-option {
-          background-color: var(--app-light) !important;
-        }
-      }
-
       .ng-select-container {
         .ng-value-container {
           .ng-value {
@@ -30,17 +24,21 @@ $primary: #f4655f;
             font-size: 14px;
             padding: 0.15rem;
             font-weight: 400;
+            .ng-value-icon {
+              border: none !important;
+            }
             .ng-value-icon:hover {
               background: transparent;
             }
           }
           .ng-input {
-            margin-top: 0 !important;
+            margin-top: 0px !important;
             margin-left: 2px !important;
+            margin-bottom: 2px !important;
           }
           .ng-placeholder {
             padding: 0;
-            top: 6px;
+            top: 7px;
             left: 12px;
           }
         }
@@ -108,11 +106,11 @@ $primary: #f4655f;
         border-bottom-left-radius: 0.35rem;
         border-bottom-right-radius: 0.35rem;
       }
-      .ng-option.ng-option-selected {
+      .ng-option {
         background-color: var(--app-white) !important;
       }
-      .ng-option.ng-option-marked {
-        background-color: var(--app-light) !important;
+      .ng-option.ng-option-selected {
+        color: var(--app-primary);
       }
     }
   }

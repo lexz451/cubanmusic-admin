@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, UntilDestroy, untilDestroyed } from '@shared';
 import { AuthenticationService } from './authentication.service';
+import { UiService } from '@app/@shared/services/ui.service';
 
 const log = new Logger('Login');
 
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private uiService: UiService
   ) {
     this.createForm();
   }
@@ -49,8 +51,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
         },
         (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
+          log.debug(`Login error: ${error.message}`);
         }
       );
   }

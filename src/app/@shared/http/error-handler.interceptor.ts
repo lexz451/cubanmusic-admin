@@ -36,11 +36,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     let errorMessage = 'Ocurrio un error inesperado. Intente nuevamente.';
 
     if (response.error) {
-      if (response.status == 401 || response.status == 403) {
-        errorMessage = 'Su sesion expiro o no tiene permisos para acceder. Inicie sesion.';
-        this._authService.logout().subscribe(() => {
-          this._router.navigate(['/']);
-        });
+      if (response.status == 401) {
+        errorMessage = 'Correo electrónico o contraseña incorrecta. Revise sus credenciales e intente nuevamente.'
+        this._authService.logout().subscribe()
+      } else if (response.status == 403) {
+        errorMessage = 'Su sesión expiro o no tiene permisos para acceder. Inicie sesión.';
+        this._authService.logout().subscribe()
       } else if (response.status == 0) {
         errorMessage = 'No se pudo contactar con el servidor. Revise su conexion a Internet e intente nuevamente.';
       } else if (response.status == 500) {
