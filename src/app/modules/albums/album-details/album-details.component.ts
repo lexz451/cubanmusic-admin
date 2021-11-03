@@ -9,10 +9,11 @@ import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from '../../../@shared/services/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumsService } from '../albums.service';
-import { Component, OnInit, Optional } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { Component, ElementRef, OnInit, Optional, ViewChild } from '@angular/core';
 import { Recordlabel } from '@app/@shared/models/recordlabel';
 import { Country } from '@app/@shared/models/country';
+import { Image } from '@app/@shared/models/image';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -24,12 +25,18 @@ export class AlbumDetailsComponent implements OnInit {
   album: Album = new Album();
   label = new Recordlabel();
   country = new Country();
+  image = new Image();
 
   recordLabels$: Observable<ISelectableItem[]>;
   artists$: Observable<ISelectableItem[]>;
   organizations$: Observable<ISelectableItem[]>;
   fullCountries$: Observable<Country[]>;
   countries$: Observable<ISelectableItem[]>;
+
+  albumArt: any = "/assets/default-image.jpg";
+
+  @ViewChild("input", { static: false })
+  fileInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(
     private albumService: AlbumsService,
@@ -57,6 +64,9 @@ export class AlbumDetailsComponent implements OnInit {
         .pipe(untilDestroyed(this))
         .subscribe((res) => {
           this.album = res || new Album();
+          if (this.album.image) {
+            this.albumArt = this.album.image;
+          }
         });
     }
   }
@@ -141,4 +151,28 @@ export class AlbumDetailsComponent implements OnInit {
   onChangeContributor() {
     console.log(this.album.contributors);
   }
+
+  addImage(): void {
+    this.fileInput?.nativeElement?.click();
+  }
+
+  onImageChange(): void {
+    let file = this.fileInput?.nativeElement.files[0];
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      this.album.image = reader.result;
+      this.albumArt = reader.result;
+    }
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  getImageBase64(e: Image) {
+    const base64 = e.filedata;
+    const type = e.filetype;
+    const img = `data:${type};base64,${base64}`;
+    return img;
+  }
+
 }

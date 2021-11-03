@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-
 import { environment } from '@env/environment';
-import { Logger, UntilDestroy, untilDestroyed } from '@shared';
 import { AuthenticationService } from './authentication.service';
 import { UiService } from '@app/@shared/services/ui.service';
+import { Logger } from '@app/@shared/logger.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Login');
 

@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+
 import { ActionsRendererComponent } from '@app/@shared/components/table/renderers/actions-renderer/actions-renderer.component';
 import { Group } from '@app/@shared/models/group';
 import { Quote } from '@app/@shared/models/quote';
 import { TableAction } from '@app/@shared/models/table-actions';
 import { UiService } from '@app/@shared/services/ui.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ColDef } from 'ag-grid-community';
 import { finalize, switchMap } from 'rxjs/operators';
 import { GroupService } from '../group.service';

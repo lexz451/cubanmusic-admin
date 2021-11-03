@@ -4,11 +4,11 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-
 import { environment } from '@env/environment';
-import { Logger, UntilDestroy, untilDestroyed } from '@shared';
 import { I18nService } from '@app/i18n';
 import Scrollbar from 'smooth-scrollbar';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Logger } from './@shared/logger.service';
 
 const log = new Logger('App');
 

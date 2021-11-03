@@ -1,13 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { catchError } from 'rxjs/operators';
 import { UiService } from './../@shared/services/ui.service';
-import { untilDestroyed, UntilDestroy } from '@shared';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HomeService } from './home.service';
 import { Observable, throwError } from 'rxjs';
 import { ColDef } from 'ag-grid-community';
 import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 export interface User {
   name?: string;

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { TableAction } from '@shared/models/table-actions';
-import { Logger } from '@shared';
+import { Logger } from '@app/@shared/logger.service';
 
 @Component({
   selector: 'app-actions-renderer',

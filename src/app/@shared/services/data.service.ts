@@ -54,6 +54,10 @@ export class DataService {
   get venueTypes(): Observable<ISelectableItem[]> {
     return of([
       {
+        id: 'THEATER',
+        name: 'Teatro'
+      },
+      {
         id: 'BAR',
         name: 'Bar',
       },

@@ -2,7 +2,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article } from '@app/@shared/models/article';
 import { UiService } from '@shared/services/ui.service';
 import { switchMap, finalize } from 'rxjs/operators';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ArtistsService } from '@app/modules/artists/artists.service';
 import { Artist } from '@app/@shared/models/artist';
 import { TableAction } from '@shared/models/table-actions';
@@ -10,7 +10,6 @@ import { ActionsRendererComponent } from '@shared/components/table/renderers/act
 import { DatePipe } from '@angular/common';
 import { ColDef } from 'ag-grid-community';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { UntilDestroy } from '@app/@shared';
 
 @UntilDestroy()
 @Component({

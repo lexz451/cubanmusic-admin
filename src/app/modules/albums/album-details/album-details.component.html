@@ -57,12 +57,15 @@
             </div>
           </div>
           <div class="col-sm-5">
-            <app-fileinput
-              [showPanel]="true"
-              placeholder="Portada"
-              name="portada"
-              [(ngModel)]="album.image"
-            ></app-fileinput>
+            <div class="album-art-wrapper">
+              <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input>
+              <small class="form-label">Portada</small>
+              <img class="img-fluid" [src]="albumArt">
+              <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
+                <i class="icon-picture me-2"></i>
+                Añadir Portada
+              </button>
+            </div>
           </div>
         </div>
       </div>

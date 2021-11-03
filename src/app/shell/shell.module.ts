@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '@shared';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,6 +17,7 @@ import { NotifierModule } from 'angular-notifier';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { AvatarModule } from 'ngx-avatar';
+import { SharedModule } from '@app/@shared/shared.module';
 
 @NgModule({
   imports: [

@@ -4,8 +4,8 @@ import { ArtistListComponent } from './artist-list/artist-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArtistsRoutingModule } from './artists-routing.module';
-import { SharedModule } from '@app/@shared';
 import { ArtistDetailsComponent } from './artist-details/artist-details.component';
+import { SharedModule } from '@app/@shared/shared.module';
 
 @NgModule({
   imports: [CommonModule, ArtistsRoutingModule, SharedModule],

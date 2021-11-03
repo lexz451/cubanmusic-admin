@@ -5,15 +5,13 @@ import { Logger } from '../../../@shared/logger.service';
 import { Router } from '@angular/router';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { finalize, map } from 'rxjs/operators';
 import { UiService } from '../../../@shared/services/ui.service';
 import { AlbumsService } from '../albums.service';
-import { ListRendererComponent } from '../../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { ColDef } from 'ag-grid-community';
 import { Component, OnInit } from '@angular/core';
 import { Album } from '@app/@shared/models/album';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { forkJoin } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Albums');
 

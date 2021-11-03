@@ -7,5 +7,5 @@ export class Album {
   artists?: number[] = [];
   copyrightYear?: string;
   contributors?: number[] = [];
-  image?: string;
+  image?: any;
 }

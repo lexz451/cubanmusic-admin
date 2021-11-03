@@ -8,14 +8,32 @@
   </div>
 
   <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <app-input placeholder="Nombre" name="name" [(ngModel)]="venue.name" class="col-sm-6" required></app-input>
-    <app-input
-      placeholder="Descripción"
-      name="description"
-      [(ngModel)]="venue.description"
-      class="col-sm-12"
-      controlType="textarea"
-    ></app-input>
+    <div class="row">
+      <div class="col-sm-7">
+        <div class="row">
+          <app-input placeholder="Nombre" name="name" [(ngModel)]="venue.name" class="col-sm-6" required></app-input>
+          <app-input
+            placeholder="Descripción"
+            name="description"
+            [(ngModel)]="venue.description"
+            [rows]="7"
+            class="col-sm-12"
+            controlType="textarea"
+          ></app-input>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="venue-img-wrapper">
+          <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input>
+          <small class="form-label">Imagen</small>
+          <img class="img-fluid" [src]="venueImg">
+          <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
+            <i class="icon-picture me-2"></i>
+            Añadir Imagen
+          </button>
+        </div>
+      </div>
+    </div>
     <app-selector
       class="col-sm-4"
       [(ngModel)]="venue.venueType"

@@ -1,11 +1,7 @@
 <div class="form-group">
   <input class="d-none" type="file" (change)="onFileChange($event)" #input [multiple]="multiple" [accept]="accept" />
-  <div class="img-panel" *ngIf="showPanel">
-    <label class="form-label" >{{ label || placeholder }}</label>
-    <img class="img-fluid" src="assets/default-image.jpg" #img>
-  </div>
   <label class="d-block">
-    <label class="form-label" *ngIf="!showPanel">{{ label || placeholder }}</label>
+    <label class="form-label">{{ label || placeholder }}</label>
     <div class="input-group">
       <input
         [placeholder]="placeholder"

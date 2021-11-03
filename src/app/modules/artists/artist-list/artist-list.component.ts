@@ -4,7 +4,6 @@ import { ISelectableItem } from '../../../@shared/models/selectable-item';
 import { Logger } from '../../../@shared/logger.service';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { ListRendererComponent } from '../../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { ColDef } from 'ag-grid-community';
 import { DatePipe } from '@angular/common';
 import { UiService } from '@shared/services/ui.service';
@@ -12,7 +11,7 @@ import { ArtistsService } from '../artists.service';
 import { Artist } from '../../../@shared/models/artist';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Artists');
 

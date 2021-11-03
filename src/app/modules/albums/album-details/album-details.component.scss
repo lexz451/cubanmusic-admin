@@ -2,3 +2,21 @@
   display: block;
   flex-grow: 1;
 }
+
+
+.form-label {
+  font-size: 12px;
+  margin-bottom: 0.1rem;
+  font-weight: 500;
+}
+
+.album-art-wrapper {
+  display: flex;
+  flex-direction: column;
+  img {
+    border-radius: 0.35rem;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+  }
+}

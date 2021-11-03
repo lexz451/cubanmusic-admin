@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Logger } from '@app/@shared/logger.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { Logger } from '@shared';
 import enUS from '../../translations/en-US.json';
 import esES from '../../translations/es-ES.json';
 

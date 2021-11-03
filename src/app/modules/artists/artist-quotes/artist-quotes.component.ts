@@ -9,7 +9,7 @@ import { ArtistsService } from '@app/modules/artists/artists.service';
 import { DatePipe } from '@angular/common';
 import { ColDef } from 'ag-grid-community';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

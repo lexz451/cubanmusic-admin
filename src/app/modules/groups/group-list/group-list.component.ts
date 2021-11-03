@@ -7,9 +7,10 @@ import { ActionsRendererComponent } from '@shared/components/table/renderers/act
 import { TableAction } from '@shared/models/table-actions';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { Logger, untilDestroyed, UntilDestroy } from '@shared';
 import { Group } from '@shared/models/group';
 import { GroupService } from '../group.service';
+import { Logger } from '@app/@shared/logger.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Groups');
 

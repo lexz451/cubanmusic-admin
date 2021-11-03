@@ -1,13 +1,11 @@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
-import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { DataService } from '@app/@shared/services/data.service';
-
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

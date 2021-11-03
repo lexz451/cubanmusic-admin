@@ -1,14 +1,14 @@
 import { DataService } from '../../../@shared/services/data.service';
-import { Observable, forkJoin, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../../../@shared/models/country';
 import { Recordlabel } from '../../../@shared/models/recordlabel';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { Component, OnInit } from '@angular/core';
 import { LabelService } from '../label.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

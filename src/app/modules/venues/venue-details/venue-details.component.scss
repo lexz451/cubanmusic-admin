@@ -4,3 +4,20 @@
   padding-bottom: 1rem;
   display: block;
 }
+
+.venue-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  img {
+    border-radius: 0.35rem;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.form-label {
+  font-size: 12px;
+  margin-bottom: 0.1rem;
+  font-weight: 500;
+}

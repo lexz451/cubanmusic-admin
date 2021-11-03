@@ -14,15 +14,12 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
   @Input() multiple: boolean = false;
   @Input() accept = 'image/x-png,image/jpeg';
 
-  @Input() showPanel = false;
-
   value?: File | File[];
   disabled = false;
   onChange?: (_: any) => {};
   onTouch?: () => {};
 
   @ViewChild('input', { static: false }) fileInput: ElementRef<HTMLElement> | undefined;
-  @ViewChild('img', { static: false }) preview: ElementRef<HTMLImageElement> | undefined;
 
   constructor(
     @Optional()
@@ -38,13 +35,6 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    if (this.value) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.preview.nativeElement.src = `${reader.result}`;
-      }
-      reader.readAsDataURL(this.multiple ? this.value[0] : this.value);
-    }
   }
 
   get displayText(): string | null {
@@ -61,15 +51,6 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
       this.value = event.target.files;
     } else {
       this.value = event.target.files[0];
-    }
-    if (this.showPanel) {
-      let file = event.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const res = reader.result;
-        this.preview.nativeElement.src = `${res}`
-      }
     }
     this.onChange?.(this.value);
     this.onTouch?.();

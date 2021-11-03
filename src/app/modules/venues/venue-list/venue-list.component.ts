@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { UiService } from '../../../@shared/services/ui.service';
-import { finalize } from 'rxjs/operators';
 import { VenueService } from '../venue.service';
 import { Venue } from '../../../@shared/models/venue';
 import { ColDef } from 'ag-grid-community';
@@ -9,7 +8,9 @@ import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
+import { DataService } from '@app/@shared/services/data.service';
+import { forkJoin } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Venues');
 
@@ -22,9 +23,12 @@ const log = new Logger('Venues');
 export class VenueListComponent implements OnInit {
   venues: Venue[] = [];
 
+  venueTypes: any[] = [];
+
   constructor(
     private router: Router,
     private venueService: VenueService,
+    private dataService: DataService,
     private uiService: UiService,
     private datePipe: DatePipe
   ) {}
@@ -34,11 +38,12 @@ export class VenueListComponent implements OnInit {
   }
 
   private fetchData(): void {
-    this.venueService
-      .getAll()
+    forkJoin([this.venueService
+      .getAll(), this.dataService.venueTypes])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
-        this.venues = res || [];
+        this.venues = res[0] || [];
+        this.venueTypes = res[1] || [];
       });
   }
 
@@ -47,26 +52,33 @@ export class VenueListComponent implements OnInit {
       {
         field: 'name',
         headerName: 'Nombre',
+        width: 300
       },
       {
         field: 'venueType',
         headerName: 'Tipo',
+        cellRenderer: params => {
+          return this.venueTypes.find(v => v.id == params.value)?.name || "-";
+        },
+        width: 50
       },
       {
         field: 'foundedAt',
         headerName: 'Fundado en',
         cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd');
+          return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : "-";
         },
       },
       {
         field: 'capacity',
         headerName: 'Capacidad',
+        width: 50,
+        cellRenderer: params => params.value || "-"
       },
-      {
+      /*{
         field: 'openingHours',
         headerName: 'Horario de Servicios',
-      },
+      },*/
       {
         field: 'phone',
         headerName: 'Teléfono',
@@ -78,15 +90,19 @@ export class VenueListComponent implements OnInit {
       {
         field: 'email',
         headerName: 'Email',
+        width: 250,
+        cellRenderer: params => params.value || "-"
       },
       {
         field: 'website',
         headerName: 'Sitio web',
+        width: 250,
+        cellRenderer: params => params.value || "-"
       },
-      {
+      /*{
         field: 'address',
         headerName: 'Dirección',
-      },
+      },*/
       {
         cellRendererFramework: ActionsRendererComponent,
         cellRendererParams: {

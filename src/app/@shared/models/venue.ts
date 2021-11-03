@@ -17,4 +17,5 @@ export class Venue {
   instagram?: string;
   facebook?: string;
   twitter?: string;
+  image?: any;
 }

@@ -1,4 +1,3 @@
-import { RouteReusableStrategy } from '../../../@shared/route-reusable-strategy';
 import { Genre } from '../../../@shared/models/genre';
 import { Country } from '../../../@shared/models/country';
 import { Recordlabel } from '../../../@shared/models/recordlabel';
@@ -11,18 +10,18 @@ import { Image } from '@shared/models/image';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
 import { Artist } from '@app/@shared/models/artist';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { DataService } from '@app/@shared/services/data.service';
 import { Observable } from 'rxjs';
 import { ArtistsService } from '@app/modules/artists/artists.service';
 import { UiService } from '@shared/services/ui.service';
-import { finalize, map, share } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Location } from '@shared/models/location';
 import { ImagesService } from '@app/@shared/services/images.service';
 import { Award } from '@app/@shared/models/award';
 import { Organization } from '@app/@shared/models/organization';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

@@ -4,11 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { Group } from '@shared/models/group';
 import { ISelectableItem } from '@shared/models/selectable-item';
 import { Observable } from 'rxjs';
-import { Logger, untilDestroyed } from '@shared';
 import { DataService } from '@app/@shared/services/data.service';
 import { UiService } from '@shared/services/ui.service';
 import { NgForm } from '@angular/forms';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Image } from '@app/@shared/models/image';
 import { Recordlabel } from '@app/@shared/models/recordlabel';
 import { Country } from '@app/@shared/models/country';
@@ -17,6 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Album } from '@app/@shared/models/album';
 import { Genre } from '@app/@shared/models/genre';
 import { Award } from '@app/@shared/models/award';
+import { Logger } from '@app/@shared/logger.service';
 
 const log = new Logger('group');
 

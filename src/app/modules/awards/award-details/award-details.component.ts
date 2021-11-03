@@ -6,13 +6,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AwardService } from '../award.service';
 import { NgForm } from '@angular/forms';
 import { Award } from '../../../@shared/models/award';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, NgZone, OnDestroy } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
-import { forkJoin, Observable, Subscription } from 'rxjs';
-import { publishReplay, refCount } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Organization } from '@app/@shared/models/organization';
 import { Country } from '@app/@shared/models/country';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const log = new Logger('Award');
 

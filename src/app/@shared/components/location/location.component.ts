@@ -3,22 +3,15 @@ import {
   distinctUntilChanged,
   tap,
   switchMap,
-  catchError,
-  takeUntil,
-  mergeMap,
-  withLatestFrom,
-  concatMap,
 } from 'rxjs/operators';
 
-import { of, OperatorFunction, Observable, forkJoin, Subscription, zip, concat } from 'rxjs';
+import { of, OperatorFunction, Observable, Subscription } from 'rxjs';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   Self,
   SimpleChanges,
 } from '@angular/core';
@@ -27,8 +20,6 @@ import { Location } from '@app/@shared/models/location';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '@app/@shared/services/data.service';
-import { UntilDestroy, untilDestroyed } from '@app/@shared';
-import { zipWith } from 'lodash';
 
 @Component({
   selector: 'app-location',

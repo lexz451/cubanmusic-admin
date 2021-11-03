@@ -8,7 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '@env/environment';
-import { ApiPrefixInterceptor, ErrorHandlerInterceptor, SharedModule } from '@shared';
 import { AuthModule } from '@app/auth';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
@@ -25,6 +24,9 @@ import {
   PerfectScrollbarModule,
   PERFECT_SCROLLBAR_CONFIG,
 } from 'ngx-perfect-scrollbar';
+import { SharedModule } from './@shared/shared.module';
+import { ErrorHandlerInterceptor } from './@shared/http/error-handler.interceptor';
+import { ApiPrefixInterceptor } from './@shared/http/api-prefix.interceptor';
 
 const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
