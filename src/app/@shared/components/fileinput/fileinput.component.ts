@@ -34,8 +34,7 @@ export class FileInputComponent extends ValidationControl implements OnInit, Con
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   get displayText(): string | null {
     if (!this.value) return null;

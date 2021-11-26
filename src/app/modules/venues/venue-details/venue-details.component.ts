@@ -24,9 +24,9 @@ export class VenueDetailsComponent implements OnInit {
 
   direction = Direction;
 
-  venueImg: any = "/assets/default-image.jpg";
+  venueImg: any = '/assets/default-image.jpg';
 
-  @ViewChild("input", { static: false })
+  @ViewChild('input', { static: false })
   fileInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(
@@ -94,10 +94,9 @@ export class VenueDetailsComponent implements OnInit {
     reader.onloadend = () => {
       this.venue.image = reader.result;
       this.venueImg = reader.result;
-    }
+    };
     if (file) {
       reader.readAsDataURL(file);
     }
-
   }
 }

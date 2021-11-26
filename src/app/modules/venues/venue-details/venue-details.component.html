@@ -24,9 +24,9 @@
       </div>
       <div class="col-sm-5">
         <div class="venue-img-wrapper">
-          <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input>
+          <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input />
           <small class="form-label">Imagen</small>
-          <img class="img-fluid" [src]="venueImg">
+          <img class="img-fluid" [src]="venueImg" />
           <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
             <i class="icon-picture me-2"></i>
             Añadir Imagen

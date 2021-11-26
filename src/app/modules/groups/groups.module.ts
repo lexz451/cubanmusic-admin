@@ -8,12 +8,7 @@ import { GroupQuotesComponent } from './group-quotes/group-quotes.component';
 import { SharedModule } from '@app/@shared/shared.module';
 
 @NgModule({
-  declarations: [
-    GroupListComponent,
-    GroupDetailsComponent,
-    GroupArticlesComponent,
-    GroupQuotesComponent
-  ],
+  declarations: [GroupListComponent, GroupDetailsComponent, GroupArticlesComponent, GroupQuotesComponent],
   imports: [CommonModule, SharedModule, GroupsRoutingModule],
 })
 export class GroupsModule {}

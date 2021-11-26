@@ -546,9 +546,15 @@
       ></app-input>
       <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
-      <app-selector class="col-sm-6" name="country" placeholder="País"
-        [showCreate]="true" (create)="createCountry(countryModal)"
-        [data$]="countries$" [(ngModel)]="label.country">
+      <app-selector
+        class="col-sm-6"
+        name="country"
+        placeholder="País"
+        [showCreate]="true"
+        (create)="createCountry(countryModal)"
+        [data$]="countries$"
+        [(ngModel)]="label.country"
+      >
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>

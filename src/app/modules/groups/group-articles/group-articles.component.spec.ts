@@ -11,9 +11,8 @@ describe('GroupArticlesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupArticlesComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupArticlesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

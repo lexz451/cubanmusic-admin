@@ -33,9 +33,9 @@ export class AlbumDetailsComponent implements OnInit {
   fullCountries$: Observable<Country[]>;
   countries$: Observable<ISelectableItem[]>;
 
-  albumArt: any = "/assets/default-image.jpg";
+  albumArt: any = '/assets/default-image.jpg';
 
-  @ViewChild("input", { static: false })
+  @ViewChild('input', { static: false })
   fileInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(
@@ -162,7 +162,7 @@ export class AlbumDetailsComponent implements OnInit {
     reader.onloadend = () => {
       this.album.image = reader.result;
       this.albumArt = reader.result;
-    }
+    };
     if (file) {
       reader.readAsDataURL(file);
     }
@@ -174,5 +174,4 @@ export class AlbumDetailsComponent implements OnInit {
     const img = `data:${type};base64,${base64}`;
     return img;
   }
-
 }

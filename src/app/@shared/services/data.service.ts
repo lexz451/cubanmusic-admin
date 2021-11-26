@@ -55,7 +55,7 @@ export class DataService {
     return of([
       {
         id: 'THEATER',
-        name: 'Teatro'
+        name: 'Teatro',
       },
       {
         id: 'BAR',

@@ -15,7 +15,7 @@ import { GroupService } from '../group.service';
 @Component({
   selector: 'app-group-articles',
   templateUrl: './group-articles.component.html',
-  styleUrls: ['./group-articles.component.css']
+  styleUrls: ['./group-articles.component.css'],
 })
 export class GroupArticlesComponent implements OnInit, OnChanges {
   @Input() group: Group;
@@ -77,9 +77,9 @@ export class GroupArticlesComponent implements OnInit, OnChanges {
           lineHeight: '1.5',
           whiteSpace: 'break-spaces',
         },
-        cellRenderer: params => {
-          return `<a class="fw-bold" href="${params.data?.url}">${params.value}</a>`
-        }
+        cellRenderer: (params) => {
+          return `<a class="fw-bold" href="${params.data?.url}">${params.value}</a>`;
+        },
       },
       {
         field: 'source',
@@ -124,5 +124,4 @@ export class GroupArticlesComponent implements OnInit, OnChanges {
       },
     ];
   }
-
 }

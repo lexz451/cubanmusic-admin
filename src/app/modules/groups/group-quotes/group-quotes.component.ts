@@ -16,7 +16,7 @@ import { GroupService } from '../group.service';
 @Component({
   selector: 'app-group-quotes',
   templateUrl: './group-quotes.component.html',
-  styleUrls: ['./group-quotes.component.css']
+  styleUrls: ['./group-quotes.component.css'],
 })
 export class GroupQuotesComponent implements OnInit, OnChanges {
   @Input() group: Group;

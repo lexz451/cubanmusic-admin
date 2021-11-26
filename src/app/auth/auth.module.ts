@@ -10,7 +10,15 @@ import { LoginComponent } from './login.component';
 import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, NgbModule, I18nModule, AuthRoutingModule, NotifierModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    NgbModule,
+    I18nModule,
+    AuthRoutingModule,
+    NotifierModule,
+  ],
   declarations: [LoginComponent],
 })
 export class AuthModule {}

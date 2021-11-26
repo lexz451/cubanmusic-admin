@@ -8,7 +8,6 @@
   </div>
   <form class="form d-flex flex-column flex-grow-1" #form="ngForm" novalidate>
     <ul #nav="ngbNav" class="nav nav-tabs mb-2" ngbNav [activeId]="currentFragment | async">
-
       <li ngbNavItem="professional">
         <a ngbNavLink routerLink="." fragment="professional">Datos Profesionales</a>
         <ng-template ngbNavContent>
@@ -58,11 +57,21 @@
                   </app-input>
                 </div>
                 <div class="col-sm-4">
-                  <app-input name="activeSince" type="number" [(ngModel)]="group.activeSince" placeholder="Activo desde">
+                  <app-input
+                    name="activeSince"
+                    type="number"
+                    [(ngModel)]="group.activeSince"
+                    placeholder="Activo desde"
+                  >
                   </app-input>
                 </div>
                 <div class="col-sm-4">
-                  <app-input name="activeUntil" type="number" [(ngModel)]="group.activeUntil" placeholder="Activo hasta">
+                  <app-input
+                    name="activeUntil"
+                    type="number"
+                    [(ngModel)]="group.activeUntil"
+                    placeholder="Activo hasta"
+                  >
                   </app-input>
                 </div>
 
@@ -93,9 +102,7 @@
                       <span class="ng-value-label">
                         {{ item?.title }}
                       </span>
-                      <span class="ng-value-icon right fw-bold" (click)="clear(item)" aria-hidden="true">
-                        ×
-                      </span>
+                      <span class="ng-value-icon right fw-bold" (click)="clear(item)" aria-hidden="true"> × </span>
                     </ng-template>
                   </app-selector>
                 </div>
@@ -282,9 +289,15 @@
       ></app-input>
       <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
-      <app-selector class="col-sm-6" name="country" placeholder="País"
-        [showCreate]="true" (create)="createCountry(countryModal)"
-       [data$]="countries$" [(ngModel)]="label.country">
+      <app-selector
+        class="col-sm-6"
+        name="country"
+        placeholder="País"
+        [showCreate]="true"
+        (create)="createCountry(countryModal)"
+        [data$]="countries$"
+        [(ngModel)]="label.country"
+      >
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       <app-input name="address" [(ngModel)]="label.address" placeholder="Dirección" class="col-sm-12"></app-input>

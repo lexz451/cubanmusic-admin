@@ -4,15 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Image } from '@shared/models/image';
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  Input,
-  OnDestroy,
-} from '@angular/core';
-
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-gallery',

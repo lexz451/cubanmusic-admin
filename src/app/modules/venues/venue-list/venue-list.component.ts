@@ -38,8 +38,7 @@ export class VenueListComponent implements OnInit {
   }
 
   private fetchData(): void {
-    forkJoin([this.venueService
-      .getAll(), this.dataService.venueTypes])
+    forkJoin([this.venueService.getAll(), this.dataService.venueTypes])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.venues = res[0] || [];
@@ -52,28 +51,28 @@ export class VenueListComponent implements OnInit {
       {
         field: 'name',
         headerName: 'Nombre',
-        width: 300
+        width: 300,
       },
       {
         field: 'venueType',
         headerName: 'Tipo',
-        cellRenderer: params => {
-          return this.venueTypes.find(v => v.id == params.value)?.name || "-";
+        cellRenderer: (params) => {
+          return this.venueTypes.find((v) => v.id == params.value)?.name || '-';
         },
-        width: 50
+        width: 50,
       },
       {
         field: 'foundedAt',
         headerName: 'Fundado en',
         cellRenderer: (params) => {
-          return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : "-";
+          return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : '-';
         },
       },
       {
         field: 'capacity',
         headerName: 'Capacidad',
         width: 50,
-        cellRenderer: params => params.value || "-"
+        cellRenderer: (params) => params.value || '-',
       },
       /*{
         field: 'openingHours',
@@ -91,13 +90,13 @@ export class VenueListComponent implements OnInit {
         field: 'email',
         headerName: 'Email',
         width: 250,
-        cellRenderer: params => params.value || "-"
+        cellRenderer: (params) => params.value || '-',
       },
       {
         field: 'website',
         headerName: 'Sitio web',
         width: 250,
-        cellRenderer: params => params.value || "-"
+        cellRenderer: (params) => params.value || '-',
       },
       /*{
         field: 'address',

@@ -11,9 +11,8 @@ describe('GroupQuotesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupQuotesComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupQuotesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

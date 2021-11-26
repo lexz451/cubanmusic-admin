@@ -32,7 +32,7 @@ export class SelectorComponent implements OnInit, ControlValueAccessor {
   @Input()
   showCreate = false;
   @Input()
-  canAdd = false
+  canAdd = false;
   @Input()
   bindTo = 'id';
 

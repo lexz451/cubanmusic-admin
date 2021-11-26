@@ -1,20 +1,7 @@
-import {
-  debounceTime,
-  distinctUntilChanged,
-  tap,
-  switchMap,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 
 import { of, OperatorFunction, Observable, Subscription } from 'rxjs';
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  Optional,
-  Self,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Location } from '@app/@shared/models/location';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
