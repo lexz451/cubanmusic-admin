@@ -109,9 +109,11 @@ export class HomeComponent implements OnInit {
             .createUser(this.user)
             .pipe(untilDestroyed(this))
             .subscribe(() => {
-              this._uiService.notifySuccess(
-                'El usuario fue creado con exito. Ahora puede acceder al sistema con sus credenciales.'
-              );
+              console.log('Usuario creado con éxito.');
+              //this._uiService.notifySuccess(
+              //  'El usuario fue creado con exito. Ahora puede acceder al sistema con sus credenciales.'
+              //);
+              this.users$ = this._homeService.getUsers();
             });
         },
         () => {}
