@@ -1,3 +1,4 @@
+import { concatMap } from 'rxjs/operators';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
 import { DataService } from '../../../@shared/services/data.service';
 import { forkJoin } from 'rxjs';
@@ -5,7 +6,7 @@ import { UiService } from '../../../@shared/services/ui.service';
 import { ListRendererComponent } from '../../../@shared/components/table/renderers/list-renderer/list-renderer.component';
 import { AwardService } from '../award.service';
 import { Award } from '../../../@shared/models/award';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Logger } from '../../../@shared/logger.service';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
@@ -28,43 +29,36 @@ export class AwardListComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private awardService: AwardService,
-    private selectorService: DataService,
     private uiService: UiService
   ) {}
 
   ngOnInit() {
-    this.fetchData();
-  }
-
-  private fetchData(): void {
-    forkJoin([this.selectorService.countries, this.selectorService.organizations, this.awardService.getAll()])
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        this.organizations = res[1] || [];
-        this.awards = res[2] || [];
-      });
+    const { data } = this.route.snapshot.data;
+    this.countries = data[0] || [];
+    this.organizations = data[1] || [];
+    this.awards = data[2] || [];
   }
 
   get columns(): ColDef[] {
     return [
       {
-        field: 'title',
+        field: 'name',
         headerName: 'Nombre',
       },
       {
-        field: 'country',
+        field: 'countryId',
         headerName: 'Pais',
         cellRenderer: (params) => {
           const countryId = params?.value;
           const country = this.countries.find((e) => e.id == countryId);
           if (!country) return '-';
-          return `${country.icon} ${country.name}`;
+          return country.name;
         },
       },
       {
-        field: 'grantedBy',
+        field: 'grantedById',
         headerName: 'Otorgado por',
         cellRenderer: (params) => {
           const orgId = params?.value;
@@ -93,9 +87,12 @@ export class AwardListComponent implements OnInit {
               id &&
                 this.awardService
                   .delete(id)
-                  .pipe(untilDestroyed(this))
-                  .subscribe(() => {
-                    this.fetchData();
+                  .pipe(
+                    untilDestroyed(this),
+                    concatMap(() => this.awardService.getAll())
+                  )
+                  .subscribe((res) => {
+                    this.awards = res || [];
                     this.uiService.notifySuccess('Premio eliminado con exito.');
                   });
             }

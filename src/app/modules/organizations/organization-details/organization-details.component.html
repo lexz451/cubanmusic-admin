@@ -16,14 +16,14 @@
       class="col-sm-12"
       controlType="textarea"
     ></app-input>
-    <app-phone-input class="col-sm-4" [(phone)]="org.phone" [countries]="fullCountries | async"></app-phone-input>
+    <app-phone-input class="col-sm-4" [(phone)]="org.phone" [countries]="countries"></app-phone-input>
     <app-input name="email" [(ngModel)]="org.email" placeholder="Email" class="col-sm-4"></app-input>
     <app-selector
       class="col-sm-4"
       name="country"
       placeholder="País"
-      [data$]="countries"
-      [(ngModel)]="org.country"
+      [data]="countries"
+      [(ngModel)]="org.countryId"
     ></app-selector>
     <app-input name="website" [(ngModel)]="org.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
     <app-input

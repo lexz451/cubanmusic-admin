@@ -27,10 +27,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(private modal: NgbModal, private _imageService: ImagesService, private _uiService: UiService) {}
 
   getImage(e: Image) {
-    const base64 = e.filedata;
-    const type = e.filetype;
-    const img = `data:${type};base64,${base64}`;
-    return img;
+    //const base64 = e.filedata;
+    //const type = e.filetype;
+    //const img = `data:${type};base64,${base64}`;
+    //return img;
+    return null;
   }
 
   ngOnInit(): void {}

@@ -1,5 +1,6 @@
+import { ImageFile } from '@app/@shared/models/image-file';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { finalize } from 'rxjs/operators';
+import { finalize, concatMap } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { NgForm } from '@angular/forms';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
@@ -27,13 +28,14 @@ export class AlbumDetailsComponent implements OnInit {
   country = new Country();
   image = new Image();
 
-  recordLabels$: Observable<ISelectableItem[]>;
-  artists$: Observable<ISelectableItem[]>;
-  organizations$: Observable<ISelectableItem[]>;
-  fullCountries$: Observable<Country[]>;
-  countries$: Observable<ISelectableItem[]>;
+  recordLabels: ISelectableItem[];
+  artists: ISelectableItem[];
+  organizations: ISelectableItem[];
+  countries: ISelectableItem[];
 
-  albumArt: any = '/assets/default-image.jpg';
+  defaultThumbnail: any = '/assets/default-image.jpg';
+
+  albumImage?: string;
 
   @ViewChild('input', { static: false })
   fileInput: ElementRef<HTMLInputElement> | undefined;
@@ -50,24 +52,17 @@ export class AlbumDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
 
-    this.recordLabels$ = this.dataService.recordLabels;
-    this.artists$ = this.dataService.artists;
-    this.organizations$ = this.dataService.organizations;
-    this.fullCountries$ = this.dataService.fullCountries;
-    this.countries$ = this.dataService.countries;
+    const { data } = this.route.snapshot.data;
 
-    if (id) {
-      this.albumService
-        .getById(id)
-        .pipe(untilDestroyed(this))
-        .subscribe((res) => {
-          this.album = res || new Album();
-          if (this.album.image) {
-            this.albumArt = this.album.image;
-          }
-        });
+    this.recordLabels = data[0] || [];
+    this.artists = data[1] || [];
+    this.organizations = data[2] || [];
+    this.countries = data[3] || [];
+
+    this.album = data[4] || new Album();
+    if (this.album.imageFile) {
+      this.albumImage = ImageFile.toDataURL(this.album.imageFile);
     }
   }
 
@@ -84,7 +79,7 @@ export class AlbumDetailsComponent implements OnInit {
             .createRecordLabel(this.label)
             .pipe(untilDestroyed(this))
             .subscribe((res) => {
-              this.recordLabels$ = this.dataService.recordLabels;
+
               this.uiService.notifySuccess('Sello creado con éxito.');
             });
         },
@@ -103,9 +98,12 @@ export class AlbumDetailsComponent implements OnInit {
         () => {
           this.dataService
             .createCountry(this.country)
-            .pipe(untilDestroyed(this))
+            .pipe(
+              untilDestroyed(this),
+              concatMap(() => this.dataService.countries)
+            )
             .subscribe((res) => {
-              this.countries$ = this.dataService.countries;
+              this.countries = res || [];
               this.uiService.notifySuccess('País agregado con éxito.');
             });
         },
@@ -137,8 +135,7 @@ export class AlbumDetailsComponent implements OnInit {
           .create(this.album)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Album creado con éxito.');
-            this.router.navigate(['albums']);
+            this.router.navigate(['albums']).then(() => this.uiService.notifySuccess('Album creado con éxito.'));
           });
       }
     }
@@ -159,19 +156,15 @@ export class AlbumDetailsComponent implements OnInit {
   onImageChange(): void {
     let file = this.fileInput?.nativeElement.files[0];
     let reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.onloadend = () => {
-      this.album.image = reader.result;
-      this.albumArt = reader.result;
+      const image = new ImageFile()
+      image.filename = file.name;
+      image.filetype = file.type;
+      image.filedata = ImageFile.toBase64(reader.result as string);
+      this.album.imageFile = image;
+      this.albumImage = ImageFile.toDataURL(this.album.imageFile);
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
   }
 
-  getImageBase64(e: Image) {
-    const base64 = e.filedata;
-    const type = e.filetype;
-    const img = `data:${type};base64,${base64}`;
-    return img;
-  }
 }

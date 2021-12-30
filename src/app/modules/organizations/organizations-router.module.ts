@@ -1,3 +1,5 @@
+import { OrganizationDetailResolver } from './organization-detail.resolver';
+import { OrganizationsResolver } from './organizations.resolver';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -6,12 +8,30 @@ import { OrganizationDetailsComponent } from '@app/modules/organizations/organiz
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: OrganizationListComponent, data: { title: marker('Instituciones'), animation: 10 } },
-  { path: 'new', component: OrganizationDetailsComponent, data: { title: marker('Crear Institución'), animation: 11 } },
+  {
+    path: '',
+    component: OrganizationListComponent,
+    runGuardsAndResolvers: 'always',
+    resolve: {
+      data: OrganizationsResolver
+    },
+    data: { title: marker('Instituciones') }
+  },
+  {
+    path: 'new',
+    component: OrganizationDetailsComponent,
+    resolve: {
+      data: OrganizationDetailResolver
+    },
+    data: { title: marker('Crear Institución') }
+  },
   {
     path: ':id',
     component: OrganizationDetailsComponent,
-    data: { title: marker('Editar Institución'), animation: 12 },
+    resolve: {
+      data: OrganizationDetailResolver
+    },
+    data: { title: marker('Editar Institución') },
   },
 ];
 

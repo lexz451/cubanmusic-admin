@@ -1,3 +1,4 @@
+import { ImageFile } from './image-file';
 import { Phone } from './phone';
 export class Venue {
   id?: number;
@@ -17,5 +18,5 @@ export class Venue {
   instagram?: string;
   facebook?: string;
   twitter?: string;
-  image?: any;
+  imageFile: ImageFile;
 }

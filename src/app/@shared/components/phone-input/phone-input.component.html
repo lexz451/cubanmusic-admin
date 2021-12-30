@@ -8,7 +8,7 @@
       </span>
     </button>
     <div class="phone-codes" ngbDropdownMenu>
-      <span *ngFor="let c of countries" (click)="onCountrySelected(c)" ngbDropdownItem>
+      <span *ngFor="let c of countries" (click)="onCountryChange(c)" ngbDropdownItem>
         {{ c.emoji }}
         {{ c.name }}
         <strong>({{ c.phoneCode }})</strong>
@@ -18,8 +18,8 @@
       [placeholder]="placeholder | translate"
       type="text"
       class="form-control phone-input-control"
-      [(ngModel)]="phone.number"
-      (ngModelChange)="valueChange()"
+      [ngModel]="phone?.number"
+      (ngModelChange)="onNumberChange($event)"
     />
   </div>
   <small class="form-text text-muted text-help" *ngIf="!!helperText">

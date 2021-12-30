@@ -4,11 +4,11 @@
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
-    <h2 class="mb-0 fw-bold">{{ award?.title || 'Crear nuevo Premio' }}</h2>
+    <h2 class="mb-0 fw-bold">{{ award?.name || 'Crear nuevo Premio' }}</h2>
   </div>
 
   <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <app-input placeholder="Nombre" name="name" [(ngModel)]="award.title" class="col-sm-6" required></app-input>
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="award.name" class="col-sm-6" required></app-input>
     <app-input
       placeholder="Descripción"
       name="description"
@@ -21,8 +21,8 @@
       class="col-sm-4"
       name="country"
       placeholder="País"
-      [data$]="countries$"
-      [(ngModel)]="award.country"
+      [data]="countries"
+      [(ngModel)]="award.countryId"
       (create)="createCountry(countryModal)"
       [showCreate]="true"
     ></app-selector>
@@ -31,10 +31,10 @@
       class="col-sm-4"
       name="granted"
       placeholder="Otorgado por"
-      [data$]="orgs$"
+      [data]="organizations"
       [showCreate]="true"
       (create)="createOrg(orgModal)"
-      [(ngModel)]="award.grantedBy"
+      [(ngModel)]="award.grantedById"
     ></app-selector>
 
     <app-tags
@@ -97,12 +97,12 @@
           <app-phone-input
             placeholder="Teléfono"
             [(phone)]="org.phone"
-            [countries]="fullCountries$ | async"
+            [countries]="countries"
             class="col-sm-12"
             name="phone"
           ></app-phone-input>
           <app-input class="col-sm-12" placeholder="Email" [(ngModel)]="org.email" name="email"></app-input>
-          <app-selector [data$]="countries$" placeholder="País" name="country" [(ngModel)]="org.country"></app-selector>
+          <app-selector [data]="countries" placeholder="País" name="country" [(ngModel)]="org.countryId"></app-selector>
           <app-input class="col-sm-12" name="website" placeholder="Sitio Web" [(ngModel)]="org.website"></app-input>
         </div>
       </div>

@@ -439,7 +439,7 @@
   </div>
   <form class="modal-body">
     <div class="row">
-      <app-input placeholder="Nombre" name="name" [(ngModel)]="award.title" class="col-sm-6" required></app-input>
+      <app-input placeholder="Nombre" name="name" [(ngModel)]="award.name" class="col-sm-6" required></app-input>
       <app-input
         placeholder="Descripción"
         name="description"
@@ -448,7 +448,7 @@
         controlType="textarea"
       ></app-input>
 
-      <app-selector class="col-sm-4" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="award.country">
+      <app-selector class="col-sm-4" name="country" placeholder="País" [data$]="countries$" [(ngModel)]="award.countryId">
       </app-selector>
 
       <app-selector
@@ -456,7 +456,7 @@
         name="granted"
         placeholder="Otorgado por"
         [data$]="organizations$"
-        [(ngModel)]="award.grantedBy"
+        [(ngModel)]="award.grantedById"
       ></app-selector>
 
       <app-tags
@@ -480,7 +480,7 @@
   </div>
   <form #form="ngForm" class="modal-body">
     <div class="row">
-      <app-input placeholder="Titulo" name="title" [(ngModel)]="album.title" class="col-sm-6" required></app-input>
+      <app-input placeholder="Titulo" name="title" [(ngModel)]="album.name" class="col-sm-6" required></app-input>
       <app-input
         placeholder="Descripción"
         name="description"
@@ -492,7 +492,7 @@
         name="releasedOn"
         class="col-sm-3"
         placeholder="Fecha de lanzamiento"
-        [(ngModel)]="album.releasedDate"
+        [(ngModel)]="album.releaseDate"
       ></app-datepicker>
       <app-input
         name="copyrightYear"
@@ -553,7 +553,7 @@
         [showCreate]="true"
         (create)="createCountry(countryModal)"
         [data$]="countries$"
-        [(ngModel)]="label.country"
+        [(ngModel)]="label.countryId"
       >
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>

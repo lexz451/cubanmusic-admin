@@ -18,8 +18,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class LabelDetailsComponent implements OnInit {
   label: Recordlabel = new Recordlabel();
-  countries: Observable<ISelectableItem[]>;
-  fullCountries: Observable<Country[]>;
+  countries$: Observable<ISelectableItem[]>;
 
   constructor(
     private labelService: LabelService,
@@ -32,8 +31,7 @@ export class LabelDetailsComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
 
-    this.countries = this.dataService.countries;
-    this.fullCountries = this.dataService.fullCountries;
+    this.countries$ = this.dataService.countries;
 
     if (id) {
       this.labelService

@@ -16,7 +16,7 @@
       [disabled]="isDisabled"
       [addTag]="canAdd"
       [addTagText]="'Añadir opción: '"
-      [items]="data$ | async"
+      [items]="data"
     >
       <ng-template ng-option-tmp let-item="item">
         <span *ngIf="!optionTemplate">

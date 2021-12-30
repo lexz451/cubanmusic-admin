@@ -10,11 +10,11 @@ import { Country } from '@shared/models/country';
 export class PhoneInputComponent implements OnInit, OnChanges {
   selectedCountry: Country;
 
-  @Input() phone: Phone = new Phone();
+  @Input() phone?: Phone;
   @Output() phoneChange = new EventEmitter();
 
   @Input()
-  countries: Country[] = [];
+  countries: any[] = [];
 
   @Input()
   placeholder = 'Teléfono';
@@ -25,24 +25,35 @@ export class PhoneInputComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.countries && this.countries.length) {
       if (!this.selectedCountry) {
         this.selectedCountry = this.countries[0];
+        if (!this.phone) {
+          this.phone = new Phone();
+        }
         this.phone.code = this.selectedCountry.phoneCode;
       }
     }
   }
 
-  onCountrySelected(country: Country): void {
+  onCountryChange(country: Country): void {
     this.selectedCountry = country;
+    if (!this.phone) {
+      this.phone = new Phone();
+    }
     this.phone.code = country.phoneCode;
     this.phoneChange.emit(this.phone);
   }
 
-  valueChange(): void {
+  onNumberChange(number: string): void {
+    if (!this.phone) {
+      this.phone = new Phone();
+    }
+    this.phone.number = number;
     this.phoneChange.emit(this.phone);
   }
 }

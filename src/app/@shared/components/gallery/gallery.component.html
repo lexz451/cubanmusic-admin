@@ -38,7 +38,7 @@
   </div>
   <div class="modal-body">
     <form class="row" #form="ngForm" (ngSubmit)="onSubmitModal(form, modal)">
-      <app-fileinput name="file" placeholder="Archivos" [(ngModel)]="image.filedata" class="col-sm-12" required>
+      <app-fileinput name="file" placeholder="Archivos" [(ngModel)]="image.imageFile.filedata" class="col-sm-12" required>
       </app-fileinput>
       <app-input name="title" placeholder="Título" [(ngModel)]="image.title" class="col-sm-12" required></app-input>
       <app-input name="author" placeholder="Autor" [(ngModel)]="image.author" class="col-sm-12"></app-input>

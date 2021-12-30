@@ -11,12 +11,12 @@
     <div class="row">
       <div class="col-sm-7">
         <div class="row">
-          <app-input placeholder="Nombre" name="name" [(ngModel)]="venue.name" class="col-sm-6" required></app-input>
+          <app-input placeholder="Nombre" name="name" [(ngModel)]="venue.name" class="col-sm-12" required></app-input>
           <app-input
             placeholder="Descripción"
             name="description"
             [(ngModel)]="venue.description"
-            [rows]="7"
+            [rows]="6"
             class="col-sm-12"
             controlType="textarea"
           ></app-input>
@@ -26,7 +26,7 @@
         <div class="venue-img-wrapper">
           <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input />
           <small class="form-label">Imagen</small>
-          <img class="img-fluid" [src]="venueImg" />
+          <img class="img-fluid img-thumbnail" [src]="venueImage || defaultThumbnail" />
           <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
             <i class="icon-picture me-2"></i>
             Añadir Imagen
@@ -39,13 +39,13 @@
       [(ngModel)]="venue.venueType"
       name="type"
       placeholder="Tipo"
-      [data$]="venueTypes$"
+      [data]="venueTypes"
     ></app-selector>
     <app-datepicker
       class="col-sm-4"
       [(ngModel)]="venue.foundedAt"
       name="founded"
-      placeholder="Fundado en"
+      placeholder="Fecha de Fundación"
     ></app-datepicker>
     <app-input
       class="col-sm-4"
@@ -94,7 +94,8 @@
       [(ngModel)]="venue.address"
       placeholder="Dirección"
       controlType="textarea"
-      class="col-sm-6"
+      [rows]="3"
+      class="col-sm-8"
     ></app-input>
 
     <div class="col-sm-12 d-flex mt-4">

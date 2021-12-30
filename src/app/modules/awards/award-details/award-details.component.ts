@@ -1,3 +1,4 @@
+import { concatMap } from 'rxjs/operators';
 import { Logger } from '../../../@shared/logger.service';
 import { DataService } from '../../../@shared/services/data.service';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
@@ -26,9 +27,8 @@ export class AwardDetailsComponent implements OnInit {
   org: Organization = new Organization();
   country: Country = new Country();
 
-  countries$: Observable<ISelectableItem[]>;
-  fullCountries$: Observable<Country[]>;
-  orgs$: Observable<ISelectableItem[]>;
+  countries: ISelectableItem[];
+  organizations: ISelectableItem[];
 
   constructor(
     private awardService: AwardService,
@@ -40,20 +40,11 @@ export class AwardDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
+    const { data } = this.route.snapshot.data;
 
-    this.countries$ = this.dataService.countries;
-    this.orgs$ = this.dataService.organizations;
-    this.fullCountries$ = this.dataService.fullCountries;
-
-    if (id) {
-      this.awardService
-        .getById(id)
-        .pipe(untilDestroyed(this))
-        .subscribe((res) => {
-          this.award = res || new Award();
-        });
-    }
+    this.countries = data[0] || [];
+    this.organizations = data[1] || [];
+    this.award = data[2] || new Award();
   }
 
   onSubmit(form: NgForm): void {
@@ -62,18 +53,17 @@ export class AwardDetailsComponent implements OnInit {
     } else {
       if (this.award.id) {
         this.awardService
-          .updateAward(this.award)
+          .update(this.award)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Premio actualizado con exito');
+            this.uiService.notifySuccess('Premio actualizado con éxito.');
           });
       } else {
         this.awardService
-          .createAward(this.award)
+          .create(this.award)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Premio creado con exito');
-            this.router.navigate(['awards']);
+            this.router.navigate(['awards']).then(() => this.uiService.notifySuccess('Premio creado con éxito.'));
           });
       }
     }
@@ -92,7 +82,6 @@ export class AwardDetailsComponent implements OnInit {
             .createCountry(this.country)
             .pipe(untilDestroyed(this))
             .subscribe((res) => {
-              this.countries$ = this.dataService.countries;
               this.uiService.notifySuccess('País creado con éxito.');
             });
         },
@@ -111,9 +100,12 @@ export class AwardDetailsComponent implements OnInit {
         () => {
           this.dataService
             .createOrganization(this.org)
-            .pipe(untilDestroyed(this))
+            .pipe(
+              untilDestroyed(this),
+              concatMap(() => this.awardService.organizations)
+            )
             .subscribe((res) => {
-              this.orgs$ = this.dataService.organizations;
+              this.organizations = res || [];
               this.uiService.notifySuccess('Institución creada con éxito.');
             });
         },

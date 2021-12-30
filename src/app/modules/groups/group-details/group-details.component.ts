@@ -41,7 +41,6 @@ export class GroupDetailsComponent implements OnInit {
   organizations$: Observable<ISelectableItem[]>;
   recordLabels$: Observable<ISelectableItem[]>;
   countries$: Observable<ISelectableItem[]>;
-  fullCountries$: Observable<Country[]>;
   artists$: Observable<ISelectableItem[]>;
 
   groupImages$: Observable<Image[]>;
@@ -71,7 +70,6 @@ export class GroupDetailsComponent implements OnInit {
     this.artists$ = this.dataService.artists;
     this.recordLabels$ = this.dataService.recordLabels;
     this.countries$ = this.dataService.countries;
-    this.fullCountries$ = this.dataService.fullCountries;
 
     const id = this.route.snapshot.params.id;
     if (id) {

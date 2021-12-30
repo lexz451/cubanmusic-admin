@@ -1,3 +1,4 @@
+import { switchMap, finalize } from 'rxjs/operators';
 import { Direction } from 'angular-coordinates';
 import { VenueService } from '../venue.service';
 import { UiService } from '../../../@shared/services/ui.service';
@@ -8,8 +9,9 @@ import { NgForm } from '@angular/forms';
 import { Venue } from '../../../@shared/models/venue';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of, EMPTY } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ImageFile } from '@app/@shared/models/image-file';
 
 @UntilDestroy()
 @Component({
@@ -20,11 +22,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class VenueDetailsComponent implements OnInit {
   venue: Venue = new Venue();
   countries: Country[] = [];
-  venueTypes$: Observable<ISelectableItem[]>;
+  venueTypes: ISelectableItem[];
 
   direction = Direction;
 
-  venueImg: any = '/assets/default-image.jpg';
+  defaultThumbnail: any = '/assets/default-image.jpg';
+
+  venueImage?: string;
 
   @ViewChild('input', { static: false })
   fileInput: ElementRef<HTMLInputElement> | undefined;
@@ -38,27 +42,14 @@ export class VenueDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
-    const req: Observable<any>[] = [];
+    const { data } = this.route.snapshot.data;
 
-    this.venueTypes$ = this.dataService.venueTypes;
-
-    req.push(this.venueService.countries);
-    if (id) {
-      req.push(this.venueService.getById(id));
+    this.venueTypes = data[0] || [];
+    this.countries = data[1] || [];
+    this.venue = data[2] || new Venue();
+    if (this.venue.imageFile) {
+      this.venueImage = ImageFile.toDataURL(this.venue.imageFile);
     }
-
-    forkJoin(req)
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        if (id) {
-          this.venue = res[1] || new Venue();
-          if (this.venue.image) {
-            this.venueImg = this.venue.image;
-          }
-        }
-      });
   }
 
   onSubmit(form: NgForm): void {
@@ -69,7 +60,7 @@ export class VenueDetailsComponent implements OnInit {
         this.venueService
           .update(this.venue)
           .pipe(untilDestroyed(this))
-          .subscribe(() => {
+          .subscribe((res) => {
             this.uiService.notifySuccess('Venue actualizado con éxito.');
           });
       } else {
@@ -89,14 +80,16 @@ export class VenueDetailsComponent implements OnInit {
   }
 
   onImageChange(): void {
-    let file = this.fileInput?.nativeElement.files[0];
     let reader = new FileReader();
+    let file = this.fileInput?.nativeElement.files[0];
+    reader.readAsDataURL(file);
     reader.onloadend = () => {
-      this.venue.image = reader.result;
-      this.venueImg = reader.result;
+      let image = new ImageFile();
+      image.filename = file.name;
+      image.filetype = file.type;
+      image.filedata = ImageFile.toBase64(reader.result as string);
+      this.venue.imageFile = image;
+      this.venueImage = ImageFile.toDataURL(this.venue.imageFile);
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
   }
 }

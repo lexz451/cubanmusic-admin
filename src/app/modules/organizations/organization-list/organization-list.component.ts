@@ -8,7 +8,7 @@ import { OrganizationService } from '@app/modules/organizations/organization.ser
 import { Component, OnInit } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { Organization } from '@shared/models/organization';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -27,22 +27,16 @@ export class OrganizationListComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private orgService: OrganizationService,
     private selectorService: DataService,
     private uiService: UiService
   ) {}
 
   ngOnInit() {
-    this.fetchData();
-  }
-
-  private fetchData(): void {
-    forkJoin([this.selectorService.countries, this.orgService.getAll()])
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.countries = res[0] || [];
-        this.orgs = res[1] || [];
-      });
+    const { data } = this.route.snapshot.data;
+    this.countries = data[0] || [];
+    this.orgs = data[1] || [];
   }
 
   get columns(): ColDef[] {
@@ -59,13 +53,13 @@ export class OrganizationListComponent implements OnInit {
         },
       },
       {
-        field: 'country',
+        field: 'countryId',
         headerName: 'País',
         cellRenderer: (params) => {
           const countryId = params?.value;
           const country = this.countries.find((e) => e.id == countryId);
           if (!country) return '-';
-          return `${country?.icon} ${country?.name}`;
+          return country.name;
         },
       },
       {
@@ -77,13 +71,6 @@ export class OrganizationListComponent implements OnInit {
         },
         cellRenderer: (params) => {
           return params.value ? `<a href="${params.value}">${params.value}</a>` : '-';
-        },
-      },
-      {
-        field: 'address',
-        headerName: 'Dirección',
-        cellRenderer: (params) => {
-          return params.value || '-';
         },
       },
       {
@@ -108,8 +95,11 @@ export class OrganizationListComponent implements OnInit {
                   .delete(id)
                   .pipe(untilDestroyed(this))
                   .subscribe(() => {
-                    this.fetchData();
-                    this.uiService.notifySuccess('Institucion eliminada con exito.');
+                    this.router.navigate([], {
+                      relativeTo: this.route
+                    }).then(() => {
+                      this.uiService.notifySuccess('Institución eliminada con éxito.');
+                    });
                   });
               }
             }

@@ -1,3 +1,4 @@
+import { DataService } from '@app/@shared/services/data.service';
 import { Organization } from '../../@shared/models/organization';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@shared/services/api.service';
@@ -8,7 +9,10 @@ import { Country } from '@shared/models/country';
   providedIn: 'root',
 })
 export class OrganizationService {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
 
   getAll(): Observable<Organization[]> {
     return this.apiService.get<Organization[]>('/organizations');
@@ -31,6 +35,6 @@ export class OrganizationService {
   }
 
   get countries(): Observable<Country[]> {
-    return this.apiService.get('/countries');
+    return this.dataService.countries;
   }
 }

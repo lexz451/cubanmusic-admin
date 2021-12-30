@@ -3,14 +3,14 @@ import { Point } from '@shared/models/point';
 
 export class Organization {
   id?: number;
-  name?: string = '';
-  description?: string = '';
-  phone?: Phone = new Phone();
-  email?: string = '';
-  country?: number;
+  name?: string;
+  description?: string;
+  phone?: Phone;
+  email?: string;
+  countryId?: number;
   point?: Point;
-  website?: string = '';
-  address?: string = '';
+  website?: string;
+  address?: string;
   collaborations?: number[] = [];
   affiliated?: number[] = [];
 }

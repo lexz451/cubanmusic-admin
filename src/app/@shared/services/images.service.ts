@@ -26,7 +26,7 @@ export class ImagesService {
     data.append('title', image?.title || '');
     data.append('author', image?.author || '');
     data.append('description', image?.description || '');
-    data.append('file', image.filedata, image.filedata?.name);
+    //data.append('file', image.filedata, image.filedata?.name);
     data.append('tags', image.tags.join());
     return this.httpClient.post(`/images/artist/${artistId}/upload`, data);
   }

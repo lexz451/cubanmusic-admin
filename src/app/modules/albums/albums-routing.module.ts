@@ -1,24 +1,36 @@
+import { AlbumDetailResolver } from './albums-detail.resolver';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AlbumsResolver } from './albums.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: AlbumListComponent,
-    data: { title: marker('Albums'), animation: 21 },
+    runGuardsAndResolvers: 'always',
+    resolve: {
+      data: AlbumsResolver
+    },
+    data: { title: marker('Albums') },
   },
   {
     path: 'new',
     component: AlbumDetailsComponent,
-    data: { title: marker('Crear Album'), animation: 22 },
+    resolve: {
+      data: AlbumDetailResolver
+    },
+    data: { title: marker('Crear Album') },
   },
   {
     path: ':id',
     component: AlbumDetailsComponent,
-    data: { title: marker('Editar Album'), animation: 23 },
+    resolve: {
+      data: AlbumDetailResolver
+    },
+    data: { title: marker('Editar Album') },
   },
 ];
 

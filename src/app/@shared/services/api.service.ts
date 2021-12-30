@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
+
   private _headers = new HttpHeaders({
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -30,6 +31,10 @@ export class ApiService {
     return this._httpClient.post<T>(url, data, {
       headers: this._headers,
     });
+  }
+
+  postMultipart(url: string, formData: FormData): Observable<any> {
+    return this._httpClient.post(url, formData);
   }
 
   put<T, D>(url: string, data: D): Observable<T> {

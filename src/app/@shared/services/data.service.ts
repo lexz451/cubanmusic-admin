@@ -120,24 +120,10 @@ export class DataService {
     ]);
   }
 
-  get countries(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Country[]>('/countries').pipe(
-      map((countries) =>
-        countries?.map((c) => {
-          return {
-            id: c.id,
-            name: c.name,
-            icon: c.emoji,
-          };
-        })
-      ),
-      share()
-    );
+  get countries(): Observable<Country[]> {
+    return this.apiService.get<Country[]>('/countries').pipe(share());
   }
 
-  get fullCountries(): Observable<Country[]> {
-    return this.apiService.get<Country[]>('/countries');
-  }
 
   get organizations(): Observable<ISelectableItem[]> {
     return this.apiService.get<Organization[]>('/organizations').pipe(
@@ -153,16 +139,7 @@ export class DataService {
   }
 
   get awards(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Award[]>('/awards').pipe(
-      map((awards) =>
-        awards?.map((a) => {
-          return {
-            id: a.id,
-            name: a.title,
-          };
-        })
-      )
-    );
+    return this.apiService.get<Award[]>('/awards');
   }
 
   get instruments(): Observable<ISelectableItem[]> {
@@ -260,20 +237,6 @@ export class DataService {
 
   get albums(): Observable<Album[]> {
     return this.apiService.get<Album[]>('/albums');
-  }
-
-  get selectableAlbums(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Album[]>('/albums').pipe(
-      map((albums) =>
-        albums?.map(
-          (a) =>
-            <ISelectableItem>{
-              id: a.id,
-              name: a.title,
-            }
-        )
-      )
-    );
   }
 
   createJobTitle(jobTitle: JobTitle): Observable<number> {

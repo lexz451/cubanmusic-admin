@@ -2,7 +2,7 @@ import { DataService } from '@app/@shared/services/data.service';
 import { ISelectableItem } from '../../../@shared/models/selectable-item';
 import { DatePipe } from '@angular/common';
 import { Logger } from '../../../@shared/logger.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
 import { UiService } from '../../../@shared/services/ui.service';
@@ -23,7 +23,6 @@ const log = new Logger('Albums');
 })
 export class AlbumListComponent implements OnInit {
   albums: Album[] = [];
-
   recordLabels: ISelectableItem[] = [];
   artists: ISelectableItem[] = [];
 
@@ -32,27 +31,21 @@ export class AlbumListComponent implements OnInit {
     private selectorService: DataService,
     private uiService: UiService,
     private router: Router,
+    private route: ActivatedRoute,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
-    this.fectchData();
-  }
-
-  private fectchData(): void {
-    forkJoin([this.selectorService.artists, this.selectorService.recordLabels, this.albumService.getAll()])
-      .pipe(untilDestroyed(this))
-      .subscribe((res) => {
-        this.artists = res[0] || [];
-        this.recordLabels = res[1] || [];
-        this.albums = res[2] || [];
-      });
+    const { data } = this.route.snapshot.data;
+    this.artists = data[0] || [];
+    this.recordLabels = data[1] || [];
+    this.albums = data[2] || [];
   }
 
   get columns(): ColDef[] {
     return [
       {
-        field: 'title',
+        field: 'name',
         headerName: 'Título',
         width: 300,
         wrapText: true,
@@ -113,8 +106,11 @@ export class AlbumListComponent implements OnInit {
                   .delete(id)
                   .pipe(untilDestroyed(this))
                   .subscribe(() => {
-                    this.uiService.notifySuccess('Album eliminado con exito.');
-                    this.fectchData();
+                    this.router
+                      .navigate([], {
+                        relativeTo: this.route,
+                      })
+                      .then(() => this.uiService.notifySuccess('Album eliminado con éxito.'));
                   });
             }
           },

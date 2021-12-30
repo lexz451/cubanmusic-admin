@@ -89,7 +89,7 @@ export class ArtistDetailsComponent implements OnInit {
     this.artists$ = this.dataService.artists;
     this.recordLabels$ = this.dataService.recordLabels;
     this.countries$ = this.dataService.countries;
-    this.fullCountries$ = this.dataService.fullCountries;
+    this.fullCountries$ = this.dataService.countries;
 
     const id = this.route.snapshot.params.id;
     if (id) {

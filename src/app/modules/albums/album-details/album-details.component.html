@@ -4,7 +4,7 @@
       <i class="icon-arrow-left"></i>
       <span>Atrás</span>
     </button>
-    <h2 class="mb-0 fw-bold">{{ album?.title || 'Crear nuevo Album' }}</h2>
+    <h2 class="mb-0 fw-bold">{{ album?.name || 'Crear nuevo Album' }}</h2>
   </div>
 
   <form class="form d-flex flex-column" #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -16,7 +16,7 @@
               <app-input
                 placeholder="Titulo"
                 name="title"
-                [(ngModel)]="album.title"
+                [(ngModel)]="album.name"
                 class="col-sm-12"
                 required
               ></app-input>
@@ -32,13 +32,13 @@
                 name="releasedOn"
                 class="col-sm-6"
                 placeholder="Fecha de lanzamiento"
-                [(ngModel)]="album.releasedDate"
+                [(ngModel)]="album.releaseDate"
               ></app-datepicker>
               <app-selector
                 name="recordLabel"
                 class="col-sm-6"
                 placeholder="Sello Discográfico"
-                [data$]="recordLabels$"
+                [data]="recordLabels"
                 [(ngModel)]="album.recordLabel"
                 [showCreate]="true"
                 (create)="createRecordLabel(recordLabelModal)"
@@ -50,7 +50,7 @@
                 name="collaborations"
                 class="col-sm-12"
                 placeholder="Colaboradores"
-                [data$]="artists$"
+                [data]="artists"
                 [(ngModel)]="album.contributors"
                 (ngModelChange)="onChangeContributor()"
               ></app-selector>
@@ -60,7 +60,7 @@
             <div class="album-art-wrapper">
               <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input />
               <small class="form-label">Portada</small>
-              <img class="img-fluid" [src]="albumArt" />
+              <img class="img-fluid" [src]="albumImage || defaultThumbnail" />
               <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
                 <i class="icon-picture me-2"></i>
                 Añadir Portada
@@ -92,7 +92,7 @@
         class="col-sm-12"
         controlType="textarea"
       ></app-input>
-      <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="fullCountries$ | async"></app-phone-input>
+      <app-phone-input class="col-sm-12" [(phone)]="label.phone" [countries]="countries"></app-phone-input>
       <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-12"></app-input>
       <app-selector
         class="col-sm-6"
@@ -100,8 +100,8 @@
         placeholder="País"
         [showCreate]="true"
         (create)="createCountry(countryModal)"
-        [data$]="countries$"
-        [(ngModel)]="label.country"
+        [data]="countries"
+        [(ngModel)]="label.countryId"
       >
       </app-selector>
       <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>

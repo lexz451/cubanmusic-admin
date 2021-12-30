@@ -18,11 +18,11 @@ export class VenueService {
     return this.apiService.get(`/venues/${id}`);
   }
 
-  create(venue: Venue): Observable<number> {
+  create(venue: Venue): Observable<string> {
     return this.apiService.post('/venues/new', venue);
   }
 
-  update(venue: Venue): Observable<void> {
+  update(venue: Venue): Observable<string> {
     return this.apiService.put(`/venues/${venue.id}`, venue);
   }
 

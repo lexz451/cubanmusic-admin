@@ -1,3 +1,4 @@
+import { DataService } from '@app/@shared/services/data.service';
 import { ApiService } from '../../@shared/services/api.service';
 import { Album } from '../../@shared/models/album';
 import { Observable } from 'rxjs';
@@ -7,13 +8,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AlbumsService {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService) {}
 
   getAll(): Observable<Album[]> {
     return this.apiService.get('/albums');
   }
 
-  getById(id: number): Observable<Album> {
+  getById(id: string): Observable<Album> {
     return this.apiService.get(`/albums/${id}`);
   }
 
@@ -27,5 +30,21 @@ export class AlbumsService {
 
   delete(id: number): Observable<void> {
     return this.apiService.delete(`/albums/${id}`);
+  }
+
+  get artists() {
+    return this.dataService.artists;
+  }
+
+  get recordLabels() {
+    return this.dataService.recordLabels;
+  }
+
+  get organizations() {
+    return this.dataService.organizations;
+  }
+
+  get countries() {
+    return this.dataService.countries;
   }
 }

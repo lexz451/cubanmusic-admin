@@ -21,7 +21,10 @@ import { ISelectableItem } from '@app/@shared/models/selectable-item';
 })
 export class SelectorComponent implements OnInit, ControlValueAccessor {
   @Input()
-  data$?: Observable<ISelectableItem[]>;
+  data?: ISelectableItem[] = [];
+
+  @Input()
+  data$: Observable<ISelectableItem[]>;
 
   @Input()
   label?: string;

@@ -3,22 +3,34 @@ import { VenueListComponent } from './venue-list/venue-list.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { VenuesResolver } from './venues.resolver';
+import { VenueDetailResolver } from './venue-detail.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: VenueListComponent,
-    data: { title: marker('Venues'), animation: 13 },
+    runGuardsAndResolvers: 'always',
+    resolve: {
+      data: VenuesResolver,
+    },
+    data: { title: marker('Venues') },
   },
   {
     path: 'new',
     component: VenueDetailsComponent,
-    data: { title: marker('Crear Venue'), animation: 14 },
+    resolve: {
+      data: VenueDetailResolver
+    },
+    data: { title: marker('Crear Venue') },
   },
   {
     path: ':id',
     component: VenueDetailsComponent,
-    data: { title: marker('Editar Venue'), animation: 15 },
+    resolve: {
+      data: VenueDetailResolver
+    },
+    data: { title: marker('Editar Venue') },
   },
 ];
 

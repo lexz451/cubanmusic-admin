@@ -20,9 +20,7 @@ import { Observable, forkJoin, Subscription } from 'rxjs';
 })
 export class OrganizationDetailsComponent implements OnInit {
   org: Organization = new Organization();
-
-  fullCountries: Observable<Country[]>;
-  countries: Observable<ISelectableItem[]>;
+  countries: ISelectableItem[] = [];
 
   constructor(
     private organizationService: OrganizationService,
@@ -33,19 +31,9 @@ export class OrganizationDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params.id;
-
-    this.countries = this.dataService.countries;
-    this.fullCountries = this.dataService.fullCountries;
-
-    if (id) {
-      this.organizationService
-        .getById(id)
-        .pipe(untilDestroyed(this))
-        .subscribe((res) => {
-          this.org = res || new Organization();
-        });
-    }
+    const { data } = this.route.snapshot.data;
+    this.countries = data[0] || [];
+    this.org = data[1] || new Organization();
   }
 
   onSubmit(form: NgForm) {
@@ -57,15 +45,14 @@ export class OrganizationDetailsComponent implements OnInit {
           .updateOrg(this.org)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Institucion actualizada con exito.');
+            this.uiService.notifySuccess('Institución actualizada con éxito.');
           });
       } else {
         this.organizationService
           .createOrg(this.org)
           .pipe(untilDestroyed(this))
           .subscribe(() => {
-            this.uiService.notifySuccess('Institucion creada con exito');
-            this.router.navigate(['organizations']);
+            this.router.navigate(['organizations']).then(() => this.uiService.notifySuccess('Institución creada con éxito'));
           });
       }
     }

@@ -3,30 +3,38 @@ import { AwardListComponent } from './award-list/award-list.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AwardListResolver } from './award-list.resolver';
+import { AwardDetailsResolver } from './award-details.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: AwardListComponent,
+    resolve: {
+      data: AwardListResolver
+    },
     data: {
       title: marker('Grupos'),
-      animation: 3,
     },
   },
   {
     path: 'new',
     component: AwardDetailsComponent,
+    resolve: {
+      data: AwardDetailsResolver
+    },
     data: {
-      title: marker('Crear Grupo'),
-      animation: 4,
+      title: marker('Crear Grupo')
     },
   },
   {
     path: ':id',
     component: AwardDetailsComponent,
+    resolve: {
+      data: AwardDetailsResolver
+    },
     data: {
-      title: marker('Editar Grupo'),
-      animation: 5,
+      title: marker('Editar Grupo')
     },
   },
 ];

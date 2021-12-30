@@ -6,7 +6,7 @@ import { ColDef } from 'ag-grid-community';
 import { Logger } from '../../../@shared/logger.service';
 import { TableAction } from '../../../@shared/models/table-actions';
 import { ActionsRendererComponent } from '../../../@shared/components/table/renderers/actions-renderer/actions-renderer.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@app/@shared/services/data.service';
 import { forkJoin } from 'rxjs';
@@ -22,11 +22,11 @@ const log = new Logger('Venues');
 })
 export class VenueListComponent implements OnInit {
   venues: Venue[] = [];
-
   venueTypes: any[] = [];
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private venueService: VenueService,
     private dataService: DataService,
     private uiService: UiService,
@@ -34,17 +34,19 @@ export class VenueListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fetchData();
+    const { data } = this.route.snapshot.data;
+    this.venues = data[0] || [];
+    this.venueTypes = data[1] || [];
   }
 
-  private fetchData(): void {
+  /*private fetchData(): void {
     forkJoin([this.venueService.getAll(), this.dataService.venueTypes])
       .pipe(untilDestroyed(this))
       .subscribe((res) => {
         this.venues = res[0] || [];
         this.venueTypes = res[1] || [];
       });
-  }
+  }*/
 
   get columns(): ColDef[] {
     return [
@@ -62,27 +64,11 @@ export class VenueListComponent implements OnInit {
         width: 50,
       },
       {
-        field: 'foundedAt',
-        headerName: 'Fundado en',
-        cellRenderer: (params) => {
-          return params.value ? this.datePipe.transform(params.value, 'YYYY-MM-dd') : '-';
-        },
-      },
-      {
-        field: 'capacity',
-        headerName: 'Capacidad',
-        width: 50,
-        cellRenderer: (params) => params.value || '-',
-      },
-      /*{
-        field: 'openingHours',
-        headerName: 'Horario de Servicios',
-      },*/
-      {
         field: 'phone',
         headerName: 'Teléfono',
         cellRenderer: (params) => {
           const phone = params.value;
+          if (!phone.number) return '-';
           return `(${phone.code}) ${phone.number}`;
         },
       },
@@ -96,12 +82,12 @@ export class VenueListComponent implements OnInit {
         field: 'website',
         headerName: 'Sitio web',
         width: 250,
-        cellRenderer: (params) => params.value || '-',
+        cellRenderer: (params) => {
+          const website = params.value;
+          if (!website) return "-";
+          return `<a href="#" target="blank">${website}</a>`
+        },
       },
-      /*{
-        field: 'address',
-        headerName: 'Dirección',
-      },*/
       {
         cellRendererFramework: ActionsRendererComponent,
         cellRendererParams: {
@@ -119,7 +105,7 @@ export class VenueListComponent implements OnInit {
                   .delete(id)
                   .pipe(untilDestroyed(this))
                   .subscribe(() => {
-                    this.fetchData();
+                    this.router.navigate([]);
                     this.uiService.notifySuccess('Venue eliminado con exito');
                   });
             }

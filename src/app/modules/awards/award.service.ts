@@ -1,3 +1,4 @@
+import { DataService } from '@app/@shared/services/data.service';
 import { Country } from '../../@shared/models/country';
 import { ApiService } from '../../@shared/services/api.service';
 import { Award } from '../../@shared/models/award';
@@ -8,7 +9,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AwardService {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
 
   getAll(): Observable<Award[]> {
     return this.apiService.get<Award[]>('/awards');
@@ -18,15 +22,23 @@ export class AwardService {
     return this.apiService.get<Award>(`/awards/${id}`);
   }
 
-  createAward(award: Award): Observable<void> {
+  create(award: Award): Observable<void> {
     return this.apiService.post('/awards/new', award);
   }
 
-  updateAward(award: Award): Observable<void> {
+  update(award: Award): Observable<void> {
     return this.apiService.put(`/awards/${award.id}`, award);
   }
 
   delete(id: number): Observable<void> {
     return this.apiService.delete(`/awards/${id}`);
+  }
+
+  get countries() {
+    return this.dataService.countries;
+  }
+
+  get organizations() {
+    return this.dataService.organizations;
   }
 }

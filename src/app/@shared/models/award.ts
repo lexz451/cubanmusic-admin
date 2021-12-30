@@ -3,10 +3,10 @@ import { Image } from '@shared/models/image';
 
 export class Award {
   id?: number;
-  title?: string;
+  name?: string;
   description?: string;
   image?: Image;
-  country?: number;
-  grantedBy?: number;
+  countryId?: number;
+  grantedById?: number;
   categories?: string[];
 }
