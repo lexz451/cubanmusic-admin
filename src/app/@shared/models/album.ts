@@ -1,12 +1,12 @@
 import { ImageFile } from '@app/@shared/models/image-file';
 export class Album {
-  id?: number;
+  id?: string;
   name?: string;
   description?: string;
   releaseDate?: string;
-  recordLabel?: number;
+  recordLabelId?: string;
   artists?: number[] = [];
-  copyrightYear?: string;
-  contributors?: number[] = [];
+  copyrightYear?: number;
+  contributors?: string[] = [];
   imageFile?: ImageFile;
 }

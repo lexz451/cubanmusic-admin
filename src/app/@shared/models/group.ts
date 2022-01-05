@@ -1,18 +1,20 @@
+import { ImageFile } from './image-file';
 import { Artist } from '@shared/models/artist';
 
 export class Group {
-  id?: number;
+  id?: string;
   name?: string;
   additionalNames?: string;
+  imageFile?: ImageFile;
   activeSince: number;
   activeUntil?: number;
   description?: string;
   country?: number;
-  awards: number[] = [];
+  awardsIds: string[] = [];
   collaborations: number[] = [];
-  affiliation: number;
-  label?: number;
-  genres: number[] = [];
+  organizationId: string;
+  recordLabelId?: string;
+  genresIds: string[] = [];
   email?: string;
   website?: string;
   isniCode?: string;
@@ -28,6 +30,10 @@ export class Group {
   twitter?: string;
   tiktok?: string;
   libOfCongress?: string;
-  members: Artist[] = [];
-  albums: number[] = [];
+  membersIds: string[] = [];
+  albumsIds: string[] = [];
+
+  constructor(obj: any = {}) {
+    Object.assign(this, obj);
+  }
 }

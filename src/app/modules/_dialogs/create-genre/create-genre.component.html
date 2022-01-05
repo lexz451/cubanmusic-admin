@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nuevo Género</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <app-input name="name" [placeholder]="'Nombre'" [(ngModel)]="result.name" class="col-sm-12"></app-input>
+  <app-input
+    name="description"
+    controlType="textarea"
+    [placeholder]="'Descripcion'"
+    [(ngModel)]="result.description"
+    class="col-sm-12"
+  >
+  </app-input>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" type="button" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" type="button" (click)="validateModal(form)">Aceptar</button>
+</div>

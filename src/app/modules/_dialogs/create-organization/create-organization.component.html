@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nueva Institución</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <div class="row">
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="result.name" class="col-sm-6" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="result.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+    <app-phone-input class="col-sm-4" [(phone)]="result.phone" [countries]="countries$ | async"></app-phone-input>
+    <app-input name="email" [(ngModel)]="result.email" placeholder="Email" class="col-sm-4"></app-input>
+    <app-selector
+      class="col-sm-4"
+      name="country"
+      placeholder="País"
+      [data]="countries$ | async"
+      [(ngModel)]="result.countryId"
+    ></app-selector>
+    <app-input name="website" [(ngModel)]="result.website" placeholder="Sitio Web" class="col-sm-4"></app-input>
+    <app-input
+      name="address"
+      [(ngModel)]="result.address"
+      placeholder="Dirección"
+      controlType="textarea"
+      class="col-sm-8"
+    ></app-input>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" (click)="validateModal(form)">Aceptar</button>
+</div>

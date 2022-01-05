@@ -1,0 +1,279 @@
+<div class="group-container container-fluid px-3" scrollbar>
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/groups">
+      <i class="icon-arrow-left"></i>
+      <span>Atrás</span>
+    </button>
+    <h2 class="mb-0 fw-bold">{{ group?.name || 'Crear nuevo Grupo' }}</h2>
+  </div>
+  <form class="form d-flex flex-column flex-grow-1" #form="ngForm" novalidate>
+    <ul #nav="ngbNav" class="nav nav-tabs mb-2" ngbNav [activeId]="currentFragment | async">
+      <li ngbNavItem="professional">
+        <a ngbNavLink routerLink="." fragment="professional">Datos Profesionales</a>
+        <ng-template ngbNavContent>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <app-input
+                      class="col-sm-12"
+                      name="nombre"
+                      [(ngModel)]="group.name"
+                      placeholder="Nombre"
+                      required
+                    ></app-input>
+                    <app-tags
+                      class="col-sm-12"
+                      name="nombresAdicionales"
+                      [(ngModel)]="group.additionalNames"
+                      label="Nombres adicionales"
+                      placeholder="Nombres adicionales"
+                    ></app-tags>
+                    <div class="col-sm-12 mt-2">
+                      <app-input name="isniCode" [(ngModel)]="group.isniCode" [placeholder]="'ISNI'">
+                        <button class="btn btn-link bg-transparent shadow-none">
+                          <a
+                            class="fw-normal"
+                            [class.disabled]="!group.isniCode"
+                            href="https://isni.org/isni/{{ formatISNI(group.isniCode) }}"
+                          >
+                            isni.com
+                          </a>
+                        </button>
+                      </app-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="artist-art-wrapper">
+                    <input class="d-none" (change)="onImageChange()" type="file" accept="image/*" #input />
+                    <small class="form-label">Imagen</small>
+                    <img class="img-fluid" [src]="groupImage || defaultThumbnail" />
+                    <button type="button" class="btn btn-primary d-flex align-items-center ms-auto mt-2" (click)="addImage()">
+                      <i class="icon-picture me-2"></i>
+                      Añadir Imagen
+                    </button>
+                  </div>
+                </div>
+
+                <app-input
+                  class="col-sm-12"
+                  [(ngModel)]="group.description"
+                  [controlType]="'textarea'"
+                  name="biography"
+                  [placeholder]="'Biografia'"
+                ></app-input>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="row">
+
+                <div class="col-sm-2">
+                  <app-input
+                    name="activeSince"
+                    type="number"
+                    [(ngModel)]="group.activeSince"
+                    placeholder="Año"
+                  >
+                  </app-input>
+                </div>
+                <div class="col-sm-2">
+                  <app-input
+                    name="activeUntil"
+                    type="number"
+                    [(ngModel)]="group.activeUntil"
+                    placeholder="Año"
+                  >
+                  </app-input>
+                </div>
+
+                <div class="col-sm-4">
+                  <app-selector
+                    name="affiliation"
+                    [placeholder]="'Afiliación'"
+                    [data]="organizations"
+                    [(ngModel)]="group.organizationId"
+                    [showCreate]="true"
+                    (create)="createOrganization()"
+                  ></app-selector>
+                </div>
+                <div class="col-sm-4">
+                  <app-selector
+                    name="labels"
+                    [placeholder]="'Sello Discográfico'"
+                    [data]="recordLabels"
+                    [showCreate]="true"
+                    (create)="createRecordLabel()"
+                    [multiple]="false"
+                    [(ngModel)]="group.recordLabelId"
+                  ></app-selector>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-sm-6">
+                  <app-selector
+                    name="genres"
+                    [placeholder]="'Géneros'"
+                    [data]="genres"
+                    [(ngModel)]="group.genresIds"
+                    [showCreate]="true"
+                    [multiple]="true"
+                    (create)="createGenre()"
+                  >
+                  </app-selector>
+                </div>
+                <div class="col-sm-6">
+                  <app-selector
+                    name="awards"
+                    [placeholder]="'Premios'"
+                    [data]="awards"
+                    [(ngModel)]="group.awardsIds"
+                    [showCreate]="true"
+                    [multiple]="true"
+                    (create)="createAward()"
+                  >
+                  </app-selector>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-sm-6">
+                  <app-listview
+                    (createElement)="createAlbum()"
+                    [optionTemplate]="albumOption"
+                    [(value)]="group.albumsIds"
+                    [data]="albums"
+                    title="Albums"
+                    icon="disc"
+                  >
+                    <ng-template #albumOption let-item="item" let-image="image" let-removeItem="removeItem">
+                      <div class="d-flex align-items-center" [routerLink]="['/albums', item.id]" style="cursor: pointer">
+                        <img class="img-thumb me-3" width="50" height="50" [src]="image" alt="{{ item.name }} image" />
+                        <div class="d-flex flex-column" style="width: calc(100% - 70px)">
+                          <div class="d-flex">
+                            <h6 class="card-title mb-1 text-truncate flex-grow-1">
+                              {{ item.name }}
+                            </h6>
+                            <span class="close-icon me-1" (click)="removeItem(item)"></span>
+                          </div>
+                          <small class="card-subtitle text-muted">{{ item.copyrightYear || '-' }}</small>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </app-listview>
+                </div>
+                <div class="col-sm-6">
+                  <app-listview
+                    (createElement)="createArtist()"
+                    [optionTemplate]="memberOption"
+                    [data]="artists"
+                    [(value)]="group.membersIds"
+                    title="Miembros"
+                    icon="user"
+                  >
+                    <ng-template #memberOption let-item="item" let-image="image" let-removeItem="removeItem">
+                      <div class="d-flex align-items-center">
+                        <img class="img-thumb me-3" width="50" height="50" [src]="image" alt="Card image cap" />
+                          <div class="d-flex flex-column">
+                            <div class="d-flex">
+                              <h6 class="card-title mb-1 text-truncate flex-grow-1">
+                                {{ item.name }}
+                              </h6>
+                              <span class="close-icon me-1" (click)="removeItem(item)"></span>
+                            </div>
+                          </div>
+                      </div>
+                    </ng-template>
+                  </app-listview>
+                </div>
+                <div class="v-bottom-spacer"></div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="contact" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="contact">Datos de Contacto</a>
+        <ng-template ngbNavContent>
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Correo Electrónico'" [(ngModel)]="group.email" name="email"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Sitio Web'" [(ngModel)]="group.website" name="website"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Spotify'" [(ngModel)]="group.spotify" name="spotify"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Apple Music'" [(ngModel)]="group.appleMusic" name="apple"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Sound Cloud'" [(ngModel)]="group.soundCloud" name="soundcloud"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Deezer'" [(ngModel)]="group.deezer" name="deezer"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Youtube'" [(ngModel)]="group.youtube" name="youtube"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Instagram'" [(ngModel)]="group.instagram" name="instagram"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Vibrate'" [(ngModel)]="group.viberate" name="vibrate"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input
+                  [placeholder]="'Reverb Nation'"
+                  [(ngModel)]="group.reverbNation"
+                  name="reverbNation"
+                ></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Facebook'" [(ngModel)]="group.facebook" name="facebook"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Twitter'" [(ngModel)]="group.twitter" name="twitter"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'TikTok'" [(ngModel)]="group.tiktok" name="tiktok"></app-input>
+              </div>
+              <div class="col-sm-4">
+                <app-input [placeholder]="'Biblioteca del Congreso'" [(ngModel)]="group.libOfCongress" name="loc">
+                </app-input>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="quotes" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="quotes">Quotes</a>
+        <ng-template ngbNavContent>
+          <app-group-quotes class="col-sm-12" [group]="group"></app-group-quotes>
+        </ng-template>
+      </li>
+      <li ngbNavItem="articles" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="articles">Artículos Relacionados</a>
+        <ng-template ngbNavContent>
+          <app-group-articles class="col-sm-12" [group]="group"></app-group-articles>
+        </ng-template>
+      </li>
+      <li ngbNavItem="gallery" [disabled]="!isEditMode">
+        <a ngbNavLink routerLink="." fragment="gallery">Galeria</a>
+        <ng-template ngbNavContent>
+          <app-group-gallery [group]="group"></app-group-gallery>
+        </ng-template>
+      </li>
+    </ul>
+    <div class="row flex-grow-1 mt-2" [ngbNavOutlet]="nav"></div>
+    <div class="row">
+      <div class="col-sm-12 mb-3 mt-4">
+        <div class="d-flex">
+          <button type="button" (click)="onSubmit(form)" class="btn btn-primary ms-auto">
+            {{ group.id!! ? 'Guardar' : 'Crear' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

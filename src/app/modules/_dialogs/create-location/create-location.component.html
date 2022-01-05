@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nueva Ubicación</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <div class="row">
+    <app-input name="city" [(ngModel)]="result.city" class="col-sm-12" placeholder="Pueblo/Ciudad"></app-input>
+    <app-input name="state" [(ngModel)]="result.state" class="col-sm-12" placeholder="Provincia/Estado"></app-input>
+    <app-selector
+      name="country"
+      [(ngModel)]="result.countryId"
+      [data]="countries$ | async"
+      class="col-sm-12"
+      placeholder="País"
+      [showCreate]="true"
+      (create)="createCountry()"
+    >
+    </app-selector>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" (click)="validateModal(form)">Aceptar</button>
+</div>

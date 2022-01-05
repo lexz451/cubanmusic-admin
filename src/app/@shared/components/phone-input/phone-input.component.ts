@@ -25,8 +25,7 @@ export class PhoneInputComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.countries && this.countries.length) {

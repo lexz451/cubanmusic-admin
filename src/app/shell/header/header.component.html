@@ -25,7 +25,7 @@
               (clickOnAvatar)="showProfile(userModal)"
               class="me-2"
               [size]="38"
-              [textSizeRatio]="2.4"
+              [textSizeRatio]="3"
               [name]="username"
             ></ngx-avatar>
             <small class="email fw-light me-2" ngbDropdownToggle>{{ email }}</small>
@@ -42,25 +42,25 @@
 
 <ng-template #tmp let-r="result" let-t="term">
   <div class="d-flex align-items-center">
-    <i class="icon-user me-2" *ngIf="r.type === 'Artist'"></i>
-    <i class="icon-disc me-2" *ngIf="r.type === 'Album'"></i>
-    <i class="icon-people me-2" *ngIf="r.type === 'Group'"></i>
-    <i class="icon-microphone me-2" *ngIf="r.type === 'RecordLabel'"></i>
+    <i class="icon-user me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Person'"></i>
+    <i class="icon-disc me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Album'"></i>
+    <i class="icon-people me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Group'"></i>
+    <i class="icon-microphone me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.RecordLabel'"></i>
     <img
       class="building me-2"
-      *ngIf="r.type === 'Organization'"
+      *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Organization'"
       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAABKklEQVR4nO3cwQ6CMBBF0WL8/58y/pa4IhGiofYO7RDu2ZFUwccTGRaWIkmSJOlvE3z9HHIU4zXncIs8iiu6B70PbfIo+BtkA6GoAOeyPpvPUsoj8fb2eJsd1cBXWR9gtu10ws5oJ+kbeBkGCBkgZIBQ1I30N78u0tub7lHrQthAqEeAU6k7+6PWITYQMkDIAKEjf4UXtSPTqHWIDUzChwlqY4CQAULOwpANhJyFIRsIGSBkgJCzMGQDk3AWVhsDhAwQchaGbCDkLAzZQMgAIQOEnIUhG5iEs7DaGCBkgFDmWbiWs/CZ9bgPXM78XjPmzfYvtev29hvCBkIGCBkglGkWPuV+bSB0ZANH/RFF1/3aQMgAIQOEDBCKuuCe6WHqJ/z5baAkSZKk/t7kGFu0UE9xxAAAAABJRU5ErkJggg=="
     />
-    <i class="icon-location-pin me-2" *ngIf="r.type === 'Venue'"></i>
-    <i class="icon-trophy me-2" *ngIf="r.type === 'Award'"></i>
+    <i class="icon-location-pin me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Venue'"></i>
+    <i class="icon-trophy me-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Award'"></i>
     <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Artist'">Artista</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Album'">Album</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Group'">Grupo</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'RecordLabel'">Sello Discográfico</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Organization'">Institución</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Venue'">Venue</small>
-    <small class="badge fw-normal ms-2" *ngIf="r.type === 'Award'">Premio</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Person'">Artista</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Album'">Album</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Group'">Grupo</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.RecordLabel'">Sello Discográfico</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Organization'">Institución</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Venue'">Venue</small>
+    <small class="badge fw-normal ms-2" *ngIf="r.type === 'info.cubanmusic.cubanmusicapi.model.Award'">Premio</small>
   </div>
 </ng-template>
 

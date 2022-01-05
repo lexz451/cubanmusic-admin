@@ -1,0 +1,29 @@
+::ng-deep ng-select.list-view-select {
+  display: flex !important;
+}
+
+::ng-deep ng-select.list-view-select .ng-select-container {
+  display: none !important;
+}
+
+::ng-deep ng-select.list-view-select ng-dropdown-panel {
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.35rem !important;
+  box-shadow: none !important;
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  //box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.06) !important;
+
+  .ng-option {
+    &:not(:last-child) {
+      margin-bottom: 2px;
+    }
+    &.ng-option-selected,
+    &.ng-option-marked.ng-option-selected {
+      background-color: rgba($color: #000, $alpha: 0.03) !important;
+    }
+    &.ng-option-marked {
+      background-color: transparent !important;
+    }
+  }
+}

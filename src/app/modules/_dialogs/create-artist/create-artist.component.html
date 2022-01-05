@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nuevo Artista</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <div class="row">
+    <div class="col-sm-4">
+      <app-input name="nombre" [(ngModel)]="result.name" placeholder="Nombre" required></app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-input name="alias" [(ngModel)]="result.alias" placeholder="Alias"></app-input>
+    </div>
+    <div class="col-sm-8">
+      <app-tags
+        name="nombresAdicionales"
+        [(ngModel)]="result.additionalNames"
+        label="Nombres adicionales"
+        placeholder="Nombres adicionales"
+      ></app-tags>
+    </div>
+    <div class="col-sm-12 mt-2">
+      <app-input
+        [(ngModel)]="result.biography"
+        [controlType]="'textarea'"
+        name="biography"
+        [placeholder]="'Biografia'"
+      ></app-input>
+    </div>
+
+    <div class="col-sm-6">
+      <app-selector
+        placeholder="Lugar de nacimiento"
+        name="birthPlace"
+        [data]="locations$ | async"
+        [(ngModel)]="result.birthPlaceId"
+        [showCreate]="true"
+        (create)="createBirthPlace()"
+      >
+      </app-selector>
+    </div>
+    <div class="col-sm-6">
+      <app-selector
+        name="deathPlace"
+        [data]="locations$ | async"
+        [placeholder]="'Lugar de fallecimiento'"
+        [(ngModel)]="result.deathPlaceId"
+        [showCreate]="true"
+        (create)="createDeathPlace()"
+      >
+      </app-selector>
+    </div>
+    <div class="col-sm-6">
+      <app-selector
+        placeholder="Lugar de residencia"
+        name="residencePlace"
+        [data]="locations$ | async"
+        [(ngModel)]="result.residencePlaceId"
+        [showCreate]="true"
+        (create)="createResidencePlace()"
+      >
+      </app-selector>
+    </div>
+    <div class="col-sm-6">
+      <app-input name="nationality" [placeholder]="'Nacionalidad'" [(ngModel)]="result.nationality"> </app-input>
+    </div>
+    <div class="col-sm-4">
+      <app-datepicker name="birthDate" [(ngModel)]="result.birthDate" label="Fecha de Nacimiento"> </app-datepicker>
+    </div>
+    <div class="col-sm-4">
+      <app-datepicker name="deathDate" [(ngModel)]="result.deathDate" label="Fecha de Muerte"> </app-datepicker>
+    </div>
+    <div class="col-sm-4">
+      <app-radiogroup
+        label="Sexo"
+        class="d-block mt-1 text-center"
+        name="gender"
+        [(ngModel)]="result.gender"
+        [selectors]="genders$ | async"
+      ></app-radiogroup>
+    </div>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" (click)="validateModal(form)">Aceptar</button>
+</div>

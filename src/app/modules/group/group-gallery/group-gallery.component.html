@@ -1,0 +1,11 @@
+<div class="col-sm-12">
+  <div class="row">
+    <app-gallery
+      class="col-sm-12"
+      [images]="images"
+      (deleteImage)="deleteArtistImage($event)"
+      (submitImage)="addArtistImage($event)"
+    >
+    </app-gallery>
+  </div>
+</div>

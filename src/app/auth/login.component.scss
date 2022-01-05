@@ -27,3 +27,14 @@
     width: 100%;
   }
 }
+
+.input-text-error {
+  margin-left: 2px;
+  font-size: 12px;
+  color: var(--app-danger);
+  margin-top: 0.1rem;
+}
+
+.btn.btn-primary {
+  width: 180px;
+}

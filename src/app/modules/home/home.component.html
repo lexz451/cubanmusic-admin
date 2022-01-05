@@ -1,0 +1,69 @@
+<div class="container-fluid p-3">
+  <div class="actions-container w-100 d-flex">
+    <h2 class="mb-0 fw-bold flex-grow-1">Historial</h2>
+    <button class="btn btn-primary" (click)="addUser(userModal)">Crear usuario</button>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-8">
+      <app-table [columns]="logsColumns" [data]="logs$ | async"></app-table>
+    </div>
+    <div class="col-md-4 align-self-stretch">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="mb-0 fw-bold p-1">Usuarios</h5>
+        </div>
+        <div class="card-body p-4">
+          <ul class="list-group">
+            <li class="list-group-item d-flex flex-column" *ngFor="let item of users$ | async">
+              <span class="fw-bold">{{ item.name }}</span>
+              <span>{{ item.email }}</span>
+              <small class="fw-light">Creado en: {{ item.createdDate | date }}</small>
+              <small class="badge text-primary">{{ item.role }}</small>
+              <div class="d-flex align-items-center">
+                <small class="fw-light me-2">Habilitado:</small>
+                <input type="checkbox" class="form-check-input m-0" disabled [ngModel]="item.enabled" />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #userModal let-modal>
+  <div class="modal-header">
+    <h5 class="fw-bolder mb-0">Crear Usuario</h5>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" class="row">
+      <app-input
+        name="name"
+        [(ngModel)]="user.name"
+        placeholder="Nombre Completo"
+        class="col-sm-12"
+        required
+      ></app-input>
+      <app-input
+        name="email"
+        [(ngModel)]="user.email"
+        placeholder="Correo Electronico"
+        class="col-sm-12"
+        required
+      ></app-input>
+      <app-input name="pwd" [(ngModel)]="user.password" placeholder="Contraseña" required></app-input>
+      <app-input
+        name="check_pwd"
+        [(ngModel)]="user._confirmPwd"
+        placeholder="Confirmar Contraseña"
+        required
+        [pwdMatch]="user.password"
+      ></app-input>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light text-primary" type="button" (click)="modal.dismiss()">Cerrar</button>
+    <button class="btn btn-primary" type="button" (click)="onCreateUser(form, modal)">Aceptar</button>
+  </div>
+</ng-template>
+

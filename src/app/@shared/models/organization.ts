@@ -7,7 +7,7 @@ export class Organization {
   description?: string;
   phone?: Phone;
   email?: string;
-  countryId?: number;
+  countryId?: string;
   point?: Point;
   website?: string;
   address?: string;

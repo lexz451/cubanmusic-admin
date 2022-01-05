@@ -8,47 +8,33 @@ const routes: Routes = [
       path: 'about',
       loadChildren: () => import('./modules/about/about.module').then((m) => m.AboutModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'artists',
-      loadChildren: () => import('./modules/artists/artists.module').then((m) => m.ArtistsModule),
+      loadChildren: () => import('./modules/artist/artist.module').then((m) => m.ArtistsModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'groups',
-      loadChildren: () => import('./modules/groups/groups.module').then((m) => m.GroupsModule),
+      loadChildren: () => import('./modules/group/group.module').then((m) => m.GroupsModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'organizations',
-      loadChildren: () => import('./modules/organizations/organizations.module').then((m) => m.OrganizationsModule),
+      loadChildren: () => import('./modules/organization/organization.module').then((m) => m.OrganizationsModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'labels',
-      loadChildren: () => import('./modules/labels/labels.module').then((m) => m.LabelsModule),
+      loadChildren: () => import('./modules/label/label.module').then((m) => m.LabelsModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'awards',
-      loadChildren: () => import('./modules/awards/awards.module').then((m) => m.AwardsModule),
+      loadChildren: () => import('./modules/award/award.module').then((m) => m.AwardsModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'venues',
-      loadChildren: () => import('./modules/venues/venues.module').then((m) => m.VenuesModule),
+      loadChildren: () => import('./modules/venue/venue.module').then((m) => m.VenuesModule),
     },
-  ]),
-  Shell.childRoutes([
     {
       path: 'albums',
-      loadChildren: () => import('./modules/albums/albums.module').then((m) => m.AlbumsModule),
+      loadChildren: () => import('./modules/album/album.module').then((m) => m.AlbumsModule),
     },
   ]),
   // Fallback when no prior route is matched
@@ -60,8 +46,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
       onSameUrlNavigation: 'reload',
-      relativeLinkResolution: 'corrected',
-      urlUpdateStrategy: 'deferred',
     }),
   ],
   exports: [RouterModule],

@@ -4,6 +4,7 @@ $primary: #f4655f;
   .tags-label {
     font-size: 12px;
     margin-bottom: 0.1rem;
+    font-weight: 500;
   }
   ::ng-deep .tags-control {
     border-radius: 0.35rem;
@@ -31,6 +32,8 @@ $primary: #f4655f;
       padding: 0.2rem 0.7rem !important;
       height: 34.5px;
       font-size: 14px !important;
+      font-weight: 500;
+      color: #3e3e3e;
     }
     tag {
       background-color: rgba($primary, 0.1);

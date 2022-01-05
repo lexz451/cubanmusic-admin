@@ -23,10 +23,10 @@
     (ngModelChange)="onValueChange($event)"
     [readOnly]="readonly"
   ></textarea>
-  <small class="form-text text-muted text-help input-text-help" *ngIf="!!helperText">
+  <p class="form-text text-muted text-help input-text-help" *ngIf="!!helperText">
     {{ helperText }}
-  </small>
-  <small [hidden]="valid || untouched" class="input-text-error">
+  </p>
+  <p [hidden]="valid || untouched" class="input-text-error">
     {{ validationMessages }}
-  </small>
+  </p>
 </div>

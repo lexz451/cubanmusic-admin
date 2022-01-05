@@ -1,0 +1,7 @@
+<div class="container-fluid d-flex flex-column h-100 p-3">
+  <div class="actions-container w-100 d-flex align-items-center">
+    <h2 class="mb-0 fw-bold">Premios</h2>
+    <button class="btn btn-primary ms-auto" (click)="addAward()">Crear Premio</button>
+  </div>
+  <app-table class="mt-2" [columns]="columns" [data]="awards"></app-table>
+</div>

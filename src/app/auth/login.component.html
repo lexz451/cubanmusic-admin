@@ -24,7 +24,7 @@
                 <span hidden translate>Email</span>
                 <small
                   [hidden]="loginForm.controls.email.valid || loginForm.controls.email.untouched"
-                  class="text-danger mt-2"
+                  class="input-text-error"
                   translate
                 >
                   Email is required
@@ -42,7 +42,7 @@
                 <span hidden translate>Password</span>
                 <small
                   [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched"
-                  class="text-danger mt-2"
+                  class="input-text-error"
                   translate
                 >
                   Password is required
@@ -51,14 +51,14 @@
               <div class="form-check">
                 <label class="form-check-label">
                   <input type="checkbox" class="form-check-input" formControlName="remember" />
-                  <span translate>Remember me</span>
+                  <span translate>Recordar contraseña</span>
                 </label>
               </div>
             </div>
-            <div class="m-3">
-              <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
+            <div class="m-3 d-flex align-items-center justify-content-center">
+              <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid || isLoading">
                 <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
-                <span translate>Login</span>
+                <span translate>Acceder</span>
               </button>
             </div>
           </form>

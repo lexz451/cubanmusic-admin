@@ -4,23 +4,25 @@
     <ng-select
       class="selector-control flex-grow-1 ng-select"
       [class.is-empty]="isEmpty"
-      [multiple]="multiple"
-      [ngModel]="value"
-      (change)="onModelChange($event)"
-      (clear)="onModelClear()"
-      bindLabel="name"
-      bindValue="id"
-      [placeholder]="placeholder"
-      [closeOnSelect]="!multiple"
-      [clearable]="true"
-      [disabled]="isDisabled"
       [addTag]="canAdd"
       [addTagText]="'Añadir opción: '"
+      [multiple]="multiple"
+      [(ngModel)]="value"
+      (change)="onModelChange()"
+      (clear)="onModelClear()"
+      [bindLabel]="bindLabel"
+      [bindValue]="bindTo"
+      [placeholder]="placeholder"
+      [closeOnSelect]="!multiple"
+      [clearSearchOnAdd]="true"
+      [disabled]="isDisabled"
+      [clearable]="true"
       [items]="data"
+      [notFoundText]="'No se encontraron elementos'"
     >
       <ng-template ng-option-tmp let-item="item">
         <span *ngIf="!optionTemplate">
-          {{ item.name }}
+          {{ item.name || item }}
         </span>
         <ng-template [ngTemplateOutlet]="optionTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-template>
       </ng-template>
@@ -28,7 +30,7 @@
       <ng-template ng-label-tmp let-item="item" let-clear="clear">
         <span *ngIf="!labelTemplate">
           <span class="ng-value-label">
-            {{ item.name }}
+            {{ item.name || item }}
           </span>
           <span class="ng-value-icon fw-bold" (click)="clear(item)" aria-hidden="true"> × </span>
         </span>

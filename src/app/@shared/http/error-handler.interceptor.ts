@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { AuthenticationService } from './../../auth/authentication.service';
+import { AuthenticationService } from '../../auth/authentication.service';
 import { UiService } from './../services/ui.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
@@ -30,7 +30,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor, OnDestroy {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      retry(2),
+      //retry(1),
       catchError((error) => this.errorHandler(error))
     );
   }

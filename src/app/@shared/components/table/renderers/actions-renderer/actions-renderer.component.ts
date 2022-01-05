@@ -17,6 +17,7 @@ export class ActionsRendererComponent implements ICellRendererAngularComp {
   useViewAction = false;
   useEditAction = false;
   useDeleteAction = false;
+  useRemoveAction = false;
 
   log = new Logger('Actions');
 
@@ -41,6 +42,7 @@ export class ActionsRendererComponent implements ICellRendererAngularComp {
       this.useViewAction = actions.includes(TableAction.VIEW);
       this.useEditAction = actions.includes(TableAction.EDIT);
       this.useDeleteAction = actions.includes(TableAction.DELETE);
+      this.useRemoveAction = actions.includes(TableAction.REMOVE);
     }
   }
 

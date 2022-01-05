@@ -1,0 +1,35 @@
+<div class="list-view-container card mt-3">
+  <div class="card-header p-0">
+    <div class="d-flex px-3 py-1">
+      <h6 class="flex-grow-1 d-flex align-items-center mb-0">
+        <i class="icon-{{ icon }} me-2"></i>
+        {{ title }}
+      </h6>
+      <a class="btn btn-link" (click)="onSelect()">Añadir</a>
+      <a class="btn btn-link" (click)="onCreate()">Crear</a>
+    </div>
+  </div>
+  <ul class="list-view list-group list-group-flush">
+    <ng-container *ngIf="selection?.length; else emptySelection">
+      <li class="list-group-item px-2" *ngFor="let item of selection">
+        <span *ngIf="!optionTemplate">
+          {{ item.name || item }}
+        </span>
+        <ng-template
+          [ngTemplateOutlet]="optionTemplate"
+          [ngTemplateOutletContext]="{ item: item, image: getImage(item), removeItem: removeItem }"
+        ></ng-template>
+      </li>
+    </ng-container>
+    <ng-template #emptySelection>
+      <small class="text-disabled m-auto d-flex align-items-center p-4">
+        <i class="icon-exclamation me-2"></i>
+        No se han añadido elementos.
+      </small>
+    </ng-template>
+  </ul>
+</div>
+
+<ng-template #selectorTmp>
+
+</ng-template>

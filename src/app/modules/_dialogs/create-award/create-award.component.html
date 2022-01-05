@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nuevo Premio</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <div class="row">
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="result.name" class="col-sm-6" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="result.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+
+    <app-selector
+      class="col-sm-4"
+      name="country"
+      placeholder="País"
+      [data]="countries$ | async"
+      [(ngModel)]="result.countryId"
+    >
+    </app-selector>
+
+    <app-selector
+      class="col-sm-4"
+      name="granted"
+      placeholder="Otorgado por"
+      [data]="organizations$ | async"
+      [(ngModel)]="result.grantedById"
+    ></app-selector>
+
+    <app-tags
+      name="categories"
+      label="Categorías"
+      placeholder="Añadir Categoría"
+      [(ngModel)]="result.categories"
+      class="col-sm-8"
+    ></app-tags>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" (click)="validateModal(form)">Aceptar</button>
+</div>

@@ -1,6 +1,5 @@
-import { UiService } from './../../services/ui.service';
-import { ImagesService } from '@app/@shared/services/images.service';
-import { Observable, Subscription } from 'rxjs';
+import { ImageFile } from './../../models/image-file';
+import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Image } from '@shared/models/image';
@@ -11,36 +10,41 @@ import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angu
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
 })
-export class GalleryComponent implements OnInit, OnDestroy {
+export class GalleryComponent implements OnInit {
   @Output()
   submitImage: EventEmitter<Image> = new EventEmitter();
   @Output()
-  deleteImage: EventEmitter<number> = new EventEmitter();
+  deleteImage: EventEmitter<string> = new EventEmitter();
 
   @Input()
-  images: Observable<Image[]>;
+  images: Image[] = [];
 
   image?: Image = new Image();
 
-  _subscriptions: Subscription[] = [];
+  imageFile?: File;
 
-  constructor(private modal: NgbModal, private _imageService: ImagesService, private _uiService: UiService) {}
+  constructor(private modal: NgbModal) {}
 
   getImage(e: Image) {
-    //const base64 = e.filedata;
-    //const type = e.filetype;
-    //const img = `data:${type};base64,${base64}`;
-    //return img;
-    return null;
+    return e.imageFile ? ImageFile.toDataURL(e.imageFile) : null;
   }
 
   ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this._subscriptions.forEach((e) => e.unsubscribe());
+  onImageFileChange(): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (!this.image.imageFile) {
+        this.image.imageFile = new ImageFile();
+      }
+      this.image.imageFile.filedata = ImageFile.toBase64(reader.result as string);
+      this.image.imageFile.filename = this.imageFile.name;
+      this.image.imageFile.filetype = this.imageFile.type;
+    };
+    if (this.imageFile) {
+      reader.readAsDataURL(this.imageFile);
+    }
   }
-
-  onItemsLoaded() {}
 
   addImage(modal: any): void {
     this.image = new Image();
@@ -58,7 +62,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       );
   }
 
-  onDeleteImage(id: number): void {
+  onDeleteImage(id: string): void {
     this.deleteImage.emit(id);
   }
 

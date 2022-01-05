@@ -5,11 +5,11 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '@env/environment';
 import { AuthModule } from '@app/auth';
-import { HomeModule } from './home/home.module';
+import { HomeModule } from './modules/home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,8 @@ import {
 import { SharedModule } from './@shared/shared.module';
 import { ErrorHandlerInterceptor } from './@shared/http/error-handler.interceptor';
 import { ApiPrefixInterceptor } from './@shared/http/api-prefix.interceptor';
+import { DialogsModule } from './modules/_dialogs/dialogs.module';
+import { CacheInterceptor } from './@shared/http/cache.interceptor';
 
 const lottieFactory: LottiePlayerFactoryOrLoader = () =>
   import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
@@ -78,6 +80,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,
       multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h5 class="mb-0 fw-bold">Nuevo Album</h5>
+</div>
+<form #form="ngForm" class="modal-body">
+  <div class="row">
+    <app-input placeholder="Titulo" name="title" [(ngModel)]="result.name" class="col-sm-6" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="result.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+    <!--<app-datepicker
+      name="releasedDate"
+      class="col-sm-4"
+      placeholder="Fecha de lanzamiento"
+      [(ngModel)]="result.releaseDate"
+    ></app-datepicker>-->
+    <app-input
+      name="copyrightYear"
+      class="col-sm-4"
+      placeholder="Copyright Year"
+      [(ngModel)]="result.copyrightYear"
+      type="number"
+    ></app-input>
+    <div class="row"></div>
+    <app-selector
+      name="recordLabel"
+      class="col-sm-6"
+      placeholder="Sello Discografico"
+      [data]="recordLabels$ | async"
+      [(ngModel)]="result.recordLabelId"
+      [showCreate]="true"
+      (create)="createRecordLabel()"
+    >
+    </app-selector>
+
+    <app-selector
+      [multiple]="true"
+      [canAdd]="true"
+      bindTo="-"
+      bindLabel=""
+      name="collaborations"
+      class="col-sm-6"
+      placeholder="Colaboradores"
+      [data]="albumContributors$ | async"
+      [(ngModel)]="result.contributors"
+    ></app-selector>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-light text-primary" (click)="dismissModal()">Cerrar</button>
+  <button class="btn btn-primary" (click)="validateModal(form)">Aceptar</button>
+</div>

@@ -1,11 +1,11 @@
-import { ImageFile } from "./image-file";
+import { ImageFile } from './image-file';
 
 export class Image {
-  id?: number;
+  id?: string;
   title?: string;
   author?: string;
   date?: string;
   description?: string;
-  imageFile?: ImageFile;
+  imageFile?: ImageFile = new ImageFile();
   tags: string[] = [];
 }

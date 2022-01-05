@@ -10,7 +10,7 @@
     <!--<div *ngFor="let item of images" class="img-fluid images-item" [photoGallery]="item">
       <img [src]="item" alt="" width="100%" loading="lazy"/>
     </div>-->
-    <div *ngFor="let item of images | async" class="card">
+    <div *ngFor="let item of images" class="card">
       <img class="card-img-top" [src]="getImage(item)" loading="lazy" [photoGallery]="getImage(item)" />
       <div class="card-body">
         <h5 class="card-title">{{ item?.title }}</h5>
@@ -34,11 +34,18 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="mb-0 fw-bold">Subir nueva imagen</h4>
+    <h4 class="mb-0 fw-bold">Añadir imagen</h4>
   </div>
   <div class="modal-body">
     <form class="row" #form="ngForm" (ngSubmit)="onSubmitModal(form, modal)">
-      <app-fileinput name="file" placeholder="Archivos" [(ngModel)]="image.imageFile.filedata" class="col-sm-12" required>
+      <app-fileinput
+        name="file"
+        placeholder="Archivos"
+        [(ngModel)]="imageFile"
+        (ngModelChange)="onImageFileChange()"
+        class="col-sm-12"
+        required
+      >
       </app-fileinput>
       <app-input name="title" placeholder="Título" [(ngModel)]="image.title" class="col-sm-12" required></app-input>
       <app-input name="author" placeholder="Autor" [(ngModel)]="image.author" class="col-sm-12"></app-input>

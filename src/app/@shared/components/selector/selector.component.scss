@@ -8,6 +8,7 @@ $primary: #f4655f;
   .selector-btn-create {
     border-radius: 0.35rem !important;
     padding: 0.3rem;
+    margin-left: 0.5rem;
   }
   .selector-control {
     width: 1%;
@@ -17,6 +18,7 @@ $primary: #f4655f;
     &.ng-select-multiple {
       .ng-select-container {
         .ng-value-container {
+          padding-top: 0 !important;
           .ng-value {
             background-color: rgba($primary, 0.1) !important;
             border-radius: 0.35rem !important;
@@ -24,6 +26,7 @@ $primary: #f4655f;
             font-size: 14px;
             padding: 0.15rem;
             font-weight: 400;
+            margin-bottom: 0 !important;
             .ng-value-icon {
               border: none !important;
             }
@@ -32,7 +35,7 @@ $primary: #f4655f;
             }
           }
           .ng-input {
-            margin-top: 0px !important;
+            margin-top: 5px !important;
             margin-left: 2px !important;
             margin-bottom: 2px !important;
           }
@@ -62,6 +65,10 @@ $primary: #f4655f;
       box-shadow: none;
       transition: all 0.2s ease;
 
+      .ng-clear-wrapper:hover .ng-clear {
+        color: var(--app-primary) !important;
+      }
+
       .ng-arrow-wrapper {
         display: flex;
         align-items: center;
@@ -78,11 +85,9 @@ $primary: #f4655f;
       }
 
       .ng-value-container {
-        .ng-placeholder {
-          color: rgba(0, 0, 0, 0.6) !important;
-        }
         .ng-input {
           margin-top: 1px !important;
+          //padding-left: .7rem !important;
         }
       }
     }

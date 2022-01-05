@@ -1906,6 +1906,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ng-select/ng-option-highlight@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@ng-select/ng-option-highlight@npm:0.0.7"
+  dependencies:
+    tslib: ^2.3.0
+  peerDependencies:
+    "@angular/common": ">=13.0.0 <14.0.0"
+    "@angular/core": ">=13.0.0 <14.0.0"
+  checksum: 1b2c153a56b9a0f7618fe75a3ab19249e41d36f6d32e3e3eb20314ccbb6166368a07125d47ca5943f9b6ac93cdb10de6ecae886f1de93c2169945e7019157d90
+  languageName: node
+  linkType: hard
+
 "@ng-select/ng-select@npm:^7.2.0":
   version: 7.2.0
   resolution: "@ng-select/ng-select@npm:7.2.0"
@@ -4734,6 +4746,7 @@ __metadata:
     "@biesbjerg/ngx-translate-extract-marker": ^1.0.0
     "@fortawesome/fontawesome-free": ^5.15.1
     "@ng-bootstrap/ng-bootstrap": ^11.0.0-beta.2
+    "@ng-select/ng-option-highlight": ^0.0.7
     "@ng-select/ng-select": ^7.2.0
     "@ngneat/until-destroy": ^8.0.4
     "@ngx-loading-bar/core": ^5.1.2
@@ -4785,6 +4798,7 @@ __metadata:
     prettier: ^2.2.1
     pretty-quick: ^3.1.0
     protractor: ~7.0.0
+    route-parser: ^0.0.5
     rxjs: ^6.6.3
     smooth-scrollbar: ^8.6.3
     stylelint: ~13.13.1
@@ -11812,6 +11826,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"route-parser@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "route-parser@npm:0.0.5"
+  checksum: 81619e9857f1359405be5d2fc4be22727851cc60a55a70f92a4800fef4c22dd3c78ad55b745afa229dffdca95835186c51c6012f47d3327c8ead42f55e4920f7
+  languageName: node
+  linkType: hard
+
 "run-async@npm:^2.4.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
@@ -13389,7 +13410,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"tslib@npm:>=1.7.1, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.2.0":
+"tslib@npm:>=1.7.1, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.0":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9

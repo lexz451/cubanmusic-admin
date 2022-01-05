@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  flex-grow: 1;
+}
+
+.group-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-art-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-art-wrapper img {
+  border-radius: 0.35rem;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/*.v-bottom-spacer {
+  height: 150px;
+}*/

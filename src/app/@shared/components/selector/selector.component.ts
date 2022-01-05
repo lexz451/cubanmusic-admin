@@ -1,5 +1,4 @@
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import {
   Component,
   OnInit,
@@ -10,6 +9,8 @@ import {
   Self,
   ViewEncapsulation,
   TemplateRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { ISelectableItem } from '@app/@shared/models/selectable-item';
 
@@ -19,12 +20,9 @@ import { ISelectableItem } from '@app/@shared/models/selectable-item';
   styleUrls: ['./selector.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectorComponent implements OnInit, ControlValueAccessor {
+export class SelectorComponent implements OnInit, ControlValueAccessor, OnChanges {
   @Input()
-  data?: ISelectableItem[] = [];
-
-  @Input()
-  data$: Observable<ISelectableItem[]>;
+  data?: any[] = [];
 
   @Input()
   label?: string;
@@ -36,8 +34,9 @@ export class SelectorComponent implements OnInit, ControlValueAccessor {
   showCreate = false;
   @Input()
   canAdd = false;
-  @Input()
-  bindTo = 'id';
+
+  @Input() bindTo = 'id';
+  @Input() bindLabel = 'name';
 
   @Input() optionTemplate: TemplateRef<any>;
   @Input() labelTemplate: TemplateRef<any>;
@@ -85,22 +84,21 @@ export class SelectorComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
   onCreate(): void {
     this.create.emit();
   }
 
-  onModelChange(item: any): void {
-    if (this.multiple) {
-      this.value = (item as any[])?.map((e) => e.id);
-    } else {
-      this.value = item?.id;
-    }
+  onModelChange(): void {
     this.onChange?.(this.value);
     this.onTouch?.();
   }
 
   onModelClear(): void {
-    this.value = null;
+    //this.value = null;
     this.onChange?.(this.value);
     this.onTouch?.();
   }

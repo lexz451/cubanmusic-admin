@@ -1,3 +1,7 @@
+import { ImageRendererComponent } from './components/table/renderers/image-renderer/image-renderer.component';
+import { NgOptionHighlightModule } from '@ng-select/ng-option-highlight';
+import { ListviewSelectorComponent } from './components/listview/listview-selector/listview-selector.component';
+import { ListviewComponent } from './components/listview/listview.component';
 import { SelectorComponent } from './components/selector/selector.component';
 import { FileInputComponent } from './components/fileinput/fileinput.component';
 import { TagsComponent } from './components/tags/tags.component';
@@ -6,12 +10,8 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
-import { CheckComponent } from './components/check/check.component';
-import { CheckgroupComponent } from './components/checkgroup/checkgroup.component';
 import { InputComponent } from './components/input/input.component';
-import { LocationComponent } from './components/location/location.component';
 import { RadiogroupComponent } from './components/radiogroup/radiogroup.component';
-
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { UidDirective } from './directives/uid.directive';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
@@ -29,6 +29,8 @@ import { CoordinatesModule } from 'angular-coordinates';
 import { CoordinateValidator } from './validation/coordinates-validator';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PwdMatchValidator } from './validation/pwd-match-validator';
+import { IsNumberValidator } from './validation/is-number-validator';
+import { MinMaxValidator } from './validation/min-max-validator';
 
 // @ts-ignore
 @NgModule({
@@ -53,15 +55,11 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     CoordinatesModule,
     NgbNavModule,
     NgSelectModule,
+    NgOptionHighlightModule
   ],
   declarations: [
-    CheckComponent,
-    CheckgroupComponent,
     InputComponent,
-    LocationComponent,
-
     RadiogroupComponent,
-
     TableComponent,
     TableHeaderComponent,
     TagsComponent,
@@ -69,23 +67,22 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     DatepickerComponent,
     ActionsRendererComponent,
     ListRendererComponent,
+    ImageRendererComponent,
     GalleryComponent,
     SelectorComponent,
     PhoneInputComponent,
-
+    ListviewComponent,
+    ListviewSelectorComponent,
     ClickOutsideDirective,
     CoordinateValidator,
     PwdMatchValidator,
+    IsNumberValidator,
+    MinMaxValidator,
     UidDirective,
   ],
   exports: [
-    CheckComponent,
-    CheckgroupComponent,
     InputComponent,
-    LocationComponent,
-
     RadiogroupComponent,
-
     TableComponent,
     DatepickerComponent,
     GalleryComponent,
@@ -93,12 +90,14 @@ import { PwdMatchValidator } from './validation/pwd-match-validator';
     SelectorComponent,
     TagsComponent,
     FileInputComponent,
-
+    ListviewComponent,
+    ListviewSelectorComponent,
     ClickOutsideDirective,
     CoordinateValidator,
     PwdMatchValidator,
+    IsNumberValidator,
+    MinMaxValidator,
     UidDirective,
-
     FormsModule,
     ReactiveFormsModule,
     NgbNavModule,

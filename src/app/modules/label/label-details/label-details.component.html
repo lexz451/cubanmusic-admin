@@ -1,0 +1,46 @@
+<div class="org-container container-fluid px-3">
+  <div class="d-flex flex-column align-items-start mb-2">
+    <button class="btn btn-icon ps-0 pb-0 btn-back text-primary" routerLink="/labels">
+      <i class="icon-arrow-left"></i>
+      <span>Atrás</span>
+    </button>
+    <h2 class="mb-0 fw-bold">{{ label?.name || 'Crear nuevo Sello Discográfico' }}</h2>
+  </div>
+
+  <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-4" required></app-input>
+    <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-4" required></app-input>
+    <app-input placeholder="Nombre" name="name" [(ngModel)]="label.name" class="col-sm-4" required></app-input>
+    <app-input
+      placeholder="Descripción"
+      name="description"
+      [(ngModel)]="label.description"
+      class="col-sm-12"
+      controlType="textarea"
+    ></app-input>
+    <div class="col-sm-6">
+      <div class="row">
+        <app-phone-input class="col-sm-6" [(phone)]="label.phone" [countries]="countries"></app-phone-input>
+        <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-6"></app-input>
+        <app-selector
+          class="col-sm-6"
+          name="country"
+          placeholder="País"
+          [data]="countries"
+          [(ngModel)]="label.countryId"
+        ></app-selector>
+        <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
+      </div>
+    </div>
+    <app-input
+      name="address"
+      [(ngModel)]="label.address"
+      placeholder="Dirección"
+      controlType="textarea"
+      class="col-sm-6"
+    ></app-input>
+    <div class="col-sm-12 d-flex mt-4">
+      <button class="btn btn-primary ms-auto" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

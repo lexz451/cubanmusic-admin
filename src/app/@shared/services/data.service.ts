@@ -14,6 +14,7 @@ import { JobTitle } from '@shared/models/job-title';
 import { Recordlabel } from '@shared/models/recordlabel';
 import { Artist } from '@shared/models/artist';
 import { Location } from '../models/location';
+import { SearchResult } from '../models/search-result';
 
 @Injectable({
   providedIn: 'root',
@@ -21,261 +22,185 @@ import { Location } from '../models/location';
 export class DataService {
   constructor(private apiService: ApiService) {}
 
-  get yesOrNo(): ISelectableItem[] {
-    return [
-      {
-        id: true,
-        name: 'Yes',
-      },
-      {
-        id: false,
-        name: 'No',
-      },
-    ];
+  private _genders = [
+    {
+      id: 'MALE',
+      name: 'Hombre',
+    },
+    {
+      id: 'FEMALE',
+      name: 'Mujer',
+    },
+    {
+      id: 'OTHER',
+      name: 'Otro',
+    },
+  ];
+
+  private _venueTypes = [
+    {
+      id: 'THEATER',
+      name: 'Teatro',
+    },
+    {
+      id: 'BAR',
+      name: 'Bar',
+    },
+    {
+      id: 'PUB',
+      name: 'Pub',
+    },
+    {
+      id: 'CLUB',
+      name: 'Club',
+    },
+    {
+      id: 'RESTAURANT',
+      name: 'Restaurant',
+    },
+    {
+      id: 'HOTEL',
+      name: 'Hotel',
+    },
+    {
+      id: 'CONFERENCE_CENTER',
+      name: 'Centro de Conferencias',
+    },
+    {
+      id: 'BUSINESS_CENTER',
+      name: 'Centro de Negocios',
+    },
+    {
+      id: 'COMMUNITY_CENTER',
+      name: 'Centro Comunitario',
+    },
+    {
+      id: 'SPORT_CLUB',
+      name: 'Club Deportivo',
+    },
+    {
+      id: 'ART_GALLERY',
+      name: 'Galeria de Arte',
+    },
+    {
+      id: 'ACADEMY',
+      name: 'Academia',
+    },
+    {
+      id: 'HOME',
+      name: 'Casa',
+    },
+    {
+      id: 'PARK',
+      name: 'Parque',
+    },
+    {
+      id: 'FIELD',
+      name: 'Terreno',
+    },
+    {
+      id: 'CONCERT_HALL',
+      name: 'Sala de Conciertos',
+    },
+  ];
+
+  get genders() {
+    return this._genders;
   }
 
-  get genders(): ISelectableItem[] {
-    return [
-      {
-        id: 'MALE',
-        name: 'Hombre',
-      },
-      {
-        id: 'FEMALE',
-        name: 'Mujer',
-      },
-      {
-        id: 'OTHER',
-        name: 'Otro',
-      },
-    ];
+  get genders$() {
+    return of(this.genders);
   }
 
-  get venueTypes(): Observable<ISelectableItem[]> {
-    return of([
-      {
-        id: 'THEATER',
-        name: 'Teatro',
-      },
-      {
-        id: 'BAR',
-        name: 'Bar',
-      },
-      {
-        id: 'PUB',
-        name: 'Pub',
-      },
-      {
-        id: 'CLUB',
-        name: 'Club',
-      },
-      {
-        id: 'RESTAURANT',
-        name: 'Restaurant',
-      },
-      {
-        id: 'HOTEL',
-        name: 'Hotel',
-      },
-      {
-        id: 'CONFERENCE_CENTER',
-        name: 'Centro de Conferencias',
-      },
-      {
-        id: 'BUSINESS_CENTER',
-        name: 'Centro de Negocios',
-      },
-      {
-        id: 'COMMUNITY_CENTER',
-        name: 'Centro Comunitario',
-      },
-      {
-        id: 'SPORT_CLUB',
-        name: 'Club Deportivo',
-      },
-      {
-        id: 'ART_GALLERY',
-        name: 'Galeria de Arte',
-      },
-      {
-        id: 'ACADEMY',
-        name: 'Academia',
-      },
-      {
-        id: 'HOME',
-        name: 'Casa',
-      },
-      {
-        id: 'PARK',
-        name: 'Parque',
-      },
-      {
-        id: 'FIELD',
-        name: 'Terreno',
-      },
-      {
-        id: 'CONCERT_HALL',
-        name: 'Sala de Conciertos',
-      },
-    ]);
+  get venueTypes() {
+    return this._venueTypes;
   }
 
-  get countries(): Observable<Country[]> {
-    return this.apiService.get<Country[]>('/countries').pipe(share());
+  get venueTypes$() {
+    return of(this._venueTypes);
   }
 
-
-  get organizations(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Organization[]>('/organizations').pipe(
-      map((orgs) =>
-        orgs?.map((o) => {
-          return {
-            id: o.id,
-            name: o.name,
-          };
-        })
-      )
-    );
+  get countries$() {
+    return this.apiService.get<Country[]>('/countries');
   }
 
-  get awards(): Observable<ISelectableItem[]> {
+  get organizations$() {
+    return this.apiService.get<Organization[]>('/organizations');
+  }
+
+  get awards$() {
     return this.apiService.get<Award[]>('/awards');
   }
 
-  get instruments(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Instrument[]>('/instruments').pipe(
-      map((instruments) =>
-        instruments?.map((i) => {
-          return {
-            id: i.id,
-            name: i.name,
-          };
-        })
-      )
-    );
+  get instruments$() {
+    return this.apiService.get<Instrument[]>('/instruments');
   }
 
-  get genres(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Genre[]>('/genres').pipe(
-      map((genres) =>
-        genres?.map((g) => {
-          return {
-            id: g.id,
-            name: g.name,
-          };
-        })
-      )
-    );
+  get genres$() {
+    return this.apiService.get<Genre[]>('/genres');
   }
 
-  get jobTitles(): Observable<ISelectableItem[]> {
-    return this.apiService.get<JobTitle[]>('/jobtitles').pipe(
-      map((titles) =>
-        titles?.map((t) => {
-          return {
-            id: t.id,
-            name: t.name,
-          };
-        })
-      )
-    );
+  get jobTitles$() {
+    return this.apiService.get<JobTitle[]>('/jobtitles');
   }
 
-  get recordLabels(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Recordlabel[]>('/recordlabels').pipe(
-      map((labels) =>
-        labels?.map((l) => {
-          return {
-            id: l.id,
-            name: l.name,
-          };
-        })
-      )
-    );
+  get recordLabels$() {
+    return this.apiService.get<Recordlabel[]>('/recordlabels');
   }
 
-  get locations(): Observable<ISelectableItem[]> {
-    const countries$ = this.countries.pipe(share());
-    const locations$ = this.apiService.get<Location[]>('/locations');
-    return zip(countries$, locations$).pipe(
-      map((e) =>
-        e[1].map((l) => {
-          const country = e[0].find((c) => c.id == l.country);
-          const location$ = [];
-          if (l.city) {
-            location$.push(l.city);
-          }
-          if (l.state) {
-            location$.push(l.state);
-          }
-          if (country?.name) {
-            location$.push(country.name);
-          }
-          const res = location$.join(', ');
-          return {
-            id: l.id,
-            name: res,
-          };
-        })
-      ),
-      share()
-    );
+  get locations$() {
+    return this.apiService.get<Location[]>('/locations');
   }
 
-  get artists(): Observable<ISelectableItem[]> {
-    return this.apiService.get<Artist[]>('/persons').pipe(
-      map((persons) =>
-        persons?.map((p) => {
-          return {
-            id: p.id,
-            name: p.name,
-          };
-        })
-      )
-    );
+  get artists$() {
+    return this.apiService.get<Artist[]>('/persons');
   }
 
-  get albums(): Observable<Album[]> {
+  get albums$() {
     return this.apiService.get<Album[]>('/albums');
   }
 
-  createJobTitle(jobTitle: JobTitle): Observable<number> {
+  createJobTitle(jobTitle: JobTitle): Observable<string> {
     return this.apiService.post('/jobtitles/new', jobTitle);
   }
 
-  createInstrument(instrument: Instrument): Observable<number> {
+  createInstrument(instrument: Instrument): Observable<string> {
     return this.apiService.post('/instruments/new', instrument);
   }
 
-  createCountry(country: Country): Observable<number> {
+  createCountry(country: Country): Observable<string> {
     return this.apiService.post('/countries/new', country);
   }
 
-  createLocation(location: Location): Observable<number> {
+  createLocation(location: Location): Observable<string> {
     return this.apiService.post('/locations/new', location);
   }
 
-  createAlbum(album: Album): Observable<number> {
+  createAlbum(album: Album): Observable<string> {
     return this.apiService.post('/albums/new', album);
   }
 
-  createGenre(genre: Genre): Observable<number> {
+  createGenre(genre: Genre): Observable<string> {
     return this.apiService.post('/genres/new', genre);
   }
 
-  createAward(award: Award): Observable<number> {
+  createAward(award: Award): Observable<string> {
     return this.apiService.post('/awards/new', award);
   }
 
-  createRecordLabel(label: Recordlabel): Observable<number> {
+  createRecordLabel(label: Recordlabel): Observable<string> {
     return this.apiService.post('/recordlabels/new', label);
   }
 
-  createOrganization(org: Organization): Observable<number> {
+  createOrganization(org: Organization): Observable<string> {
     return this.apiService.post('/organizations/new', org);
   }
 
-  search(name: string): Observable<any[]> {
-    return this.apiService.post('/search', name, true);
+  createArtist(artist: Artist): Observable<string> {
+    return this.apiService.post<string, Artist>('/persons/new', artist);
+  }
+
+  search(query: string): Observable<SearchResult[]> {
+    return this.apiService.get<SearchResult[]>(`/search?query=${query}`);
   }
 }
