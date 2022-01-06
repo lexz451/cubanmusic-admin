@@ -52,6 +52,12 @@ export class ArtistListComponent implements OnInit {
         sortable: true,
         sort: 'desc',
         headerName: 'Nombre',
+        wrapText: true,
+        cellStyle: {
+          lineHeight: '1',
+          textAlign: 'center',
+          fontWeight: 'bold',
+        }
       },
       {
         width: 100,

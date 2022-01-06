@@ -8,8 +8,8 @@
   </div>
 
   <form class="form row" #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-4" required></app-input>
-    <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-4" required></app-input>
+    <app-input placeholder="IPI" name="ipi" [(ngModel)]="label.ipiCode" class="col-sm-4"></app-input>
+    <app-input placeholder="ISNI" name="isni" [(ngModel)]="label.isniCode" class="col-sm-4"></app-input>
     <app-input placeholder="Nombre" name="name" [(ngModel)]="label.name" class="col-sm-4" required></app-input>
     <app-input
       placeholder="Descripción"
@@ -22,13 +22,18 @@
       <div class="row">
         <app-phone-input class="col-sm-6" [(phone)]="label.phone" [countries]="countries"></app-phone-input>
         <app-input name="email" [(ngModel)]="label.email" placeholder="Email" class="col-sm-6"></app-input>
+
         <app-selector
           class="col-sm-6"
           name="country"
           placeholder="País"
+          [showCreate]="true"
+          (create)="createCountry()"
           [data]="countries"
           [(ngModel)]="label.countryId"
-        ></app-selector>
+        >
+        </app-selector>
+
         <app-input name="website" [(ngModel)]="label.website" placeholder="Sitio Web" class="col-sm-6"></app-input>
       </div>
     </div>

@@ -6,6 +6,8 @@ import { Recordlabel } from '../../../@shared/models/recordlabel';
 import { Component, OnInit } from '@angular/core';
 import { LabelService } from '../label.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DialogService } from '@app/modules/_dialogs/dialog.service';
+import { concatMap, tap } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -21,13 +23,27 @@ export class LabelDetailsComponent implements OnInit {
     private labelService: LabelService,
     private router: Router,
     private route: ActivatedRoute,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
     const { data } = this.route.snapshot.data;
     this.countries = data[0] || [];
     this.label = data[1] || new Recordlabel();
+  }
+
+  createCountry() {
+    this.dialogService
+      .showCountryDialog()
+      .pipe(
+        untilDestroyed(this),
+        tap(res => this.label.countryId = res),
+        concatMap(() => this.labelService.countries)
+      )
+      .subscribe((res) => {
+        this.countries = res || [];
+      });
   }
 
   onSubmit(form: NgForm) {
