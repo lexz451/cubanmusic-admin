@@ -1,13 +1,13 @@
 <div class="container-fluid p-3">
   <div class="actions-container w-100 d-flex">
     <h2 class="mb-0 fw-bold flex-grow-1">Historial</h2>
-    <button class="btn btn-primary" (click)="addUser(userModal)">Crear usuario</button>
+    <button class="btn btn-primary" *ngIf="isSuperAdmin" (click)="addUser(userModal)">Crear usuario</button>
   </div>
   <div class="row mt-2">
-    <div class="col-md-8">
+    <div class="col-md-8" [class.col-md-12]="!isSuperAdmin">
       <app-table [columns]="logsColumns" [data]="logs$ | async"></app-table>
     </div>
-    <div class="col-md-4 align-self-stretch">
+    <div class="col-md-4 align-self-stretch" *ngIf="isSuperAdmin">
       <div class="card h-100">
         <div class="card-header">
           <h5 class="mb-0 fw-bold p-1">Usuarios</h5>
@@ -16,13 +16,13 @@
           <ul class="list-group">
             <li class="list-group-item d-flex flex-column" *ngFor="let item of users$ | async">
               <span class="fw-bold">{{ item.name }}</span>
-              <span>{{ item.email }}</span>
-              <small class="fw-light">Creado en: {{ item.createdDate | date }}</small>
-              <small class="badge text-primary">{{ item.role }}</small>
-              <div class="d-flex align-items-center">
-                <small class="fw-light me-2">Habilitado:</small>
-                <input type="checkbox" class="form-check-input m-0" disabled [ngModel]="item.enabled" />
+              <div class="d-flex align-items-center mb-1">
+                <span class="flex-grow-1 fw-light">{{ item.email }}</span>
+                <button *ngIf="isSuperAdmin" (click)="removeUser(item)" class="btn btn-icon" style="line-height: 1;">
+                  <img width="15" src="/assets/icons/remove.svg" alt="">
+                </button>
               </div>
+              <small class="badge text-primary">{{ item.role }}</small>
             </li>
           </ul>
         </div>

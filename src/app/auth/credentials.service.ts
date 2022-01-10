@@ -28,6 +28,10 @@ export class CredentialsService {
     return !!this.credentials;
   }
 
+  isSuperAdmin(): boolean {
+    return this.credentials.role === 'SUPER_ADMIN';
+  }
+
   /**
    * Gets the user credentials.
    * @return The user credentials or null if the user is not authenticated.

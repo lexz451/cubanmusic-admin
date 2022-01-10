@@ -43,18 +43,16 @@ export class ErrorHandlerInterceptor implements HttpInterceptor, OnDestroy {
 
     let errorMessage = 'Ocurrio un error inesperado. Intente nuevamente.';
 
-    if (response.error) {
-      if (response.status == 401) {
-        errorMessage = 'Correo electrónico o contraseña incorrecta. Revise sus credenciales e intente nuevamente.';
-      } else if (response.status == 403) {
-        errorMessage = 'Su sesión expiro o no tiene permisos para acceder. Inicie sesión.';
-      } else if (response.status == 0) {
-        errorMessage = 'No se pudo contactar con el servidor. Revise su conexion a Internet e intente nuevamente.';
-      } else if (response.status == 500) {
-        errorMessage = 'Error en el servidor: ' + response.error?.message || response.message;
-      } else {
-        errorMessage = 'Error desconocido. Intente nuevamente.';
-      }
+    if (response.status == 401) {
+      errorMessage = 'Correo electrónico o contraseña incorrecta. Revise sus credenciales e intente nuevamente.';
+    } else if (response.status == 403) {
+      errorMessage = 'Su sesión expiro o no tiene permisos para acceder. Inicie sesión.';
+    } else if (response.status == 0) {
+      errorMessage = 'No se pudo contactar con el servidor. Revise su conexion a Internet e intente nuevamente.';
+    } else if (response.status == 500) {
+      errorMessage = 'Error en el servidor: ' + response.error?.message || response.message;
+    } else {
+      errorMessage = 'Error desconocido. Intente nuevamente.';
     }
 
     this._uiService.notifyError(errorMessage);

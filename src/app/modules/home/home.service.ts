@@ -21,4 +21,8 @@ export class HomeService {
   createUser(user: User): Observable<void> {
     return this._apiService.post('/auth/signup', user);
   }
+
+  removeUser(id: number): Observable<void> {
+    return this._apiService.delete(`/auth/users/${id}`);
+  }
 }

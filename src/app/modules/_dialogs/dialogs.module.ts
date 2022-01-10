@@ -1,3 +1,4 @@
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 import { CreateOrganizationComponent } from './create-organization/create-organization.component';
 import { CreateJobtitleComponent } from './create-jobtitle/create-jobtitle.component';
 import { CreateInstrumentComponent } from './create-instrument/create-instrument.component';
@@ -25,6 +26,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     CreateInstrumentComponent,
     CreateJobtitleComponent,
     CreateOrganizationComponent,
+    AlertDialogComponent
   ],
   imports: [CommonModule, SharedModule, NgbModalModule],
 })

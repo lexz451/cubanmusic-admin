@@ -1,0 +1,12 @@
+<div class="modal-header justify-content-center">
+  <h5 class="mb-0 fw-bold">Alerta</h5>
+</div>
+<div class="modal-body">
+  <div class="d-flex align-items-center justify-content-center">
+    <span class="text-center">{{ message }}</span>
+  </div>
+</div>
+<div class="modal-footer justify-content-center">
+  <button class="btn btn-light text-primary me-2" (click)="dismiss()">Cerrar</button>
+    <button class="btn btn-primary" (click)="accept()">Aceptar</button>
+</div>
